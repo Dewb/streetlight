@@ -82,6 +82,9 @@ public:
     ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
     
 protected:
+    
+    void sizeToContent();
+    
 	ckvdSyphonClient mClient;
     ofImage mClientImage;
     

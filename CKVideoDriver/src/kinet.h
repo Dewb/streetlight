@@ -1,9 +1,10 @@
 //
 //  kinet.h
-//  CKVideoDriver
 //
 //  Created by Michael Dewberry on 12/19/12.
 //
+//  Port of kinet.py by Giles Hall
+//  http://github.com/vishnubob/kinet
 //
 
 #include <vector>
@@ -37,6 +38,7 @@ public:
     void set_blue(unsigned char b);
     
     void set_rgb(unsigned char r, unsigned char g, unsigned char b);
+
 protected:
     std::vector<char> _values;
 };
@@ -46,10 +48,14 @@ class PowerSupply
 public:
     PowerSupply(const char* strHost, const char* strPort = "6038");
     ~PowerSupply();
-    void go();
-    const char* getHost();
+    
+    char* getHost();
+    int getPort();
+    
     void addFixture(Fixture* pFix);
     void clearFixtures();
+    
+    void go();
     
 protected:
     bool _connected;

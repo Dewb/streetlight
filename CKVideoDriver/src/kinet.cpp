@@ -1,9 +1,10 @@
 //
 //  kinet.cpp
-//  CKVideoDriver
 //
 //  Created by Michael Dewberry on 12/19/12.
 //
+//  Port of kinet.py by Giles Hall
+//  http://github.com/vishnubob/kinet
 //
 
 #include "kinet.h"
@@ -92,7 +93,20 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
 PowerSupply::~PowerSupply()
 {
     free(_frame);
+    free(_host);
 }
+
+char* PowerSupply::getHost()
+{
+    return _host;
+}
+
+int PowerSupply::getPort()
+{
+    return _port;
+}
+
+
 
 void PowerSupply::addFixture(Fixture* pFix)
 {

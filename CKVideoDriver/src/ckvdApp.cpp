@@ -194,19 +194,23 @@ void ckvdApp::setup()
     _grabbers.push_back(pGrabber);
 }
 
-//--------------------------------------------------------------
-void ckvdApp::update()
+void ckvdApp::sizeToContent()
 {
     int imgW = getWidth();
     int imgH = getHeight();
-    if (imgW > 0 && imgH > 0)
+    
+    ofSetWindowShape(imgW, imgH);
+    if (_pUI)
     {
-        ofSetWindowShape(imgW, imgH);
-        if (_pUI)
-        {
-            _pUI->getRect()->setX(getClientWidth());
-        }
+        _pUI->getRect()->setX(getClientWidth());
+        _pUI->getRect()->setHeight(getHeight());
     }
+}
+
+//--------------------------------------------------------------
+void ckvdApp::update()
+{
+    sizeToContent();
 }
 
 //--------------------------------------------------------------
@@ -266,16 +270,7 @@ void ckvdApp::mouseReleased(int x, int y, int button)
 
 void ckvdApp::windowResized(int w, int h)
 {
-    int imgW = getWidth();
-    int imgH = getHeight();
-    if (imgW > 0 && imgH > 0 && (w > imgW || h > imgH))
-    {
-        ofSetWindowShape(imgW, imgH);
-        if (_pUI)
-        {
-            _pUI->getRect()->setX(getClientWidth());
-        }
-    }
+    sizeToContent();
 }
 
 int ckvdApp::getClientWidth()
@@ -298,7 +293,7 @@ int ckvdApp::getHeight()
 void ckvdApp::setSelectedGrabber(ckvdPixelGrabber* pGrabber)
 {
     _pSelectedGrabber = pGrabber;
-    auto pText = (ofxUITextInput*)(_pUI->getWidget("FIXADDR"));
+    auto pText = (ofxUITextInput*)(_pUI->getWidget("FIX_ADDR"));
     if (pText)
     {
         std::stringstream s;
