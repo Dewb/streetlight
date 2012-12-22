@@ -108,7 +108,7 @@ void PowerSupply::go()
 {
     if (!_connected)
     {
-        fprintf(stderr, "PowerSupply is not connected\n");
+        fprintf(stderr, "Power supply is not connected.\n");
         return;
     }
     
@@ -124,7 +124,7 @@ void PowerSupply::go()
             int n = addr+index;
             if (n >= 512)
             {
-                fprintf(stderr, "Fixture address %d is out of range.", n);
+                fprintf(stderr, "Fixture address %d is out of range.\n", n);
                 break;
             }
             data[n] = *(range.first);
@@ -132,7 +132,7 @@ void PowerSupply::go()
         }
     }
     
-    dump_buffer(120, _frame);
+    //dump_buffer(120, _frame);
     send(_socket, _frame, HEADER_SIZE + DATA_SIZE, 0);
 }
 

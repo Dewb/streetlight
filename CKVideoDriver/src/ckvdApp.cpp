@@ -1,10 +1,11 @@
 #include "ckvdApp.h"
+#include <algorithm>
 
-#define SIDEBAR_WIDTH 170
+#define SIDEBAR_WIDTH 190
 
 bool ckvdPixelGrabber::isFocused()
 {
-    return ckvdApp::getSelectedGrabber() == this;
+    return theApp()->getSelectedGrabber() == this;
 }
 
 void ckvdPixelGrabber::mousePressed(ofMouseEventArgs &e)
@@ -12,7 +13,7 @@ void ckvdPixelGrabber::mousePressed(ofMouseEventArgs &e)
     if (!isOver(e.x, e.y))
         return;
     
-    ckvdApp::setSelectedGrabber(this);
+    theApp()->setSelectedGrabber(this);
     ofxTangibleHandle::mousePressed(e);
 
     // hack to prevent other ofxTangibleHandles from processing event
@@ -80,11 +81,11 @@ void ckvdSinglePixelGrabber::draw()
         drawCrosshair(x, y, width, height, 1);
     }
     
-    if (ckvdApp::getGrabberFont())
+    if (theApp()->getGrabberFont())
     {
         char label[10];
         snprintf(label, 10, "%d", fixture.getAddress());
-        ckvdApp::getGrabberFont()->drawString(label, x+width/2+3, y-height/2+3);
+        theApp()->getGrabberFont()->drawString(label, x+width/2+3, y-height/2+3);
     }
     ofPopStyle();
 }
@@ -95,20 +96,38 @@ void ckvdSinglePixelGrabber::setColorFromFrame(ofImage& frame)
     fixture.set_rgb(_color.r, _color.g, _color.b);
 }
 
+void ckvdSinglePixelGrabber::moveBy(float dx, float dy)
+{
+    int w = theApp()->getClientWidth();
+    int h = theApp()->getHeight();
+    dx = x + dx < 0 ? -x : x + dx >= w ? w-x-1 : dx;
+    dy = y + dy < 0 ? -y : y + dy >= h ? h-y-1 : dy;
+    ofxTangibleHandle::moveBy(dx, dy);
+}
+
+
 void ckvdManyPixelGrabber::draw()
 {
     ofxTangibleHandle::draw();
 }
 
+ckvdApp* _theApp = NULL;
+ckvdApp* theApp()
+{
+    return _theApp;
+}
 
 //--------------------------------------------------------------
 ckvdApp::ckvdApp()
+: _pPds(new PowerSupply("10.0.0.150"))
+, _pSelectedGrabber(NULL)
+, _pGrabberFont(NULL)
 {
-    _pPds = new PowerSupply("10.0.0.150");
+    assert(_theApp == NULL);
+    _theApp = this;
 }
 
-ckvdPixelGrabber* ckvdApp::_pSelectedGrabber = NULL;
-ofTrueTypeFont* ckvdApp::_pGrabberFont = NULL;
+
 namespace
 {
     template <typename T>
@@ -150,7 +169,13 @@ void ckvdApp::update()
     int imgW = getWidth();
     int imgH = getHeight();
     if (imgW > 0 && imgH > 0)
-        ofSetWindowShape(imgW, imgH);    
+    {
+        ofSetWindowShape(imgW, imgH);
+        if (_pUI)
+        {
+            _pUI->getRect()->setX(mClient.getWidth());
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -167,6 +192,13 @@ void ckvdApp::draw()
         _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_MEDIUM));
         _pUI->addTextInput("IP", "10.0.0.150", 150)->setAutoClear(false);
         _pUI->addWidgetDown(new ofxUILabelButton("+ ADD FIXTURE", false));
+        _pUI->addWidgetDown(new ofxUILabelButton("- DELETE FIXTURE", false));
+        
+        _pUI->addSpacer(50,100)->setDrawFill(false);
+        
+        _pUI->addWidgetDown(new ofxUILabel("FIXTURE ADDRESS", OFX_UI_FONT_MEDIUM));
+        _pUI->addTextInput("FIXADDR", "0", 80)->setAutoClear(false);
+        
         ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
         //_pUI->loadSettings("GUI/guiSettings.xml");
         _pGrabberFont = _pUI->getFontSmall();
@@ -177,6 +209,10 @@ void ckvdApp::draw()
         ofSetColor(60,60,80);
         ofRect(mClient.getWidth(), 0, SIDEBAR_WIDTH, getHeight());
         ofSetColor(255,255,255);
+        
+        bool bVisible = _pSelectedGrabber != NULL;
+        _pUI->getWidget("FIXTURE ADDRESS")->setVisible(bVisible);
+        _pUI->getWidget("FIXADDR")->setVisible(bVisible);
     }
 
     mClientImage.grabScreen(0, 0, mClient.getWidth(), mClient.getHeight());
@@ -199,6 +235,17 @@ void ckvdApp::draw()
 //--------------------------------------------------------------
 void ckvdApp::keyPressed(int key)
 {
+    switch (key)
+	{
+		case OF_KEY_UP:
+            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(0,-1); break;
+		case OF_KEY_DOWN:
+            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(0,1); break;
+		case OF_KEY_LEFT:
+            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(-1,0); break;
+		case OF_KEY_RIGHT:
+            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(1,0); break;
+    }
 }
 
 void ckvdApp::mouseReleased(int x, int y, int button)
@@ -212,7 +259,16 @@ void ckvdApp::windowResized(int w, int h)
     if (imgW > 0 && imgH > 0 && (w > imgW || h > imgH))
     {
         ofSetWindowShape(imgW, imgH);
+        if (_pUI)
+        {
+            _pUI->getRect()->setX(mClient.getWidth());
+        }
     }
+}
+
+int ckvdApp::getClientWidth()
+{
+    return floor(mClient.getWidth());
 }
 
 int ckvdApp::getWidth()
@@ -223,6 +279,18 @@ int ckvdApp::getWidth()
 int ckvdApp::getHeight()
 {
     return floor(mClient.getHeight());
+}
+
+void ckvdApp::setSelectedGrabber(ckvdPixelGrabber* pGrabber)
+{
+    _pSelectedGrabber = pGrabber;
+    auto pText = (ofxUITextInput*)(_pUI->getWidget("FIXADDR"));
+    if (pText)
+    {
+        std::stringstream s;
+        s << _pSelectedGrabber->fixture.getAddress();
+        pText->setTextString(s.str());
+    }
 }
 
 void ckvdApp::exit()
@@ -239,6 +307,20 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         if (pButton && pButton->getValue())
             _grabbers.push_back(new ckvdSinglePixelGrabber());
     }
+	if(e.widget->getName() == "- DELETE FIXTURE")
+    {
+        ofxUIButton* pButton = (ofxUIButton*)e.widget;
+        if (pButton && pButton->getValue() && _pSelectedGrabber)
+        {
+            auto iter = std::find(_grabbers.begin(), _grabbers.end(), _pSelectedGrabber);
+            if (iter != _grabbers.end())
+            {
+                _grabbers.erase(std::remove(iter, _grabbers.end(), _pSelectedGrabber), _grabbers.end());
+                delete _pSelectedGrabber;
+                _pSelectedGrabber = NULL;
+            }
+        }
+    }
     else if(e.widget->getName() == "IP")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
@@ -246,6 +328,16 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         {
             delete _pPds;
             _pPds = new PowerSupply(pInput->getTextString().c_str());
+        }
+    }
+    else if(e.widget->getName() == "FIXADDR")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput && pInput->getTextString() != "" && _pSelectedGrabber)
+        {
+            int addr;
+            std::istringstream(pInput->getTextString()) >> addr;
+            _pSelectedGrabber->fixture.setAddress(addr);
         }
     }
 }

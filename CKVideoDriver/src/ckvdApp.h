@@ -35,6 +35,7 @@ public:
     ckvdSinglePixelGrabber();
     virtual void draw();
     virtual void setColorFromFrame(ofImage& frame);
+    virtual void moveBy(float dx, float dy);
     
 protected:
     ofColor _color;
@@ -72,12 +73,13 @@ public:
     void exit();
     void guiEvent(ofxUIEventArgs& args);
 
+    int getClientWidth();
     int getWidth();
     int getHeight();
     
-    static void setSelectedGrabber(ckvdPixelGrabber* pGrabber) { _pSelectedGrabber = pGrabber; }
-    static ckvdPixelGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
-    static ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
+    void setSelectedGrabber(ckvdPixelGrabber* pGrabber);
+    ckvdPixelGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
+    ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
     
 protected:
 	ckvdSyphonClient mClient;
@@ -88,9 +90,11 @@ protected:
     ofxUICanvas* _pUI;
     std::vector<ckvdPixelGrabber*> _grabbers;
     
-    static ckvdPixelGrabber* _pSelectedGrabber;
-    static ofTrueTypeFont* _pGrabberFont;
+    ckvdPixelGrabber* _pSelectedGrabber;
+    ofTrueTypeFont* _pGrabberFont;
 };
+
+ckvdApp* theApp();
 
 
 #endif
