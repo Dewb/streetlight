@@ -2,6 +2,10 @@
 #include <algorithm>
 
 #define SIDEBAR_WIDTH 190
+#define MIN_WIDTH 640
+#define MIN_HEIGHT 480
+#define DEFAULT_SYPHON_APP "Arena"
+#define DEFAULT_SYPHON_SERVER "Composition"
 
 bool ckvdPixelGrabber::isFocused()
 {
@@ -149,8 +153,8 @@ ckvdApp::~ckvdApp()
 void ckvdApp::connect()
 {
 	mClient.setup();
-    mClient.setApplicationName("Arena");
-    mClient.setServerName("Composition");
+    mClient.setApplicationName(DEFAULT_SYPHON_APP);
+    mClient.setServerName(DEFAULT_SYPHON_SERVER);
 }
 
 void ckvdApp::setup()
@@ -158,6 +162,33 @@ void ckvdApp::setup()
 	ofSetWindowTitle("CKVideoDriver");
     mClientImage.setUseTexture(false);
     ofSetFrameRate(30);
+    
+    _pUI = new ofxUICanvas(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
+    _pUI->setFont("GUI/Exo-Regular.ttf", true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
+
+    _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER APP", OFX_UI_FONT_SMALL));
+    _pUI->addTextInput("SYPHON_APP", DEFAULT_SYPHON_APP, 150)->setAutoClear(false);
+    _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER NAME", OFX_UI_FONT_SMALL));
+    _pUI->addTextInput("SYPHON_SERVER", DEFAULT_SYPHON_SERVER, 150)->setAutoClear(false);
+
+    _pUI->addSpacer(20,20)->setDrawFill(false);
+    
+    _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_SMALL));
+    _pUI->addTextInput("PDS_IP", "10.0.0.150", 150)->setAutoClear(false);
+
+    _pUI->addSpacer(20,20)->setDrawFill(false);
+    
+    _pUI->addWidgetDown(new ofxUILabelButton("+ ADD FIXTURE", false));
+    _pUI->addWidgetDown(new ofxUILabelButton("- DELETE FIXTURE", false));
+    
+    _pUI->addSpacer(20,20)->setDrawFill(false);
+    
+    _pUI->addWidgetDown(new ofxUILabel("FIXTURE ADDRESS", OFX_UI_FONT_SMALL));
+    _pUI->addTextInput("FIX_ADDR", "0", 80)->setAutoClear(false);
+    
+    ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
+    //_pUI->loadSettings("GUI/guiSettings.xml");
+    _pGrabberFont = _pUI->getFontSmall();
     
     ckvdPixelGrabber* pGrabber = new ckvdSinglePixelGrabber();
     _grabbers.push_back(pGrabber);
@@ -173,7 +204,7 @@ void ckvdApp::update()
         ofSetWindowShape(imgW, imgH);
         if (_pUI)
         {
-            _pUI->getRect()->setX(mClient.getWidth());
+            _pUI->getRect()->setX(getClientWidth());
         }
     }
 }
@@ -185,37 +216,18 @@ void ckvdApp::draw()
  
     mClient.draw(0, 0);
     
-    if (!_pUI && mClient.getWidth() > 0) // wait until we've loaded a client image before creating UI
-    {
-        _pUI = new ofxUICanvas(mClient.getWidth(), 0, SIDEBAR_WIDTH, getHeight());
-        _pUI->setFont("GUI/Exo-Regular.ttf", true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
-        _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_MEDIUM));
-        _pUI->addTextInput("IP", "10.0.0.150", 150)->setAutoClear(false);
-        _pUI->addWidgetDown(new ofxUILabelButton("+ ADD FIXTURE", false));
-        _pUI->addWidgetDown(new ofxUILabelButton("- DELETE FIXTURE", false));
-        
-        _pUI->addSpacer(50,100)->setDrawFill(false);
-        
-        _pUI->addWidgetDown(new ofxUILabel("FIXTURE ADDRESS", OFX_UI_FONT_MEDIUM));
-        _pUI->addTextInput("FIXADDR", "0", 80)->setAutoClear(false);
-        
-        ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
-        //_pUI->loadSettings("GUI/guiSettings.xml");
-        _pGrabberFont = _pUI->getFontSmall();
-    }
-    
     if (_pUI)
     {
         ofSetColor(60,60,80);
-        ofRect(mClient.getWidth(), 0, SIDEBAR_WIDTH, getHeight());
+        ofRect(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
         ofSetColor(255,255,255);
         
         bool bVisible = _pSelectedGrabber != NULL;
         _pUI->getWidget("FIXTURE ADDRESS")->setVisible(bVisible);
-        _pUI->getWidget("FIXADDR")->setVisible(bVisible);
+        _pUI->getWidget("FIX_ADDR")->setVisible(bVisible);
     }
 
-    mClientImage.grabScreen(0, 0, mClient.getWidth(), mClient.getHeight());
+    mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
     
     _pPds->clearFixtures();
     
@@ -261,24 +273,26 @@ void ckvdApp::windowResized(int w, int h)
         ofSetWindowShape(imgW, imgH);
         if (_pUI)
         {
-            _pUI->getRect()->setX(mClient.getWidth());
+            _pUI->getRect()->setX(getClientWidth());
         }
     }
 }
 
 int ckvdApp::getClientWidth()
 {
-    return floor(mClient.getWidth());
+    int w = floor(mClient.getWidth());
+    return w > MIN_WIDTH ? w : MIN_WIDTH;
 }
 
 int ckvdApp::getWidth()
 {
-    return floor(mClient.getWidth()) + SIDEBAR_WIDTH;
+    return getClientWidth() + SIDEBAR_WIDTH;
 }
 
 int ckvdApp::getHeight()
 {
-    return floor(mClient.getHeight());
+    int h = floor(mClient.getHeight());
+    return h > MIN_HEIGHT ? h : MIN_HEIGHT;
 }
 
 void ckvdApp::setSelectedGrabber(ckvdPixelGrabber* pGrabber)
@@ -321,7 +335,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             }
         }
     }
-    else if(e.widget->getName() == "IP")
+    else if(e.widget->getName() == "PDS_IP")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput && pInput->getTextString() != "")
@@ -330,7 +344,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             _pPds = new PowerSupply(pInput->getTextString().c_str());
         }
     }
-    else if(e.widget->getName() == "FIXADDR")
+    else if(e.widget->getName() == "FIX_ADDR")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput && pInput->getTextString() != "" && _pSelectedGrabber)
@@ -338,6 +352,22 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             int addr;
             std::istringstream(pInput->getTextString()) >> addr;
             _pSelectedGrabber->fixture.setAddress(addr);
+        }
+    }
+    else if(e.widget->getName() == "SYPHON_APP")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+        {
+            mClient.setApplicationName(pInput->getTextString());
+        }
+    }
+    else if(e.widget->getName() == "SYPHON_SERVER")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+        {
+            mClient.setServerName(pInput->getTextString());
         }
     }
 }
