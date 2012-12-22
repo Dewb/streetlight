@@ -14,8 +14,9 @@ typedef std::pair<std::vector<char>::const_iterator, std::vector<char>::const_it
 class Fixture
 {
 public:
-    Fixture(int address) : _address(address) {}
+    Fixture(int address=0) : _address(address) {}
     int getAddress() { return _address; }
+    void setAddress(int address) { _address = address; }
     virtual CKValueRange getValues() const = 0;
 protected:
     int _address;
@@ -46,11 +47,15 @@ public:
     PowerSupply(const char* strHost, const char* strPort = "6038");
     ~PowerSupply();
     void go();
+    const char* getHost();
     void addFixture(Fixture* pFix);
+    void clearFixtures();
     
 protected:
     bool _connected;
     int _socket;
     std::list<Fixture*> _fixtures;
     unsigned char* _frame;
+    char* _host;
+    int _port;
 };

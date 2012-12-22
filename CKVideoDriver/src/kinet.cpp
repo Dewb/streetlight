@@ -19,8 +19,16 @@ const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x
 
 void dump_buffer(unsigned n, const unsigned char* buf)
 {
-    while (n-- > 0)
+    int c = 1;
+    while (c < n)
+    {
         fprintf(stderr, "%02X ", *buf++);
+        if (c%16 == 0)
+            fprintf(stderr, "\n");
+        c++;
+    }
+    if (c%16 != 1)
+        fprintf(stderr, "\n");
 }
 
 PowerSupply::PowerSupply(const char* strHost, const char* strPort)
@@ -32,6 +40,9 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
     
     _connected = false;
     _frame = NULL;
+    
+    _host = (char*)malloc((strlen(strHost)+1)*sizeof(char));
+    strncpy(_host, strHost, strlen(strHost));
     
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;
@@ -65,6 +76,8 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
         return;
     }
     
+    _port = ((sockaddr_in*)(pr->ai_addr))->sin_port;
+    
     freeaddrinfo(pResult);
     
     int flags = fcntl(sock, F_GETFL, 0);
@@ -86,6 +99,11 @@ void PowerSupply::addFixture(Fixture* pFix)
     _fixtures.push_back(pFix);
 }
 
+void PowerSupply::clearFixtures()
+{
+    _fixtures.clear();
+}
+
 void PowerSupply::go()
 {
     if (!_connected)
@@ -103,12 +121,18 @@ void PowerSupply::go()
         int index = 0;
         for(; range.first != range.second; range.first++)
         {
-            data[addr+index] = *(range.first);
+            int n = addr+index;
+            if (n >= 512)
+            {
+                fprintf(stderr, "Fixture address %d is out of range.", n);
+                break;
+            }
+            data[n] = *(range.first);
             index++;
         }
     }
     
-    //dump_buffer(40, _frame);
+    dump_buffer(120, _frame);
     send(_socket, _frame, HEADER_SIZE + DATA_SIZE, 0);
 }
 

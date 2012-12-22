@@ -9,6 +9,6 @@ int main( ){
     ckvdApp* pApp = new ckvdApp();
     pApp->connect();
     
-    ofSetupOpenGL(&window, pApp->getClientWidth(), pApp->getClientHeight(), OF_WINDOW);
+    ofSetupOpenGL(&window, pApp->getWidth(), pApp->getHeight(), OF_WINDOW);
     ofRunApp(pApp);
 }
