@@ -8,39 +8,6 @@
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
 
-bool ckvdPixelGrabber::isFocused()
-{
-    return theApp()->getSelectedGrabber() == this;
-}
-
-void ckvdPixelGrabber::mousePressed(ofMouseEventArgs &e)
-{
-    if (!isOver(e.x, e.y))
-        return;
-    
-    theApp()->setSelectedGrabber(this);
-    ofxTangibleHandle::mousePressed(e);
-
-    // hack to prevent other ofxTangibleHandles from processing event
-    e.x = -999;
-    e.y = -999;
-}
-
-ckvdSinglePixelGrabber::ckvdSinglePixelGrabber()
-{
-    static int count = 0;
-
-    drawType = TANGIBLE_DRAW_AS_CENTER_RECT;
-
-    int cx = 40*((count)%12+1);
-    int cy = 35*((count/12)+1);
-
-    setup(cx, cy, 20, 20);
-    
-    fixture.setAddress(count*3);
-    count++;
-}
-
 namespace
 {
     void drawCrosshair(int x, int y, int width, int height, int l)
@@ -59,12 +26,72 @@ namespace
         ofLine(x, y+dh, x, y+dh*1.5+1);
         ofLine(x-dw, y, x-dw*1.5-1, y);
         ofLine(x+dw, y, x+dw*1.5, y);
+                
+        ofPopStyle();
+    }
+    
+    void drawCornerTickBox(int x, int y, int width, int height, int l)
+    {
+        ofPushStyle();
+        
+        ofNoFill();
+        ofSetLineWidth(l);
+        
+        ofRect(x, y, width, height);
+        ofLine(x, y, x+width/5, y+height/5);
+        ofLine(x+4*width/5, y+height/5, x+width, y);
+        ofLine(x+4*width/5, y+4*height/5, x+width, y+height);
+        ofLine(x, y+height, x+width/5, y+4*height/5);
 
         ofPopStyle();
     }
 }
 
-void ckvdSinglePixelGrabber::draw()
+bool ckvdVideoGrabber::isFocused()
+{
+    return theApp()->getSelectedGrabber() == this;
+}
+
+void ckvdVideoGrabber::mousePressed(ofMouseEventArgs &e)
+{
+    if (!isOver(e.x, e.y))
+        return;
+    
+    theApp()->setSelectedGrabber(this);
+    ofxTangibleHandle::mousePressed(e);
+
+    // hack to prevent other ofxTangibleHandles from processing event
+    e.x = -999;
+    e.y = -999;
+}
+
+void ckvdVideoGrabber::moveBy(float dx, float dy)
+{
+    int w = theApp()->getClientWidth();
+    int h = theApp()->getHeight();
+    dx = x + dx < 0 ? -x : x + dx >= w ? w-x-1 : dx;
+    dy = y + dy < 0 ? -y : y + dy >= h ? h-y-1 : dy;
+    ofxTangibleHandle::moveBy(dx, dy);
+}
+
+
+ckvdSingleColorGrabber::ckvdSingleColorGrabber()
+: _fixture(0)
+{
+    static int count = 0;
+
+    drawType = TANGIBLE_DRAW_AS_CENTER_RECT;
+
+    int cx = 40*((count)%12+1);
+    int cy = 35*((count/12)+1);
+
+    setup(cx, cy, 20, 20);
+    
+    _fixture.setAddress(count*3);
+    count++;
+}
+
+void ckvdSingleColorGrabber::draw()
 {
     ofPushStyle();
     
@@ -88,33 +115,122 @@ void ckvdSinglePixelGrabber::draw()
     
     if (theApp()->getGrabberFont())
     {
-        char label[10];
-        snprintf(label, 10, "%d", fixture.getAddress());
-        theApp()->getGrabberFont()->drawString(label, x+width/2+3, y-height/2+3);
+        theApp()->getGrabberFont()->drawString(_fixture.getName(), x+width/2+3, y-height/2+3);
     }
+    
     ofPopStyle();
 }
 
-void ckvdSinglePixelGrabber::setColorFromFrame(ofImage& frame)
+void ckvdSingleColorGrabber::setColorFromFrame(ofImage& frame)
 {
     _color = frame.getColor(x, y);
-    fixture.set_rgb(_color.r, _color.g, _color.b);
+    _fixture.set_rgb(_color.r, _color.g, _color.b);
 }
 
-void ckvdSinglePixelGrabber::moveBy(float dx, float dy)
+void ckvdSingleColorGrabber::listParams(vector<string>* pParams)
 {
-    int w = theApp()->getClientWidth();
-    int h = theApp()->getHeight();
-    dx = x + dx < 0 ? -x : x + dx >= w ? w-x-1 : dx;
-    dy = y + dy < 0 ? -y : y + dy >= h ? h-y-1 : dy;
-    ofxTangibleHandle::moveBy(dx, dy);
+    if (pParams)
+    {
+        pParams->push_back("ADDRESS");
+    }
 }
 
-
-void ckvdManyPixelGrabber::draw()
+int ckvdSingleColorGrabber::getParameterInt(const string& name) const
 {
-    ofxTangibleHandle::draw();
+    if (name.compare("ADDRESS") == 0)
+        return _fixture.getAddress();
+    return -1;
 }
+
+void ckvdSingleColorGrabber::setParameterInt(const string& name, int val)
+{
+    if (name.compare("ADDRESS") == 0)
+        _fixture.setAddress(val);
+}
+
+
+ckvdTileGrabber::ckvdTileGrabber()
+: _fixture(0)
+, _scale(16)
+{
+    static int count = 0;
+    
+    drawType = TANGIBLE_DRAW_AS_RECT;
+    
+    int cx = 20+96*((count)%5+1);
+    int cy = 30+96*((count/5)+1);
+    
+    setup(cx, cy, 12*_scale, 12*_scale);
+    
+    _fixture.setChannel(1+count*2);
+    count++;
+}
+
+void ckvdTileGrabber::draw()
+{
+    ofPushStyle();
+    
+    if (isFocused())
+    {
+        ofSetColor(255, 255, 100);
+        drawCornerTickBox(x, y, width, height, 5);
+        ofSetColor(60, 60, 60);
+        drawCornerTickBox(x, y, width, height, 1);
+        ofSetColor(255, 255, 100);
+    }
+    else
+    {
+        ofSetColor(255, 255, 255);
+        drawCornerTickBox(x, y, width, height, 1);
+    }
+    
+    if (theApp()->getGrabberFont())
+    {
+        string name = _fixture.getName();
+        ofTrueTypeFont* pFont = theApp()->getGrabberFont();
+        pFont->drawString(name, x+(width-pFont->stringWidth(name))/2, y+(height+pFont->stringHeight(name))/2);
+    }
+    
+    ofPopStyle();
+}
+
+
+void ckvdTileGrabber::setColorFromFrame(ofImage& frame)
+{
+    _fixture.setVideoRect(x, y, width, height);
+    _fixture.setSourceData(frame.getPixels(), frame.width, frame.height, 3);
+}
+
+void ckvdTileGrabber::listParams(vector<string>* pParams)
+{
+    if (pParams)
+    {
+        pParams->push_back("CHANNEL");
+        pParams->push_back("SCALE");
+    }
+}
+
+int ckvdTileGrabber::getParameterInt(const string& name) const
+{
+    if (name.compare("CHANNEL") == 0)
+        return _fixture.getChannel();
+    if (name.compare("SCALE") == 0)
+        return _scale;
+    return -1;
+}
+
+void ckvdTileGrabber::setParameterInt(const string& name, int val)
+{
+    if (name.compare("CHANNEL") == 0)
+        _fixture.setChannel(val);
+    if (name.compare("SCALE") == 0)
+    {
+        _scale = val;
+        width = 12*_scale;
+        height = 12*_scale;
+    }
+}
+
 
 ckvdApp* _theApp = NULL;
 ckvdApp* theApp()
@@ -160,12 +276,14 @@ void ckvdApp::connect()
 
 namespace
 {
-    void addTextInput(ofxUICanvas* pUI, string name, string text, int width, string inlineLabel = "")
+    vector<ofxUIWidget*> addTextInput(ofxUICanvas* pUI, string name, string text, int width, string inlineLabel = "")
     {
+        vector<ofxUIWidget*> widgets;
+        
         if (inlineLabel.size())
         {
             auto pLabel = new ofxUILabel(75, inlineLabel, OFX_UI_FONT_SMALL, 24);
-            pUI->addWidgetDown(pLabel);
+            widgets.push_back(pUI->addWidgetDown(pLabel));
         }
         
         auto pInput = new ofxUITextInput(name, text, width, 0, 0, 0, OFX_UI_FONT_SMALL);
@@ -173,12 +291,14 @@ namespace
         
         if (inlineLabel.size())
         {
-            pUI->addWidgetRight(pInput);
+            widgets.push_back(pUI->addWidgetRight(pInput));
         }
         else
         {
-            pUI->addWidgetDown(pInput);
+            widgets.push_back(pUI->addWidgetDown(pInput));
         }
+        
+        return widgets;
     }
 }
 
@@ -206,21 +326,17 @@ void ckvdApp::setup()
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
-    _pUI->addWidgetDown(new ofxUILabel("FIXTURES", OFX_UI_FONT_SMALL));
-    _pUI->addWidgetDown(new ofxUILabelButton("+ ADD", false));
-    _pUI->addWidgetRight(new ofxUILabelButton("- DELETE", false));
+    _pUI->addWidgetDown(new ofxUILabelButton("+ PT", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("X", false));
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
-    _pUI->addWidgetDown(new ofxUILabel("SELECTED FIXTURE", OFX_UI_FONT_SMALL));
-    addTextInput(_pUI, "FIX_ADDR", "0", 90, "ADDRESS");
+    _lastStaticWidget = _pUI->addWidgetDown(new ofxUILabel("SELECTED FIXTURE", OFX_UI_FONT_SMALL));
     
     ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
     //_pUI->loadSettings("GUI/guiSettings.xml");
     _pGrabberFont = _pUI->getFontSmall();
-    
-    ckvdPixelGrabber* pGrabber = new ckvdSinglePixelGrabber();
-    _grabbers.push_back(pGrabber);
 }
 
 void ckvdApp::sizeToContent()
@@ -236,13 +352,11 @@ void ckvdApp::sizeToContent()
     }
 }
 
-//--------------------------------------------------------------
 void ckvdApp::update()
 {
     sizeToContent();
 }
 
-//--------------------------------------------------------------
 void ckvdApp::draw()
 {
     ofBackground(0,0,0);
@@ -257,8 +371,9 @@ void ckvdApp::draw()
         
         bool bVisible = _pSelectedGrabber != NULL;
         _pUI->getWidget("SELECTED FIXTURE")->setVisible(bVisible);
-        _pUI->getWidget("FIX_ADDR")->setVisible(bVisible);
-        _pUI->getWidget("ADDRESS")->setVisible(bVisible);
+        //_pUI->getWidget("FIX_ADDR")->setVisible(bVisible);
+        //_pUI->getWidget("ADDRESS")->setVisible(bVisible);
+        _pUI->getWidget("X")->setVisible(bVisible);
     }
 
     mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
@@ -270,15 +385,13 @@ void ckvdApp::draw()
         (*iter)->setColorFromFrame(mClientImage);
         (*iter)->draw();
         
-        _pPds->addFixture(&((*iter)->fixture));
+        _pPds->addFixture((*iter)->getFixture());
     }
     
     _pPds->go();
     
 }
 
-
-//--------------------------------------------------------------
 void ckvdApp::keyPressed(int key)
 {
     switch (key)
@@ -293,7 +406,9 @@ void ckvdApp::keyPressed(int key)
             if (_pSelectedGrabber) _pSelectedGrabber->moveBy(1,0); break;
         case OF_KEY_DEL:
         case OF_KEY_BACKSPACE:
-            deleteSelected(); break;
+            if (_pSelectedGrabber && !_pUI->hasKeyboardFocus())
+                deleteSelected();
+            break;
     }
 }
 
@@ -323,15 +438,29 @@ int ckvdApp::getHeight()
     return h > MIN_HEIGHT ? h : MIN_HEIGHT;
 }
 
-void ckvdApp::setSelectedGrabber(ckvdPixelGrabber* pGrabber)
+void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)
 {
     _pSelectedGrabber = pGrabber;
-    auto pText = (ofxUITextInput*)(_pUI->getWidget("FIX_ADDR"));
-    if (pText)
+ 
+    for (auto it = _contextWidgets.begin(); it != _contextWidgets.end(); ++it)
+    {
+        _pUI->removeWidget(*it);
+    }
+    _contextWidgets.clear();
+    _pUI->setPlacer(_lastStaticWidget);
+    
+    if (!pGrabber)
+        return;
+    
+    vector<string> params;
+    _pSelectedGrabber->listParams(&params);
+    
+    for (auto it = params.begin(); it != params.end(); ++it)
     {
         std::stringstream s;
-        s << _pSelectedGrabber->fixture.getAddress();
-        pText->setTextString(s.str());
+        s << _pSelectedGrabber->getParameterInt(*it);
+        auto widgets = addTextInput(_pUI, *it, s.str(), 90, *it);
+        _contextWidgets.insert(_contextWidgets.begin(), widgets.begin(), widgets.end());
     }
 }
 
@@ -345,7 +474,7 @@ void ckvdApp::deleteSelected()
     {
         _grabbers.erase(std::remove(iter, _grabbers.end(), _pSelectedGrabber), _grabbers.end());
         delete _pSelectedGrabber;
-        _pSelectedGrabber = NULL;
+        setSelectedGrabber(NULL);
     }
 }
 
@@ -355,15 +484,34 @@ void ckvdApp::exit()
     delete _pUI;
 }
 
+namespace
+{
+    void updateWidgetParameterInt(const string& paramName, ofxUITextInput* pInput, ckvdVideoGrabber* pGrabber)
+    {
+        if (pInput && pInput->getTextString() != "" && pGrabber)
+        {
+            int addr;
+            std::istringstream(pInput->getTextString()) >> addr;
+            pGrabber->setParameterInt(paramName, addr);
+        }
+    }
+}
+
 void ckvdApp::guiEvent(ofxUIEventArgs &e)
 {
-	if(e.widget->getName() == "+ ADD")
+	if(e.widget->getName() == "+ PT")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
-            _grabbers.push_back(new ckvdSinglePixelGrabber());
+            _grabbers.push_back(new ckvdSingleColorGrabber());
     }
-	if(e.widget->getName() == "- DELETE")
+	if(e.widget->getName() == "+ TILE")
+    {
+        ofxUIButton* pButton = (ofxUIButton*)e.widget;
+        if (pButton && pButton->getValue())
+            _grabbers.push_back(new ckvdTileGrabber());
+    }
+	if(e.widget->getName() == "X")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
@@ -380,15 +528,17 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             _pPds = new PowerSupply(pInput->getTextString().c_str());
         }
     }
-    else if(e.widget->getName() == "FIX_ADDR")
+    else if(e.widget->getName() == "ADDRESS")
     {
-        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
-        if (pInput && pInput->getTextString() != "" && _pSelectedGrabber)
-        {
-            int addr;
-            std::istringstream(pInput->getTextString()) >> addr;
-            _pSelectedGrabber->fixture.setAddress(addr);
-        }
+        updateWidgetParameterInt("ADDRESS", (ofxUITextInput*)e.widget, _pSelectedGrabber);
+    }
+    else if(e.widget->getName() == "CHANNEL")
+    {
+        updateWidgetParameterInt("CHANNEL", (ofxUITextInput*)e.widget, _pSelectedGrabber);
+    }
+    else if(e.widget->getName() == "SCALE")
+    {
+        updateWidgetParameterInt("SCALE", (ofxUITextInput*)e.widget, _pSelectedGrabber);
     }
     else if(e.widget->getName() == "SYPHON_APP")
     {

@@ -10,13 +10,17 @@
 #include "kinet.h"
 #include <sys/socket.h>
 #include <netdb.h>
+#include <sstream>
+#include <iostream>
 
-#define OLD_PROTOCOL 1
+#define OLD_PROTOCOL 0 
+#define ENABLE_LOGGING 0
 
-#ifdef OLD_PROTOCOL
+#if OLD_PROTOCOL
 
 #define DATA_SIZE 512
 #define HEADER_SIZE 21
+#define NUM_CHANNELS 1
 
 const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00,
                                           0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00};
@@ -24,13 +28,16 @@ const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x
 
 #define DATA_SIZE 512
 #define HEADER_SIZE 24
+#define NUM_CHANNELS 16
 const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x08, 0x01,
                                           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                          0x04, 0x00, 0x00, 0x01, 0xFF, 0x00, 0xFF, 0x0F};
+                                          0x01, 0x00, 0x00, 0x01, 0xFF, 0x00, 0xFF, 0x0F};
 #endif
 
+#define BUFFER_SIZE (HEADER_SIZE+DATA_SIZE)*NUM_CHANNELS
 
-void dump_buffer(unsigned n, const unsigned char* buf)
+
+void dump_buffer(unsigned n, const uint8_t* buf)
 {
     int c = 1;
     while (c < n)
@@ -98,8 +105,13 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
     
     _socket = sock;
     _connected = true;
-    _frame = (unsigned char*)malloc((HEADER_SIZE+DATA_SIZE)*sizeof(unsigned char));
-    memcpy(_frame, &ck_header_bytes, HEADER_SIZE);
+    _frame = (uint8_t*)malloc(BUFFER_SIZE*sizeof(uint8_t));
+    memset(_frame, BUFFER_SIZE, 0);
+    for (int c = 0; c < NUM_CHANNELS; c++)
+    {
+        memcpy(_frame + c*(HEADER_SIZE+DATA_SIZE), &ck_header_bytes, HEADER_SIZE);
+        _frame[c*(HEADER_SIZE+DATA_SIZE)+16] = c+1;
+    }
 }
 
 PowerSupply::~PowerSupply()
@@ -117,8 +129,6 @@ int PowerSupply::getPort()
 {
     return _port;
 }
-
-
 
 void PowerSupply::addFixture(Fixture* pFix)
 {
@@ -138,84 +148,154 @@ void PowerSupply::go()
         return;
     }
     
-    unsigned char* data = _frame + HEADER_SIZE;
-    memset(data, 0, DATA_SIZE);
     for (auto fix = _fixtures.begin(); fix != _fixtures.end(); fix++)
     {
-        int addr = (*fix)->getAddress();
-        auto range = (*fix)->getValues();
-        int index = 0;
-        for(; range.first != range.second; range.first++)
-        {
-            int n = addr+index;
-            if (n >= 512)
-            {
-                fprintf(stderr, "Fixture address %d is out of range.\n", n);
-                break;
-            }
-            data[n] = *(range.first);
-            index++;
-        }
+        (*fix)->updateFrame(_frame);
     }
     
-    //dump_buffer(120, _frame);
     
-    //for (uint8_t channel=1; channel<=10; channel++)
-    //{
-    //    _frame[16] = channel;
-       send(_socket, _frame, HEADER_SIZE + DATA_SIZE, 0);  
-    //}
+    for (int channel=0; channel<10; channel++)
+    {
+        send(_socket, _frame + (HEADER_SIZE+DATA_SIZE)*channel, HEADER_SIZE + DATA_SIZE, 0);
+        
+#if ENABLE_LOGGING
+        std::cout << "Channel " << channel+1 << "\n";
+        dump_buffer(HEADER_SIZE + 3, _frame + (HEADER_SIZE+DATA_SIZE)*channel);
+#endif
+    }
 }
 
-FixtureRGB::FixtureRGB(int address, char r, char g, char b)
-: Fixture(address)
+FixtureRGB::FixtureRGB(int address, uint8_t r, uint8_t g, uint8_t b)
+: Fixture()
+, _address(address)
 {
-    _values.push_back(r);
-    _values.push_back(g);
-    _values.push_back(b);
+    _values[0] = r;
+    _values[1] = g;
+    _values[2] = b;
 }
 
-CKValueRange FixtureRGB::getValues() const
+void FixtureRGB::updateFrame(uint8_t* packets) const
 {
-    return std::make_pair(_values.begin(), _values.end());
+    memcpy(packets+HEADER_SIZE+_address, _values, 3);
 }
 
-unsigned char FixtureRGB::get_red() const
+std::string FixtureRGB::getName() const
+{
+    std::ostringstream out;
+    out << getAddress();
+    return out.str();
+}
+
+uint8_t FixtureRGB::get_red() const
 {
     return _values[0];
 }
 
-unsigned char FixtureRGB::get_green() const
+uint8_t FixtureRGB::get_green() const
 {
     return _values[1];
 }
 
-unsigned char FixtureRGB::get_blue() const
+uint8_t FixtureRGB::get_blue() const
 {
     return _values[2];
 }
 
-void FixtureRGB::set_red(unsigned char r)
+void FixtureRGB::set_red(uint8_t r)
 {
     _values[0] = r;
 }
 
-void FixtureRGB::set_green(unsigned char g)
+void FixtureRGB::set_green(uint8_t g)
 {
     _values[1] = g;
 }
 
-void FixtureRGB::set_blue(unsigned char b)
+void FixtureRGB::set_blue(uint8_t b)
 {
     _values[2] = b;
 }
 
-void FixtureRGB::set_rgb(unsigned char r, unsigned char g, unsigned char b)
+void FixtureRGB::set_rgb(uint8_t r, uint8_t g, uint8_t b)
 {
     set_red(r);
     set_green(g);
     set_blue(b);
 }
 
+FixtureTile::FixtureTile(int startChannel, int width, int height)
+: _startChannel(startChannel)
+, _fixtureWidth(width)
+, _fixtureHeight(height)
+, _videoX(0)
+, _videoY(0)
+, _videoW(width)
+, _videoH(height)
+, _sourceData(NULL)
+{
+}
 
+void FixtureTile::setVideoRect(int x, int y, int w, int h)
+{
+    _videoX = x;
+    _videoY = y;
+    _videoW = w;
+    _videoH = h;
+}
+
+void FixtureTile::setSourceData(const uint8_t* sourceData, int sourceWidth, int sourceHeight, int sourceChannels)
+{
+    _sourceData = sourceData;
+    _sourceWidth = sourceWidth;
+    _sourceHeight = sourceHeight;
+    _sourceChannels = sourceChannels;
+}
+
+void FixtureTile::updateFrame(uint8_t* packets) const
+{
+    if (_sourceData == NULL)
+        return;
+    
+    int tileX, tileY;
+    uint8_t* pIndex;
+    
+    tileX = _fixtureWidth-1;
+    tileY = _fixtureHeight/2-1;
+    pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel-1) + HEADER_SIZE;
+    
+    int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
+    int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
+
+    while (tileY < _fixtureHeight)
+    {
+#if ENABLE_LOGGING
+        std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
+#endif
+        int scale = 8;
+        memcpy(pIndex, _sourceData + (_videoX + tileX*xscale + (_videoY + tileY*yscale) * _sourceWidth) * _sourceChannels, 3);
+        pIndex+=3;
+        tileX--;
+
+        if (tileX < 0)
+        {
+            tileX =  _fixtureWidth-1;
+            if (tileY == 0) {
+                tileY = _fixtureHeight/2;
+                pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel) + HEADER_SIZE;
+            } else if (tileY < _fixtureHeight/2) {
+                tileY--;
+            } else {
+                tileY++;
+            }
+        }
+    }
+    
+}
+
+std::string FixtureTile::getName() const
+{
+    std::ostringstream out;
+    out << "C" << _startChannel << "/" << (_startChannel + 1);
+    return out.str();
+}
 

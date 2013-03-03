@@ -1,5 +1,5 @@
-#ifndef _TEST_APP
-#define _TEST_APP
+#ifndef _CKVD_APP
+#define _CKVD_APP
 
 
 #include "ofMain.h"
@@ -9,6 +9,8 @@
 #include "kinet.h"
 #include <vector>
 
+using std::string;
+using std::vector;
 
 class ckvdSyphonClient : public ofxSyphonClient
 {
@@ -17,41 +19,57 @@ public:
 };
 
 
-class ckvdPixelGrabber : public ofxTangibleHandle
+class ckvdVideoGrabber : public ofxTangibleHandle
 {
 public:
-    ckvdPixelGrabber() : fixture(0) {}
-    virtual void setColorFromFrame(ofImage& frame) = 0;
+    ckvdVideoGrabber() {}
     bool isFocused();
     virtual void mousePressed(ofMouseEventArgs &e);
+    virtual void moveBy(float dx, float dy);
 
-    FixtureRGB fixture;
+    virtual void setColorFromFrame(ofImage& frame) = 0;
+    virtual Fixture* getFixture() = 0;
+
+    virtual void listParams(vector<string>* pParams) {}
+    virtual int getParameterInt(const string& name) const { return -1; }
+    virtual void setParameterInt(const string& name, int val) {}
 };
 
 
-class ckvdSinglePixelGrabber : public ckvdPixelGrabber
+class ckvdSingleColorGrabber : public ckvdVideoGrabber
 {
 public:
-    ckvdSinglePixelGrabber();
+    ckvdSingleColorGrabber();
     virtual void draw();
+
     virtual void setColorFromFrame(ofImage& frame);
-    virtual void moveBy(float dx, float dy);
-    
+    virtual Fixture* getFixture() { return &_fixture; }
+
+    virtual void listParams(vector<string>* pParams);
+    virtual int getParameterInt(const string& name) const;
+    virtual void setParameterInt(const string& name, int val);
+
 protected:
+    FixtureRGB _fixture;
     ofColor _color;
 };
 
-
-class ckvdManyPixelGrabber : public ckvdPixelGrabber
+class ckvdTileGrabber : public ckvdVideoGrabber
 {
 public:
-    void setSize(int x, int y) { _pixelsX = x; _pixelsY = y; }
+    ckvdTileGrabber();
     virtual void draw();
+
     virtual void setColorFromFrame(ofImage& frame);
-    
+    virtual Fixture* getFixture() { return &_fixture; }
+
+    virtual void listParams(vector<string>* pParams);
+    virtual int getParameterInt(const string& name) const;
+    virtual void setParameterInt(const string& name, int val);
+
 protected:
-    int _pixelsX;
-    int _pixelsY;
+    FixtureTile _fixture;
+    int _scale;
 };
 
 
@@ -77,8 +95,8 @@ public:
     int getWidth();
     int getHeight();
     
-    void setSelectedGrabber(ckvdPixelGrabber* pGrabber);
-    ckvdPixelGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
+    void setSelectedGrabber(ckvdVideoGrabber* pGrabber);
+    ckvdVideoGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
     ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
     
     void deleteSelected();
@@ -93,9 +111,11 @@ protected:
     PowerSupply* _pPds;
     
     ofxUICanvas* _pUI;
-    std::vector<ckvdPixelGrabber*> _grabbers;
+    vector<ckvdVideoGrabber*> _grabbers;
+    vector<ofxUIWidget*> _contextWidgets;
+    ofxUIWidget* _lastStaticWidget;
     
-    ckvdPixelGrabber* _pSelectedGrabber;
+    ckvdVideoGrabber* _pSelectedGrabber;
     ofTrueTypeFont* _pGrabberFont;
 };
 
