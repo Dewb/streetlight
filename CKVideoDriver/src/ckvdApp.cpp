@@ -1,11 +1,12 @@
 #include "ckvdApp.h"
 #include <algorithm>
 
-#define SIDEBAR_WIDTH 190
+#define SIDEBAR_WIDTH 200
 #define MIN_WIDTH 640
 #define MIN_HEIGHT 480
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
+#define DEFAULT_FRAME_RATE 30
 
 bool ckvdPixelGrabber::isFocused()
 {
@@ -123,7 +124,7 @@ ckvdApp* theApp()
 
 //--------------------------------------------------------------
 ckvdApp::ckvdApp()
-: _pPds(new PowerSupply("10.0.0.150"))
+: _pPds(new PowerSupply("10.0.2.2"))
 , _pSelectedGrabber(NULL)
 , _pGrabberFont(NULL)
 {
@@ -157,34 +158,62 @@ void ckvdApp::connect()
     mClient.setServerName(DEFAULT_SYPHON_SERVER);
 }
 
+namespace
+{
+    void addTextInput(ofxUICanvas* pUI, string name, string text, int width, string inlineLabel = "")
+    {
+        if (inlineLabel.size())
+        {
+            auto pLabel = new ofxUILabel(75, inlineLabel, OFX_UI_FONT_SMALL, 24);
+            pUI->addWidgetDown(pLabel);
+        }
+        
+        auto pInput = new ofxUITextInput(name, text, width, 0, 0, 0, OFX_UI_FONT_SMALL);
+        pInput->setAutoClear(false);
+        
+        if (inlineLabel.size())
+        {
+            pUI->addWidgetRight(pInput);
+        }
+        else
+        {
+            pUI->addWidgetDown(pInput);
+        }
+    }
+}
+
 void ckvdApp::setup()
 {
 	ofSetWindowTitle("CKVideoDriver");
     mClientImage.setUseTexture(false);
-    ofSetFrameRate(30);
+    ofSetFrameRate(DEFAULT_FRAME_RATE);
     
     _pUI = new ofxUICanvas(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
     _pUI->setFont("GUI/Exo-Regular.ttf", true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
 
     _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER APP", OFX_UI_FONT_SMALL));
-    _pUI->addTextInput("SYPHON_APP", DEFAULT_SYPHON_APP, 150)->setAutoClear(false);
+    
+    addTextInput(_pUI, "SYPHON_APP", DEFAULT_SYPHON_APP, 180);
     _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER NAME", OFX_UI_FONT_SMALL));
-    _pUI->addTextInput("SYPHON_SERVER", DEFAULT_SYPHON_SERVER, 150)->setAutoClear(false);
-
-    _pUI->addSpacer(20,20)->setDrawFill(false);
+    addTextInput(_pUI, "SYPHON_SERVER", DEFAULT_SYPHON_SERVER, 180);
+    _pUI->addWidgetDown(new ofxUILabel("OUTPUT FRAME RATE", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "FRAME_RATE", "30", 40);
+    
+    _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_SMALL));
-    _pUI->addTextInput("PDS_IP", "10.0.0.150", 150)->setAutoClear(false);
+    addTextInput(_pUI, "PDS_IP", "10.0.2.2", 100);
 
-    _pUI->addSpacer(20,20)->setDrawFill(false);
+    _pUI->addSpacer(1,12)->setDrawFill(false);
+
+    _pUI->addWidgetDown(new ofxUILabel("FIXTURES", OFX_UI_FONT_SMALL));
+    _pUI->addWidgetDown(new ofxUILabelButton("+ ADD", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("- DELETE", false));
     
-    _pUI->addWidgetDown(new ofxUILabelButton("+ ADD FIXTURE", false));
-    _pUI->addWidgetDown(new ofxUILabelButton("- DELETE FIXTURE", false));
+    _pUI->addSpacer(1,12)->setDrawFill(false);
     
-    _pUI->addSpacer(20,20)->setDrawFill(false);
-    
-    _pUI->addWidgetDown(new ofxUILabel("FIXTURE ADDRESS", OFX_UI_FONT_SMALL));
-    _pUI->addTextInput("FIX_ADDR", "0", 80)->setAutoClear(false);
+    _pUI->addWidgetDown(new ofxUILabel("SELECTED FIXTURE", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "FIX_ADDR", "0", 90, "ADDRESS");
     
     ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
     //_pUI->loadSettings("GUI/guiSettings.xml");
@@ -227,8 +256,9 @@ void ckvdApp::draw()
         ofSetColor(255,255,255);
         
         bool bVisible = _pSelectedGrabber != NULL;
-        _pUI->getWidget("FIXTURE ADDRESS")->setVisible(bVisible);
+        _pUI->getWidget("SELECTED FIXTURE")->setVisible(bVisible);
         _pUI->getWidget("FIX_ADDR")->setVisible(bVisible);
+        _pUI->getWidget("ADDRESS")->setVisible(bVisible);
     }
 
     mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
@@ -261,6 +291,9 @@ void ckvdApp::keyPressed(int key)
             if (_pSelectedGrabber) _pSelectedGrabber->moveBy(-1,0); break;
 		case OF_KEY_RIGHT:
             if (_pSelectedGrabber) _pSelectedGrabber->moveBy(1,0); break;
+        case OF_KEY_DEL:
+        case OF_KEY_BACKSPACE:
+            deleteSelected(); break;
     }
 }
 
@@ -302,6 +335,20 @@ void ckvdApp::setSelectedGrabber(ckvdPixelGrabber* pGrabber)
     }
 }
 
+void ckvdApp::deleteSelected()
+{
+    if (!_pSelectedGrabber)
+        return;
+    
+    auto iter = std::find(_grabbers.begin(), _grabbers.end(), _pSelectedGrabber);
+    if (iter != _grabbers.end())
+    {
+        _grabbers.erase(std::remove(iter, _grabbers.end(), _pSelectedGrabber), _grabbers.end());
+        delete _pSelectedGrabber;
+        _pSelectedGrabber = NULL;
+    }
+}
+
 void ckvdApp::exit()
 {
     //_pUI->saveSettings("GUI/guiSettings.xml");
@@ -310,24 +357,18 @@ void ckvdApp::exit()
 
 void ckvdApp::guiEvent(ofxUIEventArgs &e)
 {
-	if(e.widget->getName() == "+ ADD FIXTURE")
+	if(e.widget->getName() == "+ ADD")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
             _grabbers.push_back(new ckvdSinglePixelGrabber());
     }
-	if(e.widget->getName() == "- DELETE FIXTURE")
+	if(e.widget->getName() == "- DELETE")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
-        if (pButton && pButton->getValue() && _pSelectedGrabber)
+        if (pButton && pButton->getValue())
         {
-            auto iter = std::find(_grabbers.begin(), _grabbers.end(), _pSelectedGrabber);
-            if (iter != _grabbers.end())
-            {
-                _grabbers.erase(std::remove(iter, _grabbers.end(), _pSelectedGrabber), _grabbers.end());
-                delete _pSelectedGrabber;
-                _pSelectedGrabber = NULL;
-            }
+            deleteSelected();
         }
     }
     else if(e.widget->getName() == "PDS_IP")
@@ -365,6 +406,17 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             mClient.setServerName(pInput->getTextString());
         }
     }
+    else if (e.widget->getName() == "FRAME_RATE")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+        {
+            int rate;
+            std::istringstream(pInput->getTextString()) >> rate;
+            ofSetFrameRate(rate);
+        }
+    }
 }
+
 
 

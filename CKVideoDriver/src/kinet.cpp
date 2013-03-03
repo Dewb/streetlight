@@ -11,11 +11,23 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
+#define OLD_PROTOCOL 1
+
+#ifdef OLD_PROTOCOL
+
 #define DATA_SIZE 512
 #define HEADER_SIZE 21
 
 const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00,
                                           0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00};
+#else
+
+#define DATA_SIZE 512
+#define HEADER_SIZE 24
+const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x08, 0x01,
+                                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                          0x04, 0x00, 0x00, 0x01, 0xFF, 0x00, 0xFF, 0x0F};
+#endif
 
 
 void dump_buffer(unsigned n, const unsigned char* buf)
@@ -147,7 +159,12 @@ void PowerSupply::go()
     }
     
     //dump_buffer(120, _frame);
-    send(_socket, _frame, HEADER_SIZE + DATA_SIZE, 0);
+    
+    //for (uint8_t channel=1; channel<=10; channel++)
+    //{
+    //    _frame[16] = channel;
+       send(_socket, _frame, HEADER_SIZE + DATA_SIZE, 0);  
+    //}
 }
 
 FixtureRGB::FixtureRGB(int address, char r, char g, char b)

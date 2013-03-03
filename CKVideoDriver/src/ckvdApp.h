@@ -81,6 +81,8 @@ public:
     ckvdPixelGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
     ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
     
+    void deleteSelected();
+    
 protected:
     
     void sizeToContent();
