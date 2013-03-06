@@ -10,6 +10,9 @@
 #include <list>
 #include <string>
 
+using std::list;
+using std::string;
+
 class Fixture
 {
 public:
@@ -71,10 +74,13 @@ protected:
 class PowerSupply
 {
 public:
-    PowerSupply(const char* strHost, const char* strPort = "6038");
+    PowerSupply();
+    PowerSupply(const string strHost, const string strPort = "6038");
     ~PowerSupply();
     
-    char* getHost();
+    bool connect(const string strHost, const string strPort = "6038");
+    
+    string getHost();
     int getPort();
     
     void addFixture(Fixture* pFix);
@@ -83,10 +89,12 @@ public:
     void go();
         
 protected:
+    void initializeBuffer(int numChannels);
+    
     bool _connected;
     int _socket;
-    std::list<Fixture*> _fixtures;
+    list<Fixture*> _fixtures;
     uint8_t* _frame;
-    char* _host;
+    string _host;
     int _port;
 };

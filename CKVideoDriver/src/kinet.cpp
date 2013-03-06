@@ -3,7 +3,7 @@
 //
 //  Created by Michael Dewberry on 12/19/12.
 //
-//  Port of kinet.py by Giles Hall
+//  Based on kinet.py by Giles Hall
 //  http://github.com/vishnubob/kinet
 //
 
@@ -22,8 +22,9 @@
 #define HEADER_SIZE 21
 #define NUM_CHANNELS 1
 
-const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00,
-                                          0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00};
+const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01,
+                                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                          0xff, 0xff, 0xff, 0xff, 0x00};
 #else
 
 #define DATA_SIZE 512
@@ -35,6 +36,8 @@ const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x
 #endif
 
 #define BUFFER_SIZE (HEADER_SIZE+DATA_SIZE)*NUM_CHANNELS
+
+// todo: replace buffer malloc'd with #defines and header bytes with a vector of structs
 
 
 void dump_buffer(unsigned n, const uint8_t* buf)
@@ -51,19 +54,42 @@ void dump_buffer(unsigned n, const uint8_t* buf)
         fprintf(stderr, "\n");
 }
 
-PowerSupply::PowerSupply(const char* strHost, const char* strPort)
+PowerSupply::PowerSupply()
+{
+    _connected = false;
+    _frame = NULL;
+    initializeBuffer(NUM_CHANNELS);
+}
+
+PowerSupply::PowerSupply(const string strHost, const string strPort)
+{    
+    _connected = false;
+    _frame = NULL;
+    initializeBuffer(NUM_CHANNELS);
+    connect(strHost, strPort);
+}
+
+void PowerSupply::initializeBuffer(int numChannels)
+{
+    if (_frame)
+        free(_frame);
+        
+    _frame = (uint8_t*)malloc(BUFFER_SIZE*sizeof(uint8_t));
+    memset(_frame, BUFFER_SIZE, 0);
+    for (int c = 0; c < numChannels; c++)
+    {
+        memcpy(_frame + c*(HEADER_SIZE+DATA_SIZE), &ck_header_bytes, HEADER_SIZE);
+        _frame[c*(HEADER_SIZE+DATA_SIZE)+16] = c+1;
+    }
+}
+
+bool PowerSupply::connect(const string strHost, const string strPort)
 {
     struct addrinfo hints;
     struct addrinfo *pResult, *pr;
     int result;
     int sock;
-    
-    _connected = false;
-    _frame = NULL;
-    
-    _host = (char*)malloc((strlen(strHost)+1)*sizeof(char));
-    strncpy(_host, strHost, strlen(strHost));
-    
+
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_DGRAM;
@@ -73,10 +99,10 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
     hints.ai_addr = NULL;
     hints.ai_next = NULL;
     
-    result = getaddrinfo(strHost, strPort, &hints, &pResult);
+    result = getaddrinfo(strHost.c_str(), strPort.c_str(), &hints, &pResult);
     if (result != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(result));
-        return;
+        return false;
     }
 
     for (pr = pResult; pr != NULL; pr = pr->ai_next) {
@@ -84,7 +110,7 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
         if (sock == -1)
             continue;
         
-        if (connect(sock, pr->ai_addr, pr->ai_addrlen) == 0)
+        if (::connect(sock, pr->ai_addr, pr->ai_addrlen) == 0)
             break;
         
         close(sock);
@@ -93,9 +119,10 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
     if (pr == NULL)
     {
         fprintf(stderr, "Could not connect to socket\n");
-        return;
+        return false;
     }
     
+    _host = strHost;
     _port = ((sockaddr_in*)(pr->ai_addr))->sin_port;
     
     freeaddrinfo(pResult);
@@ -105,22 +132,16 @@ PowerSupply::PowerSupply(const char* strHost, const char* strPort)
     
     _socket = sock;
     _connected = true;
-    _frame = (uint8_t*)malloc(BUFFER_SIZE*sizeof(uint8_t));
-    memset(_frame, BUFFER_SIZE, 0);
-    for (int c = 0; c < NUM_CHANNELS; c++)
-    {
-        memcpy(_frame + c*(HEADER_SIZE+DATA_SIZE), &ck_header_bytes, HEADER_SIZE);
-        _frame[c*(HEADER_SIZE+DATA_SIZE)+16] = c+1;
-    }
+    
+    return true;
 }
 
 PowerSupply::~PowerSupply()
 {
     free(_frame);
-    free(_host);
 }
 
-char* PowerSupply::getHost()
+string PowerSupply::getHost()
 {
     return _host;
 }
@@ -152,7 +173,6 @@ void PowerSupply::go()
     {
         (*fix)->updateFrame(_frame);
     }
-    
     
     for (int channel=0; channel<10; channel++)
     {
