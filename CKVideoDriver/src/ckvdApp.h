@@ -5,71 +5,19 @@
 #include "ofMain.h"
 #include "ofxSyphon.h"
 #include "ofxUI.h"
-#include "ofxTangibleHandle.h"
 #include "kinet.h"
+#include "ckvdHandle.h"
 #include <vector>
+#include <memory>
 
 using std::string;
 using std::vector;
+using std::map;
 
 class ckvdSyphonClient : public ofxSyphonClient
 {
 public:
     void readToPixels(ofPixels& pixels) { mTex.readToPixels(pixels); }
-};
-
-
-class ckvdVideoGrabber : public ofxTangibleHandle
-{
-public:
-    ckvdVideoGrabber() {}
-    bool isFocused();
-    virtual void mousePressed(ofMouseEventArgs &e);
-    virtual void moveBy(float dx, float dy);
-
-    virtual void setColorFromFrame(ofImage& frame) = 0;
-    virtual Fixture* getFixture() = 0;
-
-    virtual void listParams(vector<string>* pParams) {}
-    virtual int getParameterInt(const string& name) const { return -1; }
-    virtual void setParameterInt(const string& name, int val) {}
-};
-
-
-class ckvdSingleColorGrabber : public ckvdVideoGrabber
-{
-public:
-    ckvdSingleColorGrabber();
-    virtual void draw();
-
-    virtual void setColorFromFrame(ofImage& frame);
-    virtual Fixture* getFixture() { return &_fixture; }
-
-    virtual void listParams(vector<string>* pParams);
-    virtual int getParameterInt(const string& name) const;
-    virtual void setParameterInt(const string& name, int val);
-
-protected:
-    FixtureRGB _fixture;
-    ofColor _color;
-};
-
-class ckvdTileGrabber : public ckvdVideoGrabber
-{
-public:
-    ckvdTileGrabber();
-    virtual void draw();
-
-    virtual void setColorFromFrame(ofImage& frame);
-    virtual Fixture* getFixture() { return &_fixture; }
-
-    virtual void listParams(vector<string>* pParams);
-    virtual int getParameterInt(const string& name) const;
-    virtual void setParameterInt(const string& name, int val);
-
-protected:
-    FixtureTile _fixture;
-    int _scale;
 };
 
 
@@ -96,7 +44,15 @@ public:
     int getHeight();
     
     void setSelectedGrabber(ckvdVideoGrabber* pGrabber);
-    ckvdVideoGrabber* getSelectedGrabber() { return _pSelectedGrabber; }
+    ckvdVideoGrabber* getSelectedGrabber() const { return _pSelectedGrabber; }
+    
+    /*void setSelection(int id);
+    void setSelection(vector<int> id);
+    vector<int> getSelectedIds();
+    */
+    bool isHandleSelected(int id);
+    
+    
     ofTrueTypeFont* getGrabberFont() { return _pGrabberFont; }
     
     void deleteSelected();
@@ -109,13 +65,14 @@ protected:
     ofImage mClientImage;
     
     PowerSupply* _pPds;
-    
     ofxUICanvas* _pUI;
-    vector<ckvdVideoGrabber*> _grabbers;
+
     vector<ofxUIWidget*> _contextWidgets;
     ofxUIWidget* _lastStaticWidget;
     
+    vector<ckvdVideoGrabber*> _grabbers;
     ckvdVideoGrabber* _pSelectedGrabber;
+
     ofTrueTypeFont* _pGrabberFont;
 };
 

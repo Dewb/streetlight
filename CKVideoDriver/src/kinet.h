@@ -7,6 +7,9 @@
 //  http://github.com/vishnubob/kinet
 //
 
+#ifndef _KINET_H
+#define _KINET_H
+
 #include <list>
 #include <string>
 
@@ -98,3 +101,5 @@ protected:
     string _host;
     int _port;
 };
+
+#endif

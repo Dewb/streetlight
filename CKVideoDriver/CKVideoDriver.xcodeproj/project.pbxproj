@@ -12,6 +12,7 @@
 		3C99DB2F13FB0B0900B3CA02 /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C99DB2A13FB0B0900B3CA02 /* ofxSyphonClient.mm */; };
 		3C99DB3013FB0B0900B3CA02 /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C99DB2C13FB0B0900B3CA02 /* ofxSyphonServer.mm */; };
 		3C99DB5813FB0B7800B3CA02 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C99DB2413FB0B0900B3CA02 /* Syphon.framework */; };
+		5B14404616E7411800836D41 /* ckvdHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B14404416E7411800836D41 /* ckvdHandle.cpp */; };
 		5BC5816F1682B047004C6728 /* kinet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5816D1682B047004C6728 /* kinet.cpp */; };
 		5BC583BA168540CF004C6728 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC583B3168540CF004C6728 /* tinyxml.cpp */; };
 		5BC583BB168540CF004C6728 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC583B5168540CF004C6728 /* tinyxmlerror.cpp */; };
@@ -90,6 +91,8 @@
 		3C99DB2A13FB0B0900B3CA02 /* ofxSyphonClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonClient.mm; sourceTree = "<group>"; };
 		3C99DB2B13FB0B0900B3CA02 /* ofxSyphonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSyphonServer.h; sourceTree = "<group>"; };
 		3C99DB2C13FB0B0900B3CA02 /* ofxSyphonServer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonServer.mm; sourceTree = "<group>"; };
+		5B14404416E7411800836D41 /* ckvdHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ckvdHandle.cpp; sourceTree = "<group>"; };
+		5B14404516E7411800836D41 /* ckvdHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ckvdHandle.h; sourceTree = "<group>"; };
 		5BC5816D1682B047004C6728 /* kinet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinet.cpp; sourceTree = "<group>"; };
 		5BC5816E1682B047004C6728 /* kinet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinet.h; sourceTree = "<group>"; };
 		5BC582F216854005004C6728 /* ofxUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI.h; sourceTree = "<group>"; };
@@ -500,6 +503,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ckvdApp.h */,
 				5BC5816D1682B047004C6728 /* kinet.cpp */,
 				5BC5816E1682B047004C6728 /* kinet.h */,
+				5B14404416E7411800836D41 /* ckvdHandle.cpp */,
+				5B14404516E7411800836D41 /* ckvdHandle.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -620,6 +625,7 @@
 				5BC5840D16856E41004C6728 /* ofxTangibleHandle.cpp in Sources */,
 				5BC5840E16856E41004C6728 /* ofxTangibleToggle.cpp in Sources */,
 				5BC5840F16856E41004C6728 /* ofxTransmitter.cpp in Sources */,
+				5B14404616E7411800836D41 /* ckvdHandle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +645,8 @@
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -666,6 +674,8 @@
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -693,6 +703,8 @@
 		E4B69B600A3A1757003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -775,6 +787,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = CKVideoDriverDebug;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -782,6 +795,8 @@
 		E4B69B610A3A1757003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -863,6 +878,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = CKVideoDriver;
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
