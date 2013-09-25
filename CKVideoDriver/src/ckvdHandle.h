@@ -24,12 +24,18 @@ public:
 class ckvdVideoGrabber : public ckvdHandle
 {
 public:
-    ckvdVideoGrabber() {}
+    ckvdVideoGrabber() { _nSupply = 1; }
     virtual void mousePressed(ofMouseEventArgs &e);
     virtual void moveBy(float dx, float dy);
     
     virtual void setColorFromFrame(ofImage& frame) = 0;
     virtual Fixture* getFixture() = 0;
+    
+    int getSupplyNumber() const { return _nSupply; }
+    void setSupplyNumber(int n) { _nSupply = n; }
+
+protected:
+    int _nSupply;
 };
 
 class ckvdSingleColorGrabber : public ckvdVideoGrabber

@@ -95,6 +95,7 @@ public:
     
     void addFixture(Fixture* pFix);
     void clearFixtures();
+    int getFixtureCount() const { return _fixtures.size(); }
     
     void go();
         

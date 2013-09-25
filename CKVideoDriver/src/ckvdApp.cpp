@@ -2,14 +2,15 @@
 #include <algorithm>
 
 #define SIDEBAR_WIDTH 200
-#define MIN_WIDTH 640
-#define MIN_HEIGHT 480
+#define MIN_WIDTH 800
+#define MIN_HEIGHT 600
 #define MAX_WIDTH 1200
 #define MAX_HEIGHT 900
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
-#define DEFAULT_PDS_IP "10.0.2.2"
+#define DEFAULT_PDS_IP_1 "10.0.2.2"
+#define DEFAULT_PDS_IP_2 "10.0.2.3"
 
 
 ckvdApp* _theApp = NULL;
@@ -20,12 +21,13 @@ ckvdApp* theApp()
 
 //--------------------------------------------------------------
 ckvdApp::ckvdApp()
-: _pPds(new PowerSupply(DEFAULT_PDS_IP))
-, _pSelectedGrabber(NULL)
+: _pSelectedGrabber(NULL)
 , _pGrabberFont(NULL)
 {
     assert(_theApp == NULL);
     _theApp = this;
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_1));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_2));
 }
 
 
@@ -42,8 +44,7 @@ namespace
 
 ckvdApp::~ckvdApp()
 {
-    delete _pPds;
-    
+    freeVector(_supplies);
     freeVector(_grabbers);
 }
 
@@ -101,8 +102,10 @@ void ckvdApp::setup()
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
-    _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_SMALL));
-    addTextInput(_pUI, "PDS_IP", DEFAULT_PDS_IP, 100);
+    _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY 1 ADDRESS", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 100);
+    _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY 2 ADDRESS", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 100);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -158,17 +161,26 @@ void ckvdApp::draw()
 
     mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
     
-    _pPds->clearFixtures();
+    for (auto iter = _supplies.begin(); iter != _supplies.end(); iter++)
+    {
+        (*iter)->clearFixtures();
+    }
     
     for (auto iter = _grabbers.begin(); iter != _grabbers.end(); iter++)
     {
         (*iter)->setColorFromFrame(mClientImage);
         (*iter)->draw();
-        
-        _pPds->addFixture((*iter)->getFixture());
+        int nSupply = (*iter)->getParameterInt("SUPPLY") - 1;
+        if (nSupply >= 0 && nSupply < _supplies.size())
+            _supplies[nSupply]->addFixture((*iter)->getFixture());
     }
-    
-    _pPds->go();
+
+    for (auto iter = _supplies.begin(); iter != _supplies.end(); iter++)
+    {
+        if ((*iter)->getFixtureCount() > 0)
+            (*iter)->go();
+    }
+
     
 }
 
@@ -299,26 +311,30 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             deleteSelected();
         }
     }
-    else if(e.widget->getName() == "PDS_IP")
+    else if(e.widget->getName() == "PDS_IP_1")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput && pInput->getTextString() != "")
         {
-            delete _pPds;
-            _pPds = new PowerSupply(pInput->getTextString().c_str());
+            delete _supplies[0];
+            _supplies[0] = new PowerSupply(pInput->getTextString().c_str());
         }
     }
-    else if(e.widget->getName() == "ADDRESS")
+    else if(e.widget->getName() == "PDS_IP_2")
     {
-        updateWidgetParameterInt("ADDRESS", (ofxUITextInput*)e.widget, _pSelectedGrabber);
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput && pInput->getTextString() != "")
+        {
+            delete _supplies[1];
+            _supplies[1] = new PowerSupply(pInput->getTextString().c_str());
+        }
     }
-    else if(e.widget->getName() == "CHANNEL")
+    else if (e.widget->getName() == "ADDRESS" ||
+             e.widget->getName() == "CHANNEL" ||
+             e.widget->getName() == "SCALE" ||
+             e.widget->getName() == "SUPPLY")
     {
-        updateWidgetParameterInt("CHANNEL", (ofxUITextInput*)e.widget, _pSelectedGrabber);
-    }
-    else if(e.widget->getName() == "SCALE")
-    {
-        updateWidgetParameterInt("SCALE", (ofxUITextInput*)e.widget, _pSelectedGrabber);
+        updateWidgetParameterInt(e.widget->getName(), (ofxUITextInput*)e.widget, _pSelectedGrabber);
     }
     else if(e.widget->getName() == "SYPHON_APP")
     {

@@ -64,8 +64,10 @@ protected:
 	ckvdSyphonClient mClient;
     ofImage mClientImage;
     
-    PowerSupply* _pPds;
+    vector<PowerSupply*> _supplies;
+    
     ofxUICanvas* _pUI;
+    ofxUICanvas* _pGrabberUI;
 
     vector<ofxUIWidget*> _contextWidgets;
     ofxUIWidget* _lastStaticWidget;

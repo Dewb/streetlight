@@ -133,6 +133,7 @@ void ckvdSingleColorGrabber::listParams(vector<string>* pParams)
 {
     if (pParams)
     {
+        pParams->push_back("SUPPLY");
         pParams->push_back("ADDRESS");
     }
 }
@@ -141,6 +142,8 @@ int ckvdSingleColorGrabber::getParameterInt(const string& name) const
 {
     if (name.compare("ADDRESS") == 0)
         return _fixture.getAddress();
+    if (name.compare("SUPPLY") == 0)
+        return getSupplyNumber();
     return -1;
 }
 
@@ -148,6 +151,8 @@ void ckvdSingleColorGrabber::setParameterInt(const string& name, int val)
 {
     if (name.compare("ADDRESS") == 0)
         _fixture.setAddress(val);
+    if (name.compare("SUPPLY") == 0)
+        setSupplyNumber(val);
 }
 
 
@@ -206,6 +211,7 @@ void ckvdTileGrabber::listParams(vector<string>* pParams)
 {
     if (pParams)
     {
+        pParams->push_back("SUPPLY");
         pParams->push_back("CHANNEL");
         pParams->push_back("SCALE");
     }
@@ -217,6 +223,8 @@ int ckvdTileGrabber::getParameterInt(const string& name) const
         return _fixture.getChannel();
     if (name.compare("SCALE") == 0)
         return _scale;
+    if (name.compare("SUPPLY") == 0)
+        return getSupplyNumber();
     return -1;
 }
 
@@ -230,4 +238,6 @@ void ckvdTileGrabber::setParameterInt(const string& name, int val)
         width = 12*_scale;
         height = 12*_scale;
     }
+    if (name.compare("SUPPLY") == 0)
+        setSupplyNumber(val);
 }
