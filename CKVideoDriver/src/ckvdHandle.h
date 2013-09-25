@@ -64,7 +64,7 @@ public:
     virtual void setParameterInt(const string& name, int val);
     
 protected:
-    FixtureTile _fixture;
+    FixtureTile6 _fixture;
     int _scale;
 };
 

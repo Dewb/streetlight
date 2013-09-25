@@ -74,6 +74,13 @@ protected:
     int _sourceChannels;
 };
 
+class FixtureTile6 : public FixtureTile
+{
+public:
+    FixtureTile6(int startChannel, int width = 12, int height = 12);
+    virtual void updateFrame(uint8_t* packets) const;
+};
+
 class PowerSupply
 {
 public:

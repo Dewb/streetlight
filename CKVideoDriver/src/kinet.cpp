@@ -13,7 +13,7 @@
 #include <sstream>
 #include <iostream>
 
-#define OLD_PROTOCOL 0 
+#define OLD_PROTOCOL 0
 #define ENABLE_LOGGING 0
 
 #if OLD_PROTOCOL
@@ -79,7 +79,9 @@ void PowerSupply::initializeBuffer(int numChannels)
     for (int c = 0; c < numChannels; c++)
     {
         memcpy(_frame + c*(HEADER_SIZE+DATA_SIZE), &ck_header_bytes, HEADER_SIZE);
+#if !OLD_PROTOCOL
         _frame[c*(HEADER_SIZE+DATA_SIZE)+16] = c+1;
+#endif
     }
 }
 
@@ -174,7 +176,7 @@ void PowerSupply::go()
         (*fix)->updateFrame(_frame);
     }
     
-    for (int channel=0; channel<10; channel++)
+    for (int channel=0; channel<NUM_CHANNELS; channel++)
     {
         send(_socket, _frame + (HEADER_SIZE+DATA_SIZE)*channel, HEADER_SIZE + DATA_SIZE, 0);
         
@@ -307,6 +309,54 @@ void FixtureTile::updateFrame(uint8_t* packets) const
             } else {
                 tileY++;
             }
+        }
+    }
+}
+
+FixtureTile6::FixtureTile6(int startChannel, int width, int height)
+: FixtureTile(startChannel, width, height)
+{
+}
+
+void FixtureTile6::updateFrame(uint8_t* packets) const
+{
+    if (_sourceData == NULL)
+        return;
+    
+    int tileX, tileY, startx, endx;
+    uint8_t* pIndex;
+    
+    startx = 0;
+    endx = _fixtureWidth/2-1;
+    tileX = startx;
+    tileY = _fixtureHeight-1;
+    pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel-1) + HEADER_SIZE;
+    
+    int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
+    int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
+    
+    while(1)
+    {
+#if ENABLE_LOGGING
+        std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
+#endif
+        int scale = 8;
+        memcpy(pIndex, _sourceData + (_videoX + tileX*xscale + (_videoY + tileY*yscale) * _sourceWidth) * _sourceChannels, 3);
+        pIndex+=3;
+        tileX++;
+        
+        if (tileX > endx)
+        {
+            tileY--;
+            if (tileY < 0) {
+                if (endx == _fixtureWidth - 1)
+                    break;
+                startx = endx + 1;
+                endx = _fixtureWidth - 1;
+                tileY = _fixtureHeight - 1;
+                pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel) + HEADER_SIZE;
+            }
+            tileX = startx;
         }
     }
     

@@ -4,9 +4,12 @@
 #define SIDEBAR_WIDTH 200
 #define MIN_WIDTH 640
 #define MIN_HEIGHT 480
+#define MAX_WIDTH 1200
+#define MAX_HEIGHT 900
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
+#define DEFAULT_PDS_IP "10.0.2.2"
 
 
 ckvdApp* _theApp = NULL;
@@ -17,7 +20,7 @@ ckvdApp* theApp()
 
 //--------------------------------------------------------------
 ckvdApp::ckvdApp()
-: _pPds(new PowerSupply("10.0.2.2"))
+: _pPds(new PowerSupply(DEFAULT_PDS_IP))
 , _pSelectedGrabber(NULL)
 , _pGrabberFont(NULL)
 {
@@ -99,7 +102,7 @@ void ckvdApp::setup()
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("PDS IP ADDRESS", OFX_UI_FONT_SMALL));
-    addTextInput(_pUI, "PDS_IP", "10.0.2.2", 100);
+    addTextInput(_pUI, "PDS_IP", DEFAULT_PDS_IP, 100);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -201,7 +204,7 @@ void ckvdApp::windowResized(int w, int h)
 int ckvdApp::getClientWidth()
 {
     int w = floor(mClient.getWidth());
-    return w > MIN_WIDTH ? w : MIN_WIDTH;
+    return w > MIN_WIDTH ? (w < MAX_WIDTH ? w : MAX_WIDTH) : MIN_WIDTH;
 }
 
 int ckvdApp::getWidth()
@@ -212,7 +215,7 @@ int ckvdApp::getWidth()
 int ckvdApp::getHeight()
 {
     int h = floor(mClient.getHeight());
-    return h > MIN_HEIGHT ? h : MIN_HEIGHT;
+    return h > MIN_HEIGHT ? (h < MAX_HEIGHT ? h : MAX_HEIGHT) : MIN_HEIGHT;
 }
 
 void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)
