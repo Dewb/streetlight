@@ -175,7 +175,15 @@ void ckvdApp::draw()
         (*iter)->draw();
         int nSupply = (*iter)->getParameterInt("SUPPLY") - 1;
         if (nSupply >= 0 && nSupply < _supplies.size())
-            _supplies[nSupply]->addFixture((*iter)->getFixture());
+        {
+            auto fixture = (*iter)->getFixture();
+            
+            // hack: switch to new protocol if supply contains a tile
+            if (dynamic_cast<FixtureTile*>(fixture) != NULL)
+                _supplies[nSupply]->switchToNewProtocol();
+            
+            _supplies[nSupply]->addFixture(fixture);
+        }
     }
 
     for (auto iter = _supplies.begin(); iter != _supplies.end(); iter++)

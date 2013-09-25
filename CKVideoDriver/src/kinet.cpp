@@ -13,31 +13,23 @@
 #include <sstream>
 #include <iostream>
 
-#define OLD_PROTOCOL 0
 #define ENABLE_LOGGING 0
 
-#if OLD_PROTOCOL
+const unsigned char oldHeaderBytes[] = {
+    0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xff, 0xff, 0xff, 0xff, 0x00
+};
 
-#define DATA_SIZE 512
-#define HEADER_SIZE 21
-#define NUM_CHANNELS 1
+const KinetProtocol oldProtocol(21, 512, 1, oldHeaderBytes);
 
-const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01,
-                                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                          0xff, 0xff, 0xff, 0xff, 0x00};
-#else
+const unsigned char newHeaderBytes[] = {
+    0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x08, 0x01,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x01, 0x00, 0x00, 0x01, 0xFF, 0x00, 0xFF, 0x0F
+};
 
-#define DATA_SIZE 512
-#define HEADER_SIZE 24
-#define NUM_CHANNELS 16
-const unsigned char ck_header_bytes[] = { 0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x08, 0x01,
-                                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                          0x01, 0x00, 0x00, 0x01, 0xFF, 0x00, 0xFF, 0x0F};
-#endif
-
-#define BUFFER_SIZE (HEADER_SIZE+DATA_SIZE)*NUM_CHANNELS
-
-// todo: replace buffer malloc'd with #defines and header bytes with a vector of structs
+const KinetProtocol newProtocol(24, 512, 16, newHeaderBytes);
 
 
 void dump_buffer(unsigned n, const uint8_t* buf)
@@ -58,30 +50,40 @@ PowerSupply::PowerSupply()
 {
     _connected = false;
     _frame = NULL;
-    initializeBuffer(NUM_CHANNELS);
+    _proto = &oldProtocol;
+    initializeBuffer();
 }
 
 PowerSupply::PowerSupply(const string strHost, const string strPort)
 {    
     _connected = false;
     _frame = NULL;
-    initializeBuffer(NUM_CHANNELS);
+    _proto = &oldProtocol;
+    initializeBuffer();
     connect(strHost, strPort);
 }
 
-void PowerSupply::initializeBuffer(int numChannels)
+void PowerSupply::switchToNewProtocol()
+{
+    if (_proto != &newProtocol)
+    {
+        _proto = &newProtocol;
+        initializeBuffer();
+    }
+}
+
+void PowerSupply::initializeBuffer()
 {
     if (_frame)
         free(_frame);
         
-    _frame = (uint8_t*)malloc(BUFFER_SIZE*sizeof(uint8_t));
-    memset(_frame, BUFFER_SIZE, 0);
-    for (int c = 0; c < numChannels; c++)
+    _frame = (uint8_t*)malloc(_proto->getBufferSize() * sizeof(uint8_t));
+    memset(_frame, _proto->getBufferSize(), 0);
+    for (int c = 0; c < _proto->getNumChannels(); c++)
     {
-        memcpy(_frame + c*(HEADER_SIZE+DATA_SIZE), &ck_header_bytes, HEADER_SIZE);
-#if !OLD_PROTOCOL
-        _frame[c*(HEADER_SIZE+DATA_SIZE)+16] = c+1;
-#endif
+        memcpy(_frame + c * _proto->getPacketSize(), _proto->getHeaderBytes(), _proto->getHeaderSize());
+        if (_proto->getNumChannels() > 1)
+            _frame[c * _proto->getPacketSize() + 16] = c + 1;
     }
 }
 
@@ -176,13 +178,13 @@ void PowerSupply::go()
         (*fix)->updateFrame(_frame);
     }
     
-    for (int channel=0; channel<NUM_CHANNELS; channel++)
+    for (int channel = 0; channel < _proto->getNumChannels(); channel++)
     {
-        send(_socket, _frame + (HEADER_SIZE+DATA_SIZE)*channel, HEADER_SIZE + DATA_SIZE, 0);
+        send(_socket, _frame + _proto->getPacketSize() * channel, _proto->getPacketSize(), 0);
         
 #if ENABLE_LOGGING
         std::cout << "Channel " << channel+1 << "\n";
-        dump_buffer(HEADER_SIZE + 3, _frame + (HEADER_SIZE+DATA_SIZE)*channel);
+        dump_buffer(_proto->getHeaderSize() + 3, _frame + _proto->getPacketSize() * channel);
 #endif
     }
 }
@@ -198,7 +200,7 @@ FixtureRGB::FixtureRGB(int address, uint8_t r, uint8_t g, uint8_t b)
 
 void FixtureRGB::updateFrame(uint8_t* packets) const
 {
-    memcpy(packets+HEADER_SIZE+_address, _values, 3);
+    memcpy(packets + oldProtocol.getHeaderSize() + _address, _values, 3);
 }
 
 std::string FixtureRGB::getName() const
@@ -283,7 +285,7 @@ void FixtureTile::updateFrame(uint8_t* packets) const
     
     tileX = _fixtureWidth-1;
     tileY = _fixtureHeight/2-1;
-    pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel-1) + HEADER_SIZE;
+    pIndex = packets + newProtocol.getPacketSize() * (_startChannel-1) + newProtocol.getHeaderSize();
     
     int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
     int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
@@ -303,7 +305,7 @@ void FixtureTile::updateFrame(uint8_t* packets) const
             tileX =  _fixtureWidth-1;
             if (tileY == 0) {
                 tileY = _fixtureHeight/2;
-                pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel) + HEADER_SIZE;
+                pIndex = packets + newProtocol.getPacketSize() * (_startChannel) + newProtocol.getHeaderSize();
             } else if (tileY < _fixtureHeight/2) {
                 tileY--;
             } else {
@@ -330,7 +332,7 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
     endx = _fixtureWidth/2-1;
     tileX = startx;
     tileY = _fixtureHeight-1;
-    pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel-1) + HEADER_SIZE;
+    pIndex = packets + newProtocol.getPacketSize() * (_startChannel-1) + newProtocol.getHeaderSize();
     
     int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
     int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
@@ -354,7 +356,7 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
                 startx = endx + 1;
                 endx = _fixtureWidth - 1;
                 tileY = _fixtureHeight - 1;
-                pIndex = packets + (HEADER_SIZE + DATA_SIZE) * (_startChannel) + HEADER_SIZE;
+                pIndex = packets + newProtocol.getPacketSize() * (_startChannel) + newProtocol.getHeaderSize();
             }
             tileX = startx;
         }

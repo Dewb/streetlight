@@ -16,6 +16,29 @@
 using std::list;
 using std::string;
 
+// Just a data container for now. Todo: move all protocol logic into this class
+class KinetProtocol
+{
+public:
+    KinetProtocol(size_t headerSize, size_t dataSize, size_t numChannels, const unsigned char* headerBytes)
+    : _headerSize(headerSize), _dataSize(dataSize), _numChannels(numChannels), _headerBytes(headerBytes)
+    {
+    }
+
+    size_t getHeaderSize() const { return _headerSize; }
+    size_t getDataSize() const { return _dataSize; }
+    size_t getNumChannels() const { return _numChannels; }
+    size_t getPacketSize() const { return _headerSize + _dataSize; }
+    size_t getBufferSize() const { return getPacketSize() * _numChannels; }
+    const unsigned char* getHeaderBytes() const { return _headerBytes; }
+
+protected:
+    size_t _headerSize;
+    size_t _dataSize;
+    size_t _numChannels;
+    const unsigned char* _headerBytes;
+};
+
 class Fixture
 {
 public:
@@ -98,9 +121,11 @@ public:
     int getFixtureCount() const { return _fixtures.size(); }
     
     void go();
+    
+    void switchToNewProtocol();
         
 protected:
-    void initializeBuffer(int numChannels);
+    void initializeBuffer();
     
     bool _connected;
     int _socket;
@@ -108,6 +133,7 @@ protected:
     uint8_t* _frame;
     string _host;
     int _port;
+    const KinetProtocol* _proto;
 };
 
 #endif
