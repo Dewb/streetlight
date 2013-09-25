@@ -11,6 +11,8 @@
 #define DEFAULT_FRAME_RATE 30
 #define DEFAULT_PDS_IP_1 "10.0.2.2"
 #define DEFAULT_PDS_IP_2 "10.0.2.3"
+#define DEFAULT_PDS_IP_3 "10.0.2.4"
+#define DEFAULT_PDS_IP_4 "10.0.2.5"
 
 
 ckvdApp* _theApp = NULL;
@@ -28,6 +30,8 @@ ckvdApp::ckvdApp()
     _theApp = this;
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_1));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_2));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_3));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_4));
 }
 
 
@@ -97,15 +101,16 @@ void ckvdApp::setup()
     addTextInput(_pUI, "SYPHON_APP", DEFAULT_SYPHON_APP, 180);
     _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER NAME", OFX_UI_FONT_SMALL));
     addTextInput(_pUI, "SYPHON_SERVER", DEFAULT_SYPHON_SERVER, 180);
-    _pUI->addWidgetDown(new ofxUILabel("OUTPUT FRAME RATE", OFX_UI_FONT_SMALL));
     addTextInput(_pUI, "FRAME_RATE", "30", 40);
+    _pUI->addWidgetRight(new ofxUILabel("FRAMES PER SEC", OFX_UI_FONT_SMALL));
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
-    _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY 1 ADDRESS", OFX_UI_FONT_SMALL));
-    addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 100);
-    _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY 2 ADDRESS", OFX_UI_FONT_SMALL));
-    addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 100);
+    _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY ADDRESSES", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 120);
+    addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 120);
+    addTextInput(_pUI, "PDS_IP_3", DEFAULT_PDS_IP_3, 120);
+    addTextInput(_pUI, "PDS_IP_4", DEFAULT_PDS_IP_4, 120);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -154,8 +159,6 @@ void ckvdApp::draw()
         
         bool bVisible = _pSelectedGrabber != NULL;
         _pUI->getWidget("SELECTED FIXTURE")->setVisible(bVisible);
-        //_pUI->getWidget("FIX_ADDR")->setVisible(bVisible);
-        //_pUI->getWidget("ADDRESS")->setVisible(bVisible);
         _pUI->getWidget("X")->setVisible(bVisible);
     }
 
@@ -289,6 +292,15 @@ namespace
     }
 }
 
+void ckvdApp::updatePowerSupplyAddress(int index, const string& address)
+{
+    if (address != "" && index >= 0 && index < _supplies.size())
+    {
+        delete _supplies[index];
+        _supplies[index] = new PowerSupply(address.c_str());
+    }
+}
+
 void ckvdApp::guiEvent(ofxUIEventArgs &e)
 {
 	if(e.widget->getName() == "+ PT")
@@ -314,20 +326,26 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
     else if(e.widget->getName() == "PDS_IP_1")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
-        if (pInput && pInput->getTextString() != "")
-        {
-            delete _supplies[0];
-            _supplies[0] = new PowerSupply(pInput->getTextString().c_str());
-        }
+        if (pInput)
+            updatePowerSupplyAddress(0, pInput->getTextString());
     }
     else if(e.widget->getName() == "PDS_IP_2")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
-        if (pInput && pInput->getTextString() != "")
-        {
-            delete _supplies[1];
-            _supplies[1] = new PowerSupply(pInput->getTextString().c_str());
-        }
+        if (pInput)
+            updatePowerSupplyAddress(1, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_3")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(2, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_4")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(3, pInput->getTextString());
     }
     else if (e.widget->getName() == "ADDRESS" ||
              e.widget->getName() == "CHANNEL" ||

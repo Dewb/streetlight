@@ -60,6 +60,7 @@ public:
 protected:
     
     void sizeToContent();
+    void updatePowerSupplyAddress(int index, const string& address);
     
 	ckvdSyphonClient mClient;
     ofImage mClientImage;
