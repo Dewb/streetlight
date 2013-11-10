@@ -158,7 +158,7 @@ void ckvdSingleColorGrabber::setParameterInt(const string& name, int val)
 
 ckvdTileGrabber::ckvdTileGrabber()
 : _fixture(0)
-, _scale(16)
+, _scale(8)
 {
     static int count = 0;
     
@@ -169,7 +169,10 @@ ckvdTileGrabber::ckvdTileGrabber()
     
     setup(cx, cy, 12*_scale, 12*_scale);
     
-    _fixture.setChannel(1+count*2);
+    int channel = count*2;
+    int supply = channel / 16;
+    _fixture.setChannel((channel%16) + 1);
+    _nSupply = supply%4 + 1;
     count++;
 }
 
@@ -230,7 +233,7 @@ int ckvdTileGrabber::getParameterInt(const string& name) const
 
 void ckvdTileGrabber::setParameterInt(const string& name, int val)
 {
-    if (name.compare("CHANNEL") == 0)
+    if (name.compare("CHANNEL") == 0 && val >= 1 && val <= 15)
         _fixture.setChannel(val);
     if (name.compare("SCALE") == 0)
     {

@@ -296,6 +296,11 @@ namespace
             int addr;
             std::istringstream(pInput->getTextString()) >> addr;
             pGrabber->setParameterInt(paramName, addr);
+            
+            std::ostringstream validatedAddr;
+            validatedAddr << pGrabber->getParameterInt(paramName);
+            
+            pInput->setTextString(validatedAddr.str());
         }
     }
 }
