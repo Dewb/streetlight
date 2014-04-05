@@ -89,7 +89,7 @@ namespace
 
 void ckvdApp::setup()
 {
-	ofSetWindowTitle("CKVideoDriver");
+	ofSetWindowTitle("Streetlight // Syphon to LEDs");
     mClientImage.setUseTexture(false);
     ofSetFrameRate(DEFAULT_FRAME_RATE);
     

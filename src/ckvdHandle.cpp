@@ -82,7 +82,7 @@ ckvdSingleColorGrabber::ckvdSingleColorGrabber()
 {
     static int count = 0;
     
-    drawType = TANGIBLE_DRAW_AS_CENTER_RECT;
+    drawType = TANGIBLE_DRAW_AS_CENTERED_RECT;
     
     int cx = 40*((count)%12+1);
     int cy = 35*((count/12)+1);
@@ -162,7 +162,7 @@ ckvdTileGrabber::ckvdTileGrabber()
 {
     static int count = 0;
     
-    drawType = TANGIBLE_DRAW_AS_RECT;
+    drawType = TANGIBLE_DRAW_AS_CENTERED_RECT;
     
     int cx = 20+96*((count)%5+1);
     int cy = 30+96*((count/5)+1);
@@ -183,22 +183,22 @@ void ckvdTileGrabber::draw()
     if (isFocused())
     {
         ofSetColor(255, 255, 100);
-        drawCornerTickBox(x, y, width, height, 5);
+        drawCornerTickBox(x - width/2, y - height/2, width, height, 5);
         ofSetColor(60, 60, 60);
-        drawCornerTickBox(x, y, width, height, 1);
+        drawCornerTickBox(x - width/2, y - height/2, width, height, 1);
         ofSetColor(255, 255, 100);
     }
     else
     {
         ofSetColor(255, 255, 255);
-        drawCornerTickBox(x, y, width, height, 1);
+        drawCornerTickBox(x - width/2, y - height/2, width, height, 1);
     }
     
     if (theApp()->getGrabberFont())
     {
         string name = _fixture.getName();
         ofTrueTypeFont* pFont = theApp()->getGrabberFont();
-        pFont->drawString(name, x+(width-pFont->stringWidth(name))/2, y+(height+pFont->stringHeight(name))/2);
+        pFont->drawString(name, x - pFont->stringWidth(name)/2, y + pFont->stringHeight(name)/2);
     }
     
     ofPopStyle();

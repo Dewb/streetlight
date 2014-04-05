@@ -12,6 +12,8 @@
 #include <netdb.h>
 #include <sstream>
 #include <iostream>
+#include <math.h>
+#include <fcntl.h>
 
 #define ENABLE_LOGGING 0
 
