@@ -20,6 +20,8 @@ Coming later:
 
 (Formerly known as CKVideoDriver in http://github.com/Dewb/alphadep)
 
+License: [GPL v3](http://www.gnu.org/licenses/gpl-3.0.html)
+
 Required oF addons:
 * ofxSyphon -- https://github.com/astellato/ofxSyphon (head)
 * ofxTangibleUI -- https://github.com/fx-lange/ofxTangibleUI (head)
