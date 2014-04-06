@@ -52,7 +52,7 @@ public:
     virtual int getParameterInt(const string& name) const;
     virtual bool setParameterInt(const string& name, int val);
     
-    virtual string type() const { return "single"; }
+    virtual string type() const { return "point"; }
     
 protected:
     FixtureRGB _fixture;

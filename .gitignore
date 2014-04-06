@@ -1,4 +1,4 @@
 .DS_Store
 xcuserdata/
 *Debug.app/
-guiSettings.xml
+bin/data/settings.xml

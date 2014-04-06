@@ -11,10 +11,10 @@
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
-#define DEFAULT_PDS_IP_1 "10.0.2.2"
-#define DEFAULT_PDS_IP_2 "10.0.2.3"
-#define DEFAULT_PDS_IP_3 "10.0.2.4"
-#define DEFAULT_PDS_IP_4 "10.0.2.5"
+#define DEFAULT_PDS_IP_0 "10.0.2.2"
+#define DEFAULT_PDS_IP_1 "10.0.2.3"
+#define DEFAULT_PDS_IP_2 "10.0.2.4"
+#define DEFAULT_PDS_IP_3 "10.0.2.5"
 
 
 ckvdApp* _theApp = NULL;
@@ -30,10 +30,10 @@ ckvdApp::ckvdApp()
 {
     assert(_theApp == NULL);
     _theApp = this;
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_0));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_1));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_2));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_3));
-    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_4));
 }
 
 
@@ -115,10 +115,10 @@ void ckvdApp::setup()
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY ADDRESSES", OFX_UI_FONT_SMALL));
+    addTextInput(_pUI, "PDS_IP_0", DEFAULT_PDS_IP_0, 120);
     addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 120);
     addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 120);
     addTextInput(_pUI, "PDS_IP_3", DEFAULT_PDS_IP_3, 120);
-    addTextInput(_pUI, "PDS_IP_4", DEFAULT_PDS_IP_4, 120);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -376,25 +376,25 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             deleteSelected();
         }
     }
-    else if(e.widget->getName() == "PDS_IP_1")
+    else if(e.widget->getName() == "PDS_IP_0")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
             updatePowerSupplyAddress(0, pInput->getTextString());
     }
-    else if(e.widget->getName() == "PDS_IP_2")
+    else if(e.widget->getName() == "PDS_IP_1")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
             updatePowerSupplyAddress(1, pInput->getTextString());
     }
-    else if(e.widget->getName() == "PDS_IP_3")
+    else if(e.widget->getName() == "PDS_IP_2")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
             updatePowerSupplyAddress(2, pInput->getTextString());
     }
-    else if(e.widget->getName() == "PDS_IP_4")
+    else if(e.widget->getName() == "PDS_IP_3")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
