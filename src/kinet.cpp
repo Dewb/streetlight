@@ -298,9 +298,18 @@ void FixtureTile::updateFrame(uint8_t* packets) const
         std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
 #endif
         int scale = 8;
-        memcpy(pIndex, _sourceData + (_videoX + tileX*xscale + (_videoY + tileY*yscale) * _sourceWidth) * _sourceChannels, 3);
-        pIndex+=3;
-        tileX--;
+        
+        int xx = _videoX + tileX * xscale;
+        int yy = _videoY + tileY * yscale;
+        
+        if (xx < _sourceWidth && yy < _sourceHeight) {
+            memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
+        } else {
+            memset(pIndex, 0, 3);
+        }
+        
+        pIndex += 3;
+        tileX++;
 
         if (tileX < 0)
         {
@@ -345,8 +354,17 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
         std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
 #endif
         int scale = 8;
-        memcpy(pIndex, _sourceData + (_videoX + tileX*xscale + (_videoY + tileY*yscale) * _sourceWidth) * _sourceChannels, 3);
-        pIndex+=3;
+        
+        int xx = _videoX + tileX * xscale;
+        int yy = _videoY + tileY * yscale;
+        
+        if (xx < _sourceWidth && yy < _sourceHeight) {
+            memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
+        } else {
+            memset(pIndex, 0, 3);
+        }
+        
+        pIndex += 3;
         tileX++;
         
         if (tileX > endx)

@@ -16,9 +16,10 @@ class ckvdHandle : public ofxTangibleHandle
 {
 public:
     bool isFocused();
-    virtual void listParams(vector<string>* pParams) {}
-    virtual int getParameterInt(const string& name) const { return -1; }
-    virtual void setParameterInt(const string& name, int val) {}
+    virtual void listParams(vector<string>* pParams);
+    virtual int getParameterInt(const string& name) const;
+    virtual bool setParameterInt(const string& name, int val);
+    virtual string type() const = 0;
 };
 
 class ckvdVideoGrabber : public ckvdHandle
@@ -49,7 +50,9 @@ public:
     
     virtual void listParams(vector<string>* pParams);
     virtual int getParameterInt(const string& name) const;
-    virtual void setParameterInt(const string& name, int val);
+    virtual bool setParameterInt(const string& name, int val);
+    
+    virtual string type() const { return "single"; }
     
 protected:
     FixtureRGB _fixture;
@@ -59,7 +62,7 @@ protected:
 class ckvdTileGrabber : public ckvdVideoGrabber
 {
 public:
-    ckvdTileGrabber();
+    ckvdTileGrabber(int scale = 8);
     virtual void draw();
     
     virtual void setColorFromFrame(ofImage& frame);
@@ -67,7 +70,9 @@ public:
     
     virtual void listParams(vector<string>* pParams);
     virtual int getParameterInt(const string& name) const;
-    virtual void setParameterInt(const string& name, int val);
+    virtual bool setParameterInt(const string& name, int val);
+    
+    virtual string type() const { return "tile"; }
     
 protected:
     FixtureTile6 _fixture;

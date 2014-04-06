@@ -1,4 +1,6 @@
 #include "ckvdApp.h"
+#include "ofxXmlSettings.h"
+
 #include <algorithm>
 
 #define SIDEBAR_WIDTH 200
@@ -104,6 +106,12 @@ void ckvdApp::setup()
     addTextInput(_pUI, "FRAME_RATE", "30", 40);
     _pUI->addWidgetRight(new ofxUILabel("FRAMES PER SEC", OFX_UI_FONT_SMALL));
     
+    _pUI->addSpacer(1,6)->setDrawFill(false);
+    
+    _pUI->addWidgetDown(new ofxUILabel("CONFIG", OFX_UI_FONT_SMALL));
+    _pUI->addWidgetRight(new ofxUILabelButton("LOAD", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("SAVE", false));
+    
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY ADDRESSES", OFX_UI_FONT_SMALL));
@@ -116,7 +124,7 @@ void ckvdApp::setup()
 
     _pUI->addWidgetDown(new ofxUILabelButton("+ PT", false));
     _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
-    _pUI->addWidgetRight(new ofxUILabelButton("X", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("DELETE", false));
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
@@ -159,7 +167,7 @@ void ckvdApp::draw()
         
         bool bVisible = _pSelectedGrabber != NULL;
         _pUI->getWidget("SELECTED FIXTURE")->setVisible(bVisible);
-        _pUI->getWidget("X")->setVisible(bVisible);
+        _pUI->getWidget("DELETE")->setVisible(bVisible);
     }
 
     mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
@@ -243,14 +251,14 @@ int ckvdApp::getHeight()
 
 void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)
 {
-    _pSelectedGrabber = pGrabber;
- 
     for (auto it = _contextWidgets.begin(); it != _contextWidgets.end(); ++it)
     {
         _pUI->removeWidget(*it);
     }
     _contextWidgets.clear();
     _pUI->setPlacer(_lastStaticWidget);
+ 
+    _pSelectedGrabber = pGrabber;
     
     if (!pGrabber)
         return;
@@ -261,6 +269,9 @@ void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)
     for (auto it = params.begin(); it != params.end(); ++it)
     {
         std::stringstream s;
+        if (*it == "X" || *it == "Y")
+            continue;
+        
         s << _pSelectedGrabber->getParameterInt(*it);
         auto widgets = addTextInput(_pUI, *it, s.str(), 90, *it);
         _contextWidgets.insert(_contextWidgets.begin(), widgets.begin(), widgets.end());
@@ -276,8 +287,8 @@ void ckvdApp::deleteSelected()
     if (iter != _grabbers.end())
     {
         _grabbers.erase(std::remove(iter, _grabbers.end(), _pSelectedGrabber), _grabbers.end());
-        delete _pSelectedGrabber;
         setSelectedGrabber(NULL);
+        delete _pSelectedGrabber;
     }
 }
 
@@ -289,7 +300,7 @@ void ckvdApp::exit()
 
 namespace
 {
-    void updateWidgetParameterInt(const string& paramName, ofxUITextInput* pInput, ckvdVideoGrabber* pGrabber)
+    int updateWidgetParameterInt(const string& paramName, ofxUITextInput* pInput, ckvdVideoGrabber* pGrabber)
     {
         if (pInput && pInput->getTextString() != "" && pGrabber)
         {
@@ -301,18 +312,47 @@ namespace
             validatedAddr << pGrabber->getParameterInt(paramName);
             
             pInput->setTextString(validatedAddr.str());
+            
+            return addr;
         }
     }
 }
 
+void ckvdApp::updateSyphonApp(const string& app)
+{
+    auto widget = (ofxUITextInput*)_pUI->getWidget("SYPHON_APP");
+    if (widget)
+        widget->setTextString(app);
+    
+    mClient.setApplicationName(app);
+}
+
+void ckvdApp::updateSyphonServer(const string& server)
+{
+    auto widget = (ofxUITextInput*)_pUI->getWidget("SYPHON_SERVER");
+    if (widget)
+        widget->setTextString(server);
+    
+    mClient.setServerName(server);
+}
+
+
 void ckvdApp::updatePowerSupplyAddress(int index, const string& address)
 {
+    std::ostringstream widgetName;
+    widgetName << "PDS_IP_" << index;
+    auto widget = (ofxUITextInput*)_pUI->getWidget(widgetName.str());
+    if (widget)
+        widget->setTextString(address);
+    
     if (address != "" && index >= 0 && index < _supplies.size())
     {
         delete _supplies[index];
         _supplies[index] = new PowerSupply(address.c_str());
     }
 }
+
+static int g_lastScale = 8;
 
 void ckvdApp::guiEvent(ofxUIEventArgs &e)
 {
@@ -326,9 +366,9 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
-            _grabbers.push_back(new ckvdTileGrabber());
+            _grabbers.push_back(new ckvdTileGrabber(g_lastScale));
     }
-	if(e.widget->getName() == "X")
+	if(e.widget->getName() == "DELETE")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
@@ -363,16 +403,22 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
     else if (e.widget->getName() == "ADDRESS" ||
              e.widget->getName() == "CHANNEL" ||
              e.widget->getName() == "SCALE" ||
-             e.widget->getName() == "SUPPLY")
+             e.widget->getName() == "SUPPLY" ||
+             e.widget->getName() == "X" ||
+             e.widget->getName() == "Y"
+             )
     {
-        updateWidgetParameterInt(e.widget->getName(), (ofxUITextInput*)e.widget, _pSelectedGrabber);
+        int result = updateWidgetParameterInt(e.widget->getName(), (ofxUITextInput*)e.widget, _pSelectedGrabber);
+
+        if (e.widget->getName() == "SCALE")
+            g_lastScale = result;
     }
     else if(e.widget->getName() == "SYPHON_APP")
     {
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
         {
-            mClient.setApplicationName(pInput->getTextString());
+            updateSyphonApp(pInput->getTextString());
         }
     }
     else if(e.widget->getName() == "SYPHON_SERVER")
@@ -380,7 +426,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
         {
-            mClient.setServerName(pInput->getTextString());
+            updateSyphonServer(pInput->getTextString());
         }
     }
     else if (e.widget->getName() == "FRAME_RATE")
@@ -392,6 +438,113 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
             std::istringstream(pInput->getTextString()) >> rate;
             ofSetFrameRate(rate);
         }
+    }
+    else if (e.widget->getName() == "LOAD")
+    {
+        ofxXmlSettings settings;
+        if(!settings.loadFile("settings.xml"))
+            return;
+        
+        for (auto grabber : _grabbers) {
+            delete grabber;
+        }
+        _grabbers.clear();
+        
+        settings.pushTag("settings");
+
+        settings.pushTag("syphon");
+        updateSyphonApp(settings.getValue("app", ""));
+        updateSyphonServer(settings.getValue("server", ""));
+        settings.popTag();
+        
+        settings.pushTag("supplies");
+        for(int i = 0; i < settings.getNumTags("supply"); i++){
+            settings.pushTag("supply", i);
+            if (i < 4) {
+                updatePowerSupplyAddress(i, settings.getValue("host", ""));
+            }
+            settings.popTag();
+        }
+        settings.popTag();
+        
+        settings.pushTag("grabbers");
+        for(int i = 0; i < settings.getNumTags("grabber"); i++){
+            settings.pushTag("grabber", i);
+            ckvdVideoGrabber* pGrabber = NULL;
+            
+            string typeName = settings.getValue("type", "");
+            if (typeName == "point") {
+                pGrabber = new ckvdSingleColorGrabber();
+            } else if (typeName == "tile") {
+                pGrabber = new ckvdTileGrabber();
+            }
+            
+            settings.pushTag("parameters");
+            if (pGrabber) {
+                for(int j = 0; j < settings.getNumTags("param"); j++) {
+                    settings.pushTag("param", j);
+                    pGrabber->setParameterInt(settings.getValue("name", ""), settings.getValue("value", 0));
+                    settings.popTag();
+                }
+                _grabbers.push_back(pGrabber);
+            }
+            settings.popTag();
+            
+            settings.popTag();
+        }
+        settings.popTag();
+        
+    }
+    else if (e.widget->getName() == "SAVE")
+    {
+        ofxXmlSettings settings;
+        settings.addTag("settings");
+        settings.pushTag("settings");
+        
+        settings.setValue("syphon:app",    mClient.getApplicationName());
+        settings.setValue("syphon:server", mClient.getServerName());
+        //settings.setValue("framerate", ofGetFrameRate());
+        
+        settings.addTag("supplies");
+        settings.pushTag("supplies");
+        for (int ii = 0; ii < _supplies.size(); ii++)
+        {
+            settings.addTag("supply");
+            settings.pushTag("supply", ii);
+            settings.setValue("host", _supplies[ii]->getHost());
+            settings.popTag();
+        }
+        settings.popTag();
+        
+        settings.addTag("grabbers");
+        settings.pushTag("grabbers");
+        for (int ii = 0; ii < _grabbers.size(); ii++)
+        {
+            auto pGrabber = _grabbers[ii];
+            vector<string> params;
+            
+            pGrabber->listParams(&params);
+            
+            settings.addTag("grabber");
+            settings.pushTag("grabber", ii);
+            settings.setValue("type", pGrabber->type());
+            settings.addTag("parameters");
+            settings.pushTag("parameters");
+            
+            for (int jj = 0; jj < params.size(); jj++)
+            {
+                settings.addTag("param");
+                settings.pushTag("param", jj);
+                settings.setValue("name", params[jj]);
+                settings.setValue("value", pGrabber->getParameterInt(params[jj]));
+                settings.popTag();
+            }
+            settings.popTag();
+            settings.popTag();
+        }
+        settings.popTag();
+        
+        settings.saveFile("settings.xml");
     }
 }
 
