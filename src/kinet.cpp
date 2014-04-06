@@ -302,7 +302,7 @@ void FixtureTile::updateFrame(uint8_t* packets) const
         int xx = _videoX + tileX * xscale;
         int yy = _videoY + tileY * yscale;
         
-        if (xx < _sourceWidth && yy < _sourceHeight) {
+        if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
             memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
         } else {
             memset(pIndex, 0, 3);
@@ -358,7 +358,7 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
         int xx = _videoX + tileX * xscale;
         int yy = _videoY + tileY * yscale;
         
-        if (xx < _sourceWidth && yy < _sourceHeight) {
+        if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
             memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
         } else {
             memset(pIndex, 0, 3);
