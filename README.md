@@ -29,10 +29,18 @@ Installation instructions:
 
 1. Download [openFrameworks v0.8.1](http://openframeworks.cc/download/older.html)
 
-2. Download or pull the following oF extensions into the addons folder:
-  * ofxSyphon -- https://github.com/astellato/ofxSyphon (head)
-  * ofxTangibleUI -- https://github.com/fx-lange/ofxTangibleUI (head)
-  * ofxUI -- https://github.com/rezaali/ofxUI (51b2dcb5d6bef17e18c23adf91ae94fce095f42d)
+2. Clone the following oF extensions into the addons folder:
+  * ofxSyphon (head revision)
+  * ofxTangibleUI (head revision)
+  * ofxUI (commit 51b2dcb5d6bef17e18c23adf91ae94fce095f42d)
+  ```
+  cd of_v0.8.1_osx_release/addons
+  git clone https://github.com/astellato/ofxSyphon
+  git clone https://github.com/fx-lange/ofxTangibleUI
+  git clone https://github.com/rezaali/ofxUI
+  cd ofxUI
+  git checkout 51b2dcb5d6bef17e18c23adf91ae94fce095f42d
+  ```
 
 3. Download or pull streetlight into the same parent folder as openFrameworks. (Do not put it in the apps folder.)
 4. Open streetlight/streetlight.xcodeproj in Xcode and build.
