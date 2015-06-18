@@ -10,41 +10,41 @@
 	<string>streetlight</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>2C443C65-6B5E-4A5B-A159-EB50C783FFAC</key>
-		<string>https://github.com/astellato/ofxSyphon</string>
-		<key>507877E1-7A16-4F9F-BBBD-C7512E747EC2</key>
-		<string>https://github.com/rezaali/ofxUI</string>
-		<key>A5EBCD9B-CA18-4A56-AFE9-AE05075C8A7E</key>
-		<string>https://github.com/Dewb/alphadep</string>
-		<key>AA60A94F-4D7E-4580-A239-8DC1D3D0B07D</key>
+		<key>3665ADE37174E56838B9A209007A6EF65BDDC5A0</key>
+		<string>https://github.com/Dewb/streetlight</string>
+		<key>3F51819371F6A622BFF25A14624B884B6F1A2C65</key>
 		<string>https://github.com/fx-lange/ofxTangibleUI</string>
+		<key>7E804D925461714118DB355C65BC964B41D94376</key>
+		<string>https://github.com/Dewb/ofxUI</string>
+		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
+		<string>https://github.com/astellato/ofxSyphon</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>streetlight.xcodeproj/project.xcworkspace</string>
+	<string>streetlight.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>2C443C65-6B5E-4A5B-A159-EB50C783FFAC</key>
-		<string>../../../of_v0.8.1_osx_release/addons/ofxSyphon</string>
-		<key>507877E1-7A16-4F9F-BBBD-C7512E747EC2</key>
-		<string>../../../of_v0.8.1_osx_release/addons/ofxUI</string>
-		<key>A5EBCD9B-CA18-4A56-AFE9-AE05075C8A7E</key>
+		<key>3665ADE37174E56838B9A209007A6EF65BDDC5A0</key>
 		<string>../..</string>
-		<key>AA60A94F-4D7E-4580-A239-8DC1D3D0B07D</key>
-		<string>../../../of_v0.8.1_osx_release/addons/ofxTangibleUI</string>
+		<key>3F51819371F6A622BFF25A14624B884B6F1A2C65</key>
+		<string>../../../of_v0.8.4_osx_release/addons/ofxTangibleUI</string>
+		<key>7E804D925461714118DB355C65BC964B41D94376</key>
+		<string>../../../of_v0.8.4_osx_release/addons/ofxUI</string>
+		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
+		<string>../../../of_v0.8.4_osx_release/addons/ofxSyphon</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Dewb/alphadep</string>
+	<string>https://github.com/Dewb/streetlight</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>A5EBCD9B-CA18-4A56-AFE9-AE05075C8A7E</string>
+	<string>3665ADE37174E56838B9A209007A6EF65BDDC5A0</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2C443C65-6B5E-4A5B-A159-EB50C783FFAC</string>
+			<string>F4CCB893AFADB97238A965FD2F28717F1CAAE613</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxSyphon</string>
 		</dict>
@@ -52,7 +52,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>AA60A94F-4D7E-4580-A239-8DC1D3D0B07D</string>
+			<string>3F51819371F6A622BFF25A14624B884B6F1A2C65</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxTangibleUI</string>
 		</dict>
@@ -60,7 +60,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>507877E1-7A16-4F9F-BBBD-C7512E747EC2</string>
+			<string>7E804D925461714118DB355C65BC964B41D94376</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxUI</string>
 		</dict>
@@ -68,7 +68,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A5EBCD9B-CA18-4A56-AFE9-AE05075C8A7E</string>
+			<string>3665ADE37174E56838B9A209007A6EF65BDDC5A0</string>
 			<key>IDESourceControlWCCName</key>
 			<string>streetlight</string>
 		</dict>
