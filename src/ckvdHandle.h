@@ -75,7 +75,7 @@ public:
     virtual string type() const { return "tile"; }
     
 protected:
-    FixtureTile6 _fixture;
+    FixtureTileDC _fixture;
     int _scale;
 };
 

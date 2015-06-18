@@ -104,6 +104,13 @@ public:
     virtual void updateFrame(uint8_t* packets) const;
 };
 
+class FixtureTileDC : public FixtureTile
+{
+public:
+    FixtureTileDC(int startChannel, int width = 12, int height = 12);
+    virtual void updateFrame(uint8_t* packets) const;
+};
+
 class PowerSupply
 {
 public:

@@ -11,10 +11,12 @@
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
-#define DEFAULT_PDS_IP_0 "10.0.2.2"
-#define DEFAULT_PDS_IP_1 "10.0.2.3"
-#define DEFAULT_PDS_IP_2 "10.0.2.4"
-#define DEFAULT_PDS_IP_3 "10.0.2.5"
+#define DEFAULT_PDS_IP_0 "192.168.10.101"
+#define DEFAULT_PDS_IP_1 "192.168.10.102"
+#define DEFAULT_PDS_IP_2 "192.168.10.103"
+#define DEFAULT_PDS_IP_3 "192.168.10.104"
+#define DEFAULT_PDS_IP_4 "192.168.10.105"
+#define DEFAULT_PDS_IP_5 "192.168.10.106"
 
 
 ckvdApp* _theApp = NULL;
@@ -34,6 +36,8 @@ ckvdApp::ckvdApp()
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_1));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_2));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_3));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_4));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_5));
 }
 
 
@@ -119,6 +123,8 @@ void ckvdApp::setup()
     addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 120);
     addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 120);
     addTextInput(_pUI, "PDS_IP_3", DEFAULT_PDS_IP_3, 120);
+    addTextInput(_pUI, "PDS_IP_4", DEFAULT_PDS_IP_4, 120);
+    addTextInput(_pUI, "PDS_IP_5", DEFAULT_PDS_IP_5, 120);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -187,8 +193,8 @@ void ckvdApp::draw()
             auto fixture = (*iter)->getFixture();
             
             // hack: switch to new protocol if supply contains a tile
-            if (dynamic_cast<FixtureTile*>(fixture) != NULL)
-                _supplies[nSupply]->switchToNewProtocol();
+            //if (dynamic_cast<FixtureTile*>(fixture) != NULL)
+            //    _supplies[nSupply]->switchToNewProtocol();
             
             _supplies[nSupply]->addFixture(fixture);
         }
@@ -399,6 +405,18 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
             updatePowerSupplyAddress(3, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_4")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(4, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_5")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(5, pInput->getTextString());
     }
     else if (e.widget->getName() == "ADDRESS" ||
              e.widget->getName() == "CHANNEL" ||

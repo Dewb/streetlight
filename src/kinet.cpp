@@ -309,7 +309,7 @@ void FixtureTile::updateFrame(uint8_t* packets) const
         }
         
         pIndex += 3;
-        tileX++;
+        tileX--;
 
         if (tileX < 0)
         {
@@ -383,6 +383,62 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
     }
     
 }
+
+FixtureTileDC::FixtureTileDC(int startChannel, int width, int height)
+: FixtureTile(startChannel, width, height)
+{
+}
+
+void FixtureTileDC::updateFrame(uint8_t* packets) const
+{
+    if (_sourceData == NULL)
+        return;
+
+    int tileX, tileY;
+    uint8_t* pIndex;
+
+    tileX = _fixtureWidth-1;
+    tileY = _fixtureHeight/2-1;
+    pIndex = packets + oldProtocol.getPacketSize() * (_startChannel-1) + oldProtocol.getHeaderSize();
+
+    int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
+    int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
+
+    while (tileY < _fixtureHeight)
+    {
+#if ENABLE_LOGGING
+        std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
+#endif
+        int scale = 8;
+
+        int xx = _videoX + tileX * xscale;
+        int yy = _videoY + tileY * yscale;
+
+        if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
+            memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
+        } else {
+            memset(pIndex, 0, 3);
+        }
+
+        pIndex += 3;
+        tileX--;
+
+        if (tileX < 0)
+        {
+            tileX =  _fixtureWidth-1;
+            if (tileY == 0) {
+                tileY = _fixtureHeight/2;
+                //pIndex = packets + oldProtocol.getPacketSize() * (_startChannel) + oldProtocol.getHeaderSize();
+            } else if (tileY < _fixtureHeight/2) {
+                tileY--;
+            } else {
+                tileY++;
+            }
+        }
+    }
+}
+
+
 
 std::string FixtureTile::getName() const
 {
