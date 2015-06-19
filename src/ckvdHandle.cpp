@@ -241,9 +241,10 @@ void ckvdTileGrabber::draw()
     
     if (theApp()->getGrabberFont())
     {
-        string name = _fixture.getName();
+        ostringstream ss;
+        ss << "#" << getParameterInt("SUPPLY") << " " << _fixture.getName();
         ofTrueTypeFont* pFont = theApp()->getGrabberFont();
-        pFont->drawString(name, x - pFont->stringWidth(name)/2, y + pFont->stringHeight(name)/2);
+        pFont->drawString(ss.str(), x - pFont->stringWidth(ss.str())/2, y + pFont->stringHeight(ss.str())/2);
     }
     
     ofPopStyle();
