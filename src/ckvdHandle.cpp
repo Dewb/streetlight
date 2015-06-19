@@ -251,7 +251,7 @@ void ckvdTileGrabber::draw()
 
 void ckvdTileGrabber::setColorFromFrame(ofImage& frame)
 {
-    _fixture.setVideoRect(x, y, width, height);
+    _fixture.setVideoRect(x - width/2, y - height/2, width, height);
     _fixture.setSourceData(frame.getPixels(), frame.width, frame.height, 3);
 }
 
