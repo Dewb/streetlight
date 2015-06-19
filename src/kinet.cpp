@@ -353,8 +353,7 @@ void FixtureTile6::updateFrame(uint8_t* packets) const
 #if ENABLE_LOGGING
         std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
 #endif
-        int scale = 8;
-        
+
         int xx = _videoX + tileX * xscale;
         int yy = _videoY + tileY * yscale;
         
@@ -397,22 +396,26 @@ void FixtureTileDC::updateFrame(uint8_t* packets) const
     int tileX, tileY;
     uint8_t* pIndex;
 
-    tileX = _fixtureWidth-1;
-    tileY = _fixtureHeight/2-1;
+    int quadrant = 0;
+
+    tileX = _fixtureWidth/2-1;
+    tileY = 0;
     pIndex = packets + oldProtocol.getPacketSize() * (_startChannel-1) + oldProtocol.getHeaderSize();
 
     int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
     int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
 
-    while (tileY < _fixtureHeight)
+    int tileYtop = _fixtureHeight/2;
+    int tileXright = -1;
+
+    while (true)
     {
 #if ENABLE_LOGGING
         std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
 #endif
-        int scale = 8;
 
         int xx = _videoX + tileX * xscale;
-        int yy = _videoY + tileY * yscale;
+        int yy = _videoY + (_fixtureHeight - tileY - 1) * yscale;
 
         if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
             memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
@@ -421,18 +424,31 @@ void FixtureTileDC::updateFrame(uint8_t* packets) const
         }
 
         pIndex += 3;
-        tileX--;
+        tileY++;
 
-        if (tileX < 0)
+        if (tileY >= tileYtop)
         {
-            tileX =  _fixtureWidth-1;
-            if (tileY == 0) {
-                tileY = _fixtureHeight/2;
-                //pIndex = packets + oldProtocol.getPacketSize() * (_startChannel) + oldProtocol.getHeaderSize();
-            } else if (tileY < _fixtureHeight/2) {
-                tileY--;
-            } else {
-                tileY++;
+            tileX--;
+            tileY = tileYtop - _fixtureHeight/2;
+            if (tileX <= tileXright) {
+                if (quadrant == 0) {
+                    quadrant = 1;
+                    tileX = _fixtureWidth/2 - 1;
+                    tileY = _fixtureHeight/2;
+                    tileYtop = _fixtureHeight;
+                } else if (quadrant == 1) {
+                    quadrant = 2;
+                    tileX = _fixtureWidth - 1;
+                    tileY = _fixtureHeight/2;
+                    tileXright = _fixtureWidth/2 - 1;
+                } else if (quadrant == 2) {
+                    quadrant = 3;
+                    tileX = _fixtureWidth - 1;
+                    tileY = 0;
+                    tileYtop = _fixtureHeight/2;
+                } else if (quadrant == 3) {
+                    break;
+                }
             }
         }
     }
