@@ -79,6 +79,8 @@ public:
     void setChannel(int channel) { _startChannel = channel; }
     void setVideoRect(int x, int y, int w, int h);
     void setSourceData(const uint8_t* sourceData, int sourceWidth, int sourceHeight, int sourceChannels);
+    int getRotation() const { return _rotation; }
+    void setRotation(int degrees) { _rotation = degrees; }
 
     virtual void updateFrame(uint8_t* packets) const;
     virtual std::string getName() const;
@@ -95,6 +97,7 @@ protected:
     int _sourceWidth;
     int _sourceHeight;
     int _sourceChannels;
+    int _rotation;
 };
 
 class FixtureTile6 : public FixtureTile

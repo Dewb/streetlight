@@ -238,6 +238,12 @@ void ckvdTileGrabber::draw()
         ofSetColor(255, 255, 255);
         drawCornerTickBox(x - width/2, y - height/2, width, height, 1);
     }
+
+    int r = (width + height) / 5;
+    int d = 10;
+    float c = cos((270 + _fixture.getRotation()) * pi/180.0);
+    float s = sin((270 + _fixture.getRotation()) * pi/180.0);
+    ofLine((int)floor(x + r * c), int(floor(y + r * s)), int(floor(x + (r + d) * c)), int(floor(y + (r + d) * s)));
     
     if (theApp()->getGrabberFont())
     {
@@ -265,6 +271,7 @@ void ckvdTileGrabber::listParams(vector<string>* pParams)
         pParams->push_back("SUPPLY");
         pParams->push_back("CHANNEL");
         pParams->push_back("SCALE");
+        pParams->push_back("ROTATION");
     }
 }
 
@@ -280,6 +287,8 @@ int ckvdTileGrabber::getParameterInt(const string& name) const
         return _scale;
     if (name.compare("SUPPLY") == 0)
         return getSupplyNumber();
+    if (name.compare("ROTATION") == 0)
+        return _fixture.getRotation();
     return -1;
 }
 
@@ -303,6 +312,10 @@ bool ckvdTileGrabber::setParameterInt(const string& name, int val)
     {
         setSupplyNumber(val);
         return true;
+    }
+    if (name.compare("ROTATION") == 0)
+    {
+        _fixture.setRotation(val);
     }
     return false;
 }

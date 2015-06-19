@@ -422,6 +422,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
              e.widget->getName() == "CHANNEL" ||
              e.widget->getName() == "SCALE" ||
              e.widget->getName() == "SUPPLY" ||
+             e.widget->getName() == "ROTATION" ||
              e.widget->getName() == "X" ||
              e.widget->getName() == "Y"
              )

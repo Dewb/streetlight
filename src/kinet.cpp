@@ -258,6 +258,7 @@ FixtureTile::FixtureTile(int startChannel, int width, int height)
 , _videoW(width)
 , _videoH(height)
 , _sourceData(NULL)
+, _rotation(0)
 {
 }
 
@@ -414,8 +415,25 @@ void FixtureTileDC::updateFrame(uint8_t* packets) const
         std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
 #endif
 
-        int xx = _videoX + tileX * xscale;
-        int yy = _videoY + (_fixtureHeight - tileY - 1) * yscale;
+        int xx, yy;
+
+        int rotation = getRotation() % 360;
+        if (rotation % 90 != 0)
+            rotation = 0;
+
+        if (rotation == 0) {
+            xx = _videoX + tileX * xscale;
+            yy = _videoY + (_fixtureHeight - tileY - 1) * yscale;
+        } else if (rotation == 90) {
+            xx = _videoX + (_fixtureHeight - tileY - 1) * yscale;
+            yy = _videoY + tileX * xscale;
+        } else if (rotation == 180) {
+            xx = _videoX + (_fixtureWidth - tileX - 1) * xscale;
+            yy = _videoY + tileY * yscale;
+        } else if (rotation == 270) {
+            xx = _videoX + tileY * yscale;
+            yy = _videoY + (_fixtureWidth - tileX - 1) * xscale;
+        }
 
         if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
             memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
