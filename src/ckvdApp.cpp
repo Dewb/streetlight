@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-#define SIDEBAR_WIDTH 200
+#define SIDEBAR_WIDTH 260
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
 #define MAX_WIDTH 1200
@@ -17,7 +17,12 @@
 #define DEFAULT_PDS_IP_3 "192.168.10.104"
 #define DEFAULT_PDS_IP_4 "192.168.10.105"
 #define DEFAULT_PDS_IP_5 "192.168.10.106"
-
+#define DEFAULT_PDS_IP_6 "192.168.10.107"
+#define DEFAULT_PDS_IP_7 "192.168.10.108"
+#define DEFAULT_PDS_IP_8 "192.168.10.109"
+#define DEFAULT_PDS_IP_9 "192.168.10.110"
+#define DEFAULT_PDS_IP_10 "192.168.10.111"
+#define DEFAULT_PDS_IP_11 "192.168.10.112"
 
 ckvdApp* _theApp = NULL;
 ckvdApp* theApp()
@@ -38,6 +43,12 @@ ckvdApp::ckvdApp()
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_3));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_4));
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_5));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_6));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_7));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_8));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_9));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_10));
+    _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_11));
 }
 
 
@@ -67,20 +78,20 @@ void ckvdApp::connect()
 
 namespace
 {
-    vector<ofxUIWidget*> addTextInput(ofxUICanvas* pUI, string name, string text, int width, string inlineLabel = "")
+    vector<ofxUIWidget*> addTextInput(ofxUICanvas* pUI, string name, string text, int width, string inlineLabel = "", bool addRight = false)
     {
         vector<ofxUIWidget*> widgets;
         
         if (inlineLabel.size())
         {
             auto pLabel = new ofxUILabel(75, inlineLabel, OFX_UI_FONT_SMALL, 24);
-            widgets.push_back(pUI->addWidgetDown(pLabel));
+            widgets.push_back(addRight ? pUI->addWidgetRight(pLabel) : pUI->addWidgetDown(pLabel));
         }
         
         auto pInput = new ofxUITextInput(name, text, width, 0, 0, 0, OFX_UI_FONT_SMALL);
         pInput->setAutoClear(false);
         
-        if (inlineLabel.size())
+        if (inlineLabel.size() || addRight)
         {
             widgets.push_back(pUI->addWidgetRight(pInput));
         }
@@ -120,11 +131,17 @@ void ckvdApp::setup()
     
     _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY ADDRESSES", OFX_UI_FONT_SMALL));
     addTextInput(_pUI, "PDS_IP_0", DEFAULT_PDS_IP_0, 120);
+    addTextInput(_pUI, "PDS_IP_6", DEFAULT_PDS_IP_6, 120, "", true);
     addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 120);
+    addTextInput(_pUI, "PDS_IP_7", DEFAULT_PDS_IP_7, 120, "", true);
     addTextInput(_pUI, "PDS_IP_2", DEFAULT_PDS_IP_2, 120);
+    addTextInput(_pUI, "PDS_IP_8", DEFAULT_PDS_IP_8, 120, "", true);
     addTextInput(_pUI, "PDS_IP_3", DEFAULT_PDS_IP_3, 120);
+    addTextInput(_pUI, "PDS_IP_9", DEFAULT_PDS_IP_9, 120, "", true);
     addTextInput(_pUI, "PDS_IP_4", DEFAULT_PDS_IP_4, 120);
+    addTextInput(_pUI, "PDS_IP_10", DEFAULT_PDS_IP_10, 120, "", true);
     addTextInput(_pUI, "PDS_IP_5", DEFAULT_PDS_IP_5, 120);
+    addTextInput(_pUI, "PDS_IP_11", DEFAULT_PDS_IP_11, 120, "", true);
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
@@ -417,6 +434,42 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
         if (pInput)
             updatePowerSupplyAddress(5, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_6")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(6, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_7")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(7, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_8")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(8, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_9")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(9, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_10")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(10, pInput->getTextString());
+    }
+    else if(e.widget->getName() == "PDS_IP_11")
+    {
+        ofxUITextInput* pInput = (ofxUITextInput*)e.widget;
+        if (pInput)
+            updatePowerSupplyAddress(11, pInput->getTextString());
     }
     else if (e.widget->getName() == "ADDRESS" ||
              e.widget->getName() == "CHANNEL" ||
