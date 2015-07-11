@@ -252,8 +252,9 @@ void ckvdApp::update()
 
 void ckvdApp::draw()
 {
-    ofBackground(0,0,0);
- 
+    ofDisableAlphaBlending();
+    ofBackground(0,0,0,1.0);
+
 	mClient.maybeBind();
     mClient.getTexture().draw(0, 0);
     
