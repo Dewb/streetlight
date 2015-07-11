@@ -81,6 +81,7 @@
 		5B4B95681B32A9A700BB6E5C /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4B95671B32A9A700BB6E5C /* openFrameworksDebug.a */; };
 		5B4B956A1B32A9B100BB6E5C /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4B95691B32A9B100BB6E5C /* GLUT.framework */; };
 		5B4B956C1B32AA0300BB6E5C /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B4B956B1B32AA0300BB6E5C /* GLUT.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B71754B1B50CE96009C77A7 /* radomeSyphonClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B7175491B50CE96009C77A7 /* radomeSyphonClient.cpp */; };
 		BAF16D3FCC1A5D86832036D0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBBCC8EEA69482FBD867949E /* tinyxml.cpp */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -276,6 +277,8 @@
 		5B4B95671B32A9A700BB6E5C /* openFrameworksDebug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = openFrameworksDebug.a; path = ../of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx/openFrameworksDebug.a; sourceTree = "<group>"; };
 		5B4B95691B32A9B100BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		5B4B956B1B32AA0300BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		5B7175491B50CE96009C77A7 /* radomeSyphonClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radomeSyphonClient.cpp; sourceTree = "<group>"; };
+		5B71754A1B50CE96009C77A7 /* radomeSyphonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = radomeSyphonClient.h; sourceTree = "<group>"; };
 		62E561F228DA38E916AD82A4 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		933ED693354272BB5F2671F7 /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = tinyxml.h; sourceTree = "<group>"; };
 		B3589C0292318E6126A86AB2 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
@@ -687,6 +690,8 @@
 				5B297B1118EE501C006B7D16 /* ckvdHandle.h */,
 				5B297B1218EE501C006B7D16 /* kinet.cpp */,
 				5B297B1318EE501C006B7D16 /* kinet.h */,
+				5B7175491B50CE96009C77A7 /* radomeSyphonClient.cpp */,
+				5B71754A1B50CE96009C77A7 /* radomeSyphonClient.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -791,6 +796,7 @@
 				5B4B95071B32A92100BB6E5C /* ofxUICustomImageButton.cpp in Sources */,
 				5B4B95201B32A92100BB6E5C /* ofxUISlider.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				5B71754B1B50CE96009C77A7 /* radomeSyphonClient.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ckvdApp.cpp in Sources */,
 				170DC9AF378A4CB8C72106C1 /* ofxXmlSettings.cpp in Sources */,
 				5B4B950F1B32A92100BB6E5C /* ofxUIImageSampler.cpp in Sources */,
