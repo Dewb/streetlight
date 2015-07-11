@@ -9,6 +9,8 @@
 #include "ckvdApp.h"
 #include "ckvdHandle.h"
 
+#define pi 3.141592
+
 namespace
 {
     void drawCrosshair(int x, int y, int width, int height, int l)
@@ -187,7 +189,7 @@ int ckvdSingleColorGrabber::getParameterInt(const string& name) const
 bool ckvdSingleColorGrabber::setParameterInt(const string& name, int val)
 {
     if (ckvdHandle::setParameterInt(name, val))
-        return;
+        return true;
         
     if (name.compare("ADDRESS") == 0) {
         _fixture.setAddress(val);
@@ -295,7 +297,7 @@ int ckvdTileGrabber::getParameterInt(const string& name) const
 bool ckvdTileGrabber::setParameterInt(const string& name, int val)
 {
     if (ckvdHandle::setParameterInt(name, val))
-        return;
+        return true;
     
     if (name.compare("CHANNEL") == 0 && val >= 1 && val <= 15) {
         _fixture.setChannel(val);

@@ -11,18 +11,23 @@
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
-#define DEFAULT_PDS_IP_0 "192.168.10.101"
-#define DEFAULT_PDS_IP_1 "192.168.10.102"
-#define DEFAULT_PDS_IP_2 "192.168.10.103"
-#define DEFAULT_PDS_IP_3 "192.168.10.104"
-#define DEFAULT_PDS_IP_4 "192.168.10.105"
-#define DEFAULT_PDS_IP_5 "192.168.10.106"
-#define DEFAULT_PDS_IP_6 "192.168.10.107"
-#define DEFAULT_PDS_IP_7 "192.168.10.108"
-#define DEFAULT_PDS_IP_8 "192.168.10.109"
-#define DEFAULT_PDS_IP_9 "192.168.10.110"
-#define DEFAULT_PDS_IP_10 "192.168.10.111"
-#define DEFAULT_PDS_IP_11 "192.168.10.112"
+#define DEFAULT_PDS_IP_0 "10.0.0.101"
+#define DEFAULT_PDS_IP_1 "10.0.0.102"
+#define DEFAULT_PDS_IP_2 "10.0.0.103"
+#define DEFAULT_PDS_IP_3 "10.0.0.104"
+#define DEFAULT_PDS_IP_4 "10.0.0.105"
+#define DEFAULT_PDS_IP_5 "10.0.0.106"
+#define DEFAULT_PDS_IP_6 "10.0.100.101"
+#define DEFAULT_PDS_IP_7 "10.0.100.102"
+#define DEFAULT_PDS_IP_8 "10.0.100.103"
+#define DEFAULT_PDS_IP_9 "10.0.100.104"
+#define DEFAULT_PDS_IP_10 "10.0.100.105"
+#define DEFAULT_PDS_IP_11 "10.0.100.106"
+
+#ifdef _WIN32
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#endif
 
 ckvdApp* _theApp = NULL;
 ckvdApp* theApp()
@@ -35,6 +40,16 @@ ckvdApp::ckvdApp()
 : _pSelectedGrabber(NULL)
 , _pGrabberFont(NULL)
 {
+#ifdef _WIN32
+	WORD wVersion;
+	WSADATA wsaData;
+	wVersion = MAKEWORD(2, 2);
+	int err = WSAStartup(wVersion, &wsaData);
+	if (err != 0) {
+		fprintf(stderr, "WSAStartup failed with error: %d\n", err);
+	}
+#endif
+
     assert(_theApp == NULL);
     _theApp = this;
     _supplies.push_back(new PowerSupply(DEFAULT_PDS_IP_0));
@@ -63,6 +78,62 @@ namespace
     }
 }
 
+void ckvdApp::loadSettings() {
+	 ofxXmlSettings settings;
+        if(!settings.loadFile("settings.xml"))
+            return;
+        
+        for (auto grabber : _grabbers) {
+            delete grabber;
+        }
+        _grabbers.clear();
+        
+        settings.pushTag("settings");
+
+        settings.pushTag("syphon");
+        updateSyphonApp(settings.getValue("app", ""));
+        updateSyphonServer(settings.getValue("server", ""));
+        settings.popTag();
+        
+        settings.pushTag("supplies");
+        for(int i = 0; i < settings.getNumTags("supply"); i++){
+            settings.pushTag("supply", i);
+            if (i < 12) {
+                updatePowerSupplyAddress(i, settings.getValue("host", ""));
+            }
+            settings.popTag();
+        }
+        settings.popTag();
+        
+        settings.pushTag("grabbers");
+        for(int i = 0; i < settings.getNumTags("grabber"); i++){
+            settings.pushTag("grabber", i);
+            ckvdVideoGrabber* pGrabber = NULL;
+            
+            string typeName = settings.getValue("type", "");
+            if (typeName == "point") {
+                pGrabber = new ckvdSingleColorGrabber();
+            } else if (typeName == "tile") {
+                pGrabber = new ckvdTileGrabber();
+            }
+            
+            settings.pushTag("parameters");
+            if (pGrabber) {
+                for(int j = 0; j < settings.getNumTags("param"); j++) {
+                    settings.pushTag("param", j);
+                    pGrabber->setParameterInt(settings.getValue("name", ""), settings.getValue("value", 0));
+                    settings.popTag();
+                }
+                _grabbers.push_back(pGrabber);
+            }
+            settings.popTag();
+            
+            settings.popTag();
+        }
+        settings.popTag();
+        
+}
+
 ckvdApp::~ckvdApp()
 {
     freeVector(_supplies);
@@ -71,7 +142,6 @@ ckvdApp::~ckvdApp()
 
 void ckvdApp::connect()
 {
-	mClient.setup();
     mClient.setApplicationName(DEFAULT_SYPHON_APP);
     mClient.setServerName(DEFAULT_SYPHON_SERVER);
 }
@@ -154,8 +224,12 @@ void ckvdApp::setup()
     _lastStaticWidget = _pUI->addWidgetDown(new ofxUILabel("SELECTED FIXTURE", OFX_UI_FONT_SMALL));
     
     ofAddListener(_pUI->newGUIEvent, this, &ckvdApp::guiEvent);
-    //_pUI->loadSettings("GUI/guiSettings.xml");
+   
     _pGrabberFont = _pUI->getFontSmall();
+
+	mClient.initialize("","");
+
+	loadSettings();
 }
 
 void ckvdApp::sizeToContent()
@@ -180,7 +254,8 @@ void ckvdApp::draw()
 {
     ofBackground(0,0,0);
  
-    mClient.draw(0, 0);
+	mClient.maybeBind();
+    mClient.getTexture().draw(0, 0);
     
     if (_pUI)
     {
@@ -513,59 +588,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
     }
     else if (e.widget->getName() == "LOAD")
     {
-        ofxXmlSettings settings;
-        if(!settings.loadFile("settings.xml"))
-            return;
-        
-        for (auto grabber : _grabbers) {
-            delete grabber;
-        }
-        _grabbers.clear();
-        
-        settings.pushTag("settings");
-
-        settings.pushTag("syphon");
-        updateSyphonApp(settings.getValue("app", ""));
-        updateSyphonServer(settings.getValue("server", ""));
-        settings.popTag();
-        
-        settings.pushTag("supplies");
-        for(int i = 0; i < settings.getNumTags("supply"); i++){
-            settings.pushTag("supply", i);
-            if (i < 4) {
-                updatePowerSupplyAddress(i, settings.getValue("host", ""));
-            }
-            settings.popTag();
-        }
-        settings.popTag();
-        
-        settings.pushTag("grabbers");
-        for(int i = 0; i < settings.getNumTags("grabber"); i++){
-            settings.pushTag("grabber", i);
-            ckvdVideoGrabber* pGrabber = NULL;
-            
-            string typeName = settings.getValue("type", "");
-            if (typeName == "point") {
-                pGrabber = new ckvdSingleColorGrabber();
-            } else if (typeName == "tile") {
-                pGrabber = new ckvdTileGrabber();
-            }
-            
-            settings.pushTag("parameters");
-            if (pGrabber) {
-                for(int j = 0; j < settings.getNumTags("param"); j++) {
-                    settings.pushTag("param", j);
-                    pGrabber->setParameterInt(settings.getValue("name", ""), settings.getValue("value", 0));
-                    settings.popTag();
-                }
-                _grabbers.push_back(pGrabber);
-            }
-            settings.popTag();
-            
-            settings.popTag();
-        }
-        settings.popTag();
-        
+       loadSettings();
     }
     else if (e.widget->getName() == "SAVE")
     {

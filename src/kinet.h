@@ -12,9 +12,11 @@
 
 #include <list>
 #include <string>
+#include <stdint.h>
 
 using std::list;
 using std::string;
+
 
 // Just a data container for now. Todo: move all protocol logic into this class
 class KinetProtocol

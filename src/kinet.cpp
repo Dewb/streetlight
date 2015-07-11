@@ -8,8 +8,14 @@
 //
 
 #include "kinet.h"
+#ifdef _WIN32
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "ws2_32.lib")
+#else
 #include <sys/socket.h>
 #include <netdb.h>
+#endif
 #include <sstream>
 #include <iostream>
 #include <math.h>
@@ -36,7 +42,7 @@ const KinetProtocol newProtocol(24, 512, 16, newHeaderBytes);
 
 void dump_buffer(unsigned n, const uint8_t* buf)
 {
-    int c = 1;
+    unsigned c = 1;
     while (c < n)
     {
         fprintf(stderr, "%02X ", *buf++);
@@ -81,7 +87,7 @@ void PowerSupply::initializeBuffer()
         
     _frame = (uint8_t*)malloc(_proto->getBufferSize() * sizeof(uint8_t));
     memset(_frame, _proto->getBufferSize(), 0);
-    for (int c = 0; c < _proto->getNumChannels(); c++)
+    for (unsigned c = 0; c < _proto->getNumChannels(); c++)
     {
         memcpy(_frame + c * _proto->getPacketSize(), _proto->getHeaderBytes(), _proto->getHeaderSize());
         if (_proto->getNumChannels() > 1)
@@ -107,7 +113,7 @@ bool PowerSupply::connect(const string strHost, const string strPort)
     
     result = getaddrinfo(strHost.c_str(), strPort.c_str(), &hints, &pResult);
     if (result != 0) {
-        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(result));
+        fprintf(stderr, "getaddrinfo: %d\n", result);
         return false;
     }
 
@@ -118,9 +124,12 @@ bool PowerSupply::connect(const string strHost, const string strPort)
         
         if (::connect(sock, pr->ai_addr, pr->ai_addrlen) == 0)
             break;
-        
+#ifdef _WIN32
+		closesocket(sock);
+#else
         close(sock);
-    }
+#endif
+	}
 
     if (pr == NULL)
     {
@@ -132,10 +141,15 @@ bool PowerSupply::connect(const string strHost, const string strPort)
     _port = ((sockaddr_in*)(pr->ai_addr))->sin_port;
     
     freeaddrinfo(pResult);
-    
+#ifdef _WIN32
+	unsigned long on = 1;
+	if (0 != ioctlsocket(sock, FIONBIO, &on)) {
+		fprintf(stderr, "Could not enable non-blocking mode on socket\n");
+	}
+#else
     int flags = fcntl(sock, F_GETFL, 0);
     fcntl(sock, F_SETFL, flags | O_NONBLOCK);
-    
+#endif    
     _socket = sock;
     _connected = true;
     
@@ -180,9 +194,9 @@ void PowerSupply::go()
         (*fix)->updateFrame(_frame);
     }
     
-    for (int channel = 0; channel < _proto->getNumChannels(); channel++)
+    for (unsigned channel = 0; channel < _proto->getNumChannels(); channel++)
     {
-        send(_socket, _frame + _proto->getPacketSize() * channel, _proto->getPacketSize(), 0);
+        send(_socket, (char*)_frame + _proto->getPacketSize() * channel, _proto->getPacketSize(), 0);
         
 #if ENABLE_LOGGING
         std::cout << "Channel " << channel+1 << "\n";

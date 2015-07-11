@@ -2,3 +2,16 @@
 xcuserdata/
 *Debug.app/
 bin/data/settings.xml
+._*
+obj/
+*.user
+*.suo
+*.ilk
+*.pdb
+*.sdf
+bin/*.lib
+bin/*.dll
+bin/*.app/
+bin/*.exe
+bin/*.exp
+*.opensdf

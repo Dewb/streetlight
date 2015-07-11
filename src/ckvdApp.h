@@ -3,7 +3,7 @@
 
 
 #include "ofMain.h"
-#include "ofxSyphon.h"
+#include "radomeSyphonClient.h"
 #include "ofxUI.h"
 #include "kinet.h"
 #include "ckvdHandle.h"
@@ -14,7 +14,7 @@ using std::string;
 using std::vector;
 using std::map;
 
-class ckvdSyphonClient : public ofxSyphonClient
+class ckvdSyphonClient : public radomeSyphonClient
 {
 public:
     void readToPixels(ofPixels& pixels) { mTex.readToPixels(pixels); }
@@ -60,7 +60,8 @@ public:
 protected:
     
     void sizeToContent();
-    
+    void loadSettings();
+
     void updatePowerSupplyAddress(int index, const string& address);
     void updateSyphonApp(const string& app);
     void updateSyphonServer(const string& server);
