@@ -75,7 +75,12 @@ public:
     virtual string type() const { return "tile"; }
     
 protected:
-    FixtureTileDC _fixture;
+    // Uncomment this line for iColorTile MX 12x12
+    FixtureTile _fixture;
+    // Uncomment this line for iColorModule FX 6x6
+    //FixtureTile6 _fixture;
+    // Uncomment this for hybrid DC tiles
+    //FixtureTileDC _fixture;
     int _scale;
 };
 
