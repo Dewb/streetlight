@@ -23,14 +23,14 @@ Licensing:
 Installation instructions:
 --------------------------
 
-1. Download [openFrameworks v0.8.1](http://openframeworks.cc/download/older.html)
+1. Download [openFrameworks v0.8.4](http://openframeworks.cc/download/)
 
 2. Clone the following oF extensions into the addons folder:
   * ofxSyphon (head revision, OSX only)
   * ofxTangibleUI (head revision)
   * ofxUI (commit 51b2dcb5d6bef17e18c23adf91ae94fce095f42d)
   ```
-  cd of_v0.8.1_osx_release/addons
+  cd of_v0.8.4_osx_release/addons
   git clone https://github.com/astellato/ofxSyphon
   git clone https://github.com/fx-lange/ofxTangibleUI
   git clone https://github.com/rezaali/ofxUI
