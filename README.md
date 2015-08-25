@@ -28,14 +28,12 @@ Installation instructions:
 2. Clone the following oF extensions into the addons folder:
   * ofxSyphon (head revision, OSX only)
   * ofxTangibleUI (head revision)
-  * ofxUI (commit 51b2dcb5d6bef17e18c23adf91ae94fce095f42d)
+  * ofxUI (fork)
   ```
   cd of_v0.8.4_osx_release/addons
   git clone https://github.com/astellato/ofxSyphon
   git clone https://github.com/fx-lange/ofxTangibleUI
-  git clone https://github.com/rezaali/ofxUI
-  cd ofxUI
-  git checkout 51b2dcb5d6bef17e18c23adf91ae94fce095f42d
+  git clone https://github.com/Dewb/ofxUI
   ```
 
 3. Download or pull streetlight into the same parent folder as openFrameworks. (Do not put it in the apps folder.)
