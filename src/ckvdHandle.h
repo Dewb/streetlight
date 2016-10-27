@@ -76,11 +76,13 @@ public:
     
 protected:
     // Uncomment this line for iColorTile MX 12x12
-    FixtureTile _fixture;
+    //FixtureTile _fixture;
     // Uncomment this line for iColorModule FX 6x6
     //FixtureTile6 _fixture;
     // Uncomment this for hybrid DC tiles
     //FixtureTileDC _fixture;
+    // Uncomment this for Tensor 10x Loews Board tiles
+    FixtureTileTensor _fixture;
     int _scale;
 };
 

@@ -116,6 +116,13 @@ public:
     virtual void updateFrame(uint8_t* packets) const;
 };
 
+class FixtureTileTensor : public FixtureTile
+{
+public:
+    FixtureTileTensor(int startChannel, int width = 6, int height = 10);
+    virtual void updateFrame(uint8_t* packets) const;
+};
+
 class PowerSupply
 {
 public:
