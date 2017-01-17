@@ -16,6 +16,17 @@ namespace
     void drawCrosshair(int x, int y, int width, int height, int l)
     {
         ofPushStyle();
+
+        bool showXTicks = true;
+        bool showYTicks = true;
+        if (height == 0) {
+            showYTicks = false;
+            height = 8;
+        }
+        if (width == 0) {
+            showXTicks = false;
+            width = 8;
+        }
         
         ofNoFill();
         ofSetLineWidth(l);
@@ -24,12 +35,16 @@ namespace
         int dh = height/2;
         
         ofRect(x-dw, y-dh, width, height);
-        
-        ofLine(x, y-dh, x, y-dh*1.5);
-        ofLine(x, y+dh, x, y+dh*1.5+1);
-        ofLine(x-dw, y, x-dw*1.5-1, y);
-        ofLine(x+dw, y, x+dw*1.5, y);
-        
+
+        if (showYTicks) {
+            ofLine(x, y-dh, x, y-dh*1.5);
+            ofLine(x, y+dh, x, y+dh*1.5+1);
+        }
+        if (showXTicks) {
+            ofLine(x-dw, y, x-dw*1.5-1, y);
+            ofLine(x+dw, y, x+dw*1.5, y);
+        }
+
         ofPopStyle();
     }
     
@@ -201,6 +216,104 @@ bool ckvdSingleColorGrabber::setParameterInt(const string& name, int val)
     }
     return false;
 }
+
+
+ckvdStripGrabber::ckvdStripGrabber(int length)
+: _fixture(0, length)
+{
+    static int count = 0;
+
+    drawType = TANGIBLE_DRAW_AS_CENTERED_RECT;
+
+    int cx = 20+96*((count)%5+1);
+    int cy = 30+96*((count/5)+1);
+
+    setup(cx, cy, 24, 12);
+
+    count++;
+}
+
+void ckvdStripGrabber::draw()
+{
+    ofPushStyle();
+
+    width = _fixture.getLength();
+    height = 8;
+
+    if (isFocused())
+    {
+        ofSetColor(255, 255, 100);
+        drawCrosshair(x, y, width, 0, 5);
+        ofSetColor(60, 60, 60);
+        drawCrosshair(x, y, width, 0, 1);
+        ofSetColor(255, 255, 100);
+    }
+    else
+    {
+        ofSetColor(255, 255, 255);
+        drawCrosshair(x, y, width, 0, 1);
+    }
+
+    if (theApp()->getGrabberFont())
+    {
+        theApp()->getGrabberFont()->drawString(_fixture.getName(), x+width/2+3, y-height/2+3);
+    }
+
+    ofPopStyle();
+}
+
+void ckvdStripGrabber::setColorFromFrame(ofImage& frame)
+{
+    _fixture.set_data(frame.getPixels() + 3 * (int(x) + frame.width * int(y)));
+}
+
+void ckvdStripGrabber::listParams(vector<string>* pParams)
+{
+    ckvdHandle::listParams(pParams);
+
+    if (pParams)
+    {
+        pParams->push_back("SUPPLY");
+        pParams->push_back("ADDRESS");
+        pParams->push_back("LENGTH");
+    }
+}
+
+int ckvdStripGrabber::getParameterInt(const string& name) const
+{
+    int v = ckvdHandle::getParameterInt(name);
+    if (v >= 0)
+        return v;
+
+    if (name.compare("ADDRESS") == 0)
+        return _fixture.getStartAddress();
+    if (name.compare("SUPPLY") == 0)
+        return getSupplyNumber();
+    if (name.compare("LENGTH") == 0)
+        return _fixture.getLength();
+    return -1;
+}
+
+bool ckvdStripGrabber::setParameterInt(const string& name, int val)
+{
+    if (ckvdHandle::setParameterInt(name, val))
+        return true;
+
+    if (name.compare("ADDRESS") == 0) {
+        _fixture.setStartAddress(val);
+        return true;
+    }
+    if (name.compare("SUPPLY") == 0) {
+        setSupplyNumber(val);
+        return true;
+    }
+    if (name.compare("LENGTH") == 0) {
+        _fixture.setLength(val);
+        return true;
+    }
+    return false;
+}
+
 
 
 ckvdTileGrabber::ckvdTileGrabber(int scale)

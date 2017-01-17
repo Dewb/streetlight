@@ -115,6 +115,8 @@ void ckvdApp::loadSettings() {
                 pGrabber = new ckvdSingleColorGrabber();
             } else if (typeName == "tile") {
                 pGrabber = new ckvdTileGrabber();
+            } else if (typeName == "strip") {
+                pGrabber = new ckvdStripGrabber();
             }
             
             settings.pushTag("parameters");
@@ -217,6 +219,7 @@ void ckvdApp::setup()
 
     _pUI->addWidgetDown(new ofxUILabelButton("+ PT", false));
     _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("+ STRIP", false));
     _pUI->addWidgetRight(new ofxUILabelButton("DELETE", false));
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
@@ -466,6 +469,12 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
             _grabbers.push_back(new ckvdTileGrabber(g_lastScale));
+    }
+    if(e.widget->getName() == "+ STRIP")
+    {
+        ofxUIButton* pButton = (ofxUIButton*)e.widget;
+        if (pButton && pButton->getValue())
+            _grabbers.push_back(new ckvdStripGrabber());
     }
 	if(e.widget->getName() == "DELETE")
     {

@@ -263,6 +263,26 @@ void FixtureRGB::set_rgb(uint8_t r, uint8_t g, uint8_t b)
     set_blue(b);
 }
 
+FixtureStrip::FixtureStrip(int address, int length)
+: Fixture()
+, _address(address)
+, _length(length)
+{
+}
+
+void FixtureStrip::updateFrame(uint8_t* packets) const
+{
+    memcpy(packets + oldProtocol.getHeaderSize() + _address, _bytes, _length * 3);
+}
+
+std::string FixtureStrip::getName() const
+{
+    std::ostringstream out;
+    out << "S" << getStartAddress();
+    return out.str();
+}
+
+
 FixtureTile::FixtureTile(int startChannel, int width, int height)
 : _startChannel(startChannel)
 , _fixtureWidth(width)
