@@ -5,16 +5,19 @@ Streetlight sends live video from a Syphon- or Spout-enabled application to an a
 
 This is pre-alpha software.
 
-Currently supports:
+Streetlight has been tested and is expected to work with:
 * Philips Color Kinectics ColorBlast, ColorBurst, and similar RGB fixtures on a PDS-150e or similar
 * Philips iColorTile MX 12x12 or iColorModule FX 6x6 (but not simultaneously) on a PDS-60 or PDS-480
-* Mac OS X video sources w/ Syphon support
-* Windows video sources with Spout support (or via FFGL sender plugin)
+* Philips iColor Flex or similar light strand/chain/strip on a PDS-60 or similar
+* Video input on Mac OS X with Syphon
+* Video input on Windows with Spout
 
 Future enhancements:
+* Improved UI with JUCE
 * Support for mixing iColorTile MX 12x12 and iColorModule FX 6x6 
 * Support for [Fadecandy](https://github.com/scanlime/fadecandy) and [LEDscape](https://github.com/Yona-Appletree/LEDscape) devices via [OpenPixelControl](http://openpixelcontrol.org/)
 * Support for [PixelPusher](http://www.heroicrobotics.com/) devices
+* Support for DMX devices
 
 Licensing:
 * Streetlight is licensed under [GPL v3](http://www.gnu.org/licenses/gpl-3.0.html)
