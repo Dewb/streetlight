@@ -227,7 +227,7 @@ void ckvdApp::setup()
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
     _pUI->addWidgetDown(new ofxUILabelButton("+ POINT", false));
-    _pUI->addWidgetRight(new ofxUILabelButton("+ STRIP", false));
+    _pUI->addWidgetRight(new ofxUILabelButton("+ STRAND", false));
     _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
     //_pUI->addWidgetRight(new ofxUILabelButton("DELETE", false));
 
@@ -513,7 +513,7 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
         if (pButton && pButton->getValue())
             _grabbers.push_back(new ckvdTileGrabber(g_lastScale));
     }
-    if(e.widget->getName() == "+ STRIP")
+    if(e.widget->getName() == "+ STRAND")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
