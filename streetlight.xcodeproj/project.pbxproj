@@ -274,17 +274,17 @@
 		5B4B94B61B32A92100BB6E5C /* ofxUIWidgetWithLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIWidgetWithLabel.cpp; sourceTree = "<group>"; };
 		5B4B94B71B32A92100BB6E5C /* ofxUIWidgetWithLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWidgetWithLabel.h; sourceTree = "<group>"; };
 		5B4B94B81B32A92100BB6E5C /* ofxUIWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWrapper.h; sourceTree = "<group>"; };
-		5B4B95671B32A9A700BB6E5C /* openFrameworksDebug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = openFrameworksDebug.a; path = ../of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx/openFrameworksDebug.a; sourceTree = "<group>"; };
-		5B4B95691B32A9B100BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
-		5B4B956B1B32AA0300BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../of_v0.8.4_osx_release/libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		5B4B95671B32A9A700BB6E5C /* openFrameworksDebug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = openFrameworksDebug.a; path = "$(OF_PATH)/libs/openFrameworksCompiled/lib/osx/openFrameworksDebug.a"; sourceTree = "<group>"; };
+		5B4B95691B32A9B100BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = "$(OF_PATH)/libs/glut/lib/osx/GLUT.framework"; sourceTree = "<group>"; };
+		5B4B956B1B32AA0300BB6E5C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = "$(OF_PATH)/libs/glut/lib/osx/GLUT.framework"; sourceTree = "<group>"; };
 		5B7175491B50CE96009C77A7 /* radomeSyphonClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radomeSyphonClient.cpp; sourceTree = "<group>"; };
 		5B71754A1B50CE96009C77A7 /* radomeSyphonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = radomeSyphonClient.h; sourceTree = "<group>"; };
 		62E561F228DA38E916AD82A4 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		933ED693354272BB5F2671F7 /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = tinyxml.h; sourceTree = "<group>"; };
 		B3589C0292318E6126A86AB2 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
-		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../of_v0.8.1_osx_release/libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = "$(OF_PATH)/libs/glut/lib/osx/GLUT.framework"; sourceTree = "<group>"; };
 		BBBCC8EEA69482FBD867949E /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; path = tinyxml.cpp; sourceTree = "<group>"; };
-		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../of_v0.8.1_osx_release/libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = "$(OF_PATH)/libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -301,7 +301,7 @@
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../of_v0.8.1_osx_release/libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
+		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = "$(OF_PATH)/libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -344,7 +344,7 @@
 				6E54289412D2D94F45A05113 /* libs */,
 			);
 			name = ofxXmlSettings;
-			path = ../of_v0.8.4_osx_release/addons/ofxXmlSettings;
+			path = "$(OF_PATH)/addons/ofxXmlSettings";
 			sourceTree = "<group>";
 		};
 		5B297B4718EE5387006B7D16 /* ofxSyphon */ = {
@@ -354,7 +354,7 @@
 				5B297B6918EE5388006B7D16 /* src */,
 			);
 			name = ofxSyphon;
-			path = ../of_v0.8.4_osx_release/addons/ofxSyphon;
+			path = "$(OF_PATH)/addons/ofxSyphon";
 			sourceTree = "<group>";
 		};
 		5B297B6018EE5388006B7D16 /* libs */ = {
@@ -419,7 +419,7 @@
 				5B4B91D61B32A91E00BB6E5C /* src */,
 			);
 			name = ofxTangibleUI;
-			path = ../of_v0.8.4_osx_release/addons/ofxTangibleUI;
+			path = "$(OF_PATH)/addons/ofxTangibleUI";
 			sourceTree = "<group>";
 		};
 		5B4B91D61B32A91E00BB6E5C /* src */ = {
@@ -480,7 +480,7 @@
 				5B4B94571B32A92100BB6E5C /* src */,
 			);
 			name = ofxUI;
-			path = ../of_v0.8.4_osx_release/addons/ofxUI;
+			path = "$(OF_PATH)/addons/ofxUI";
 			sourceTree = "<group>";
 		};
 		5B4B94571B32A92100BB6E5C /* src */ = {
@@ -783,7 +783,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f ../of_v0.8.4_osx_release/libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n";
+			shellScript = "cp -f \"$OF_PATH/libs/fmodex/lib/osx/libfmodex.dylib\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -901,33 +901,33 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/libs,
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls/bezier,
-					../of_v0.8.1_osx_release/addons/ofxUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxUI/src,
+					"$(OF_PATH)/addons/ofxXmlSettings/libs",
+					"$(OF_PATH)/addons/ofxXmlSettings/src",
+					"$(OF_PATH)/addons/ofxSyphon/libs",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/src",
+					"$(OF_PATH)/addons/ofxSyphon/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/libs",
+					"$(OF_PATH)/addons/ofxTangibleUI/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls/bezier",
+					"$(OF_PATH)/addons/ofxUI/libs",
+					"$(OF_PATH)/addons/ofxUI/src",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -962,33 +962,33 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/libs,
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls/bezier,
-					../of_v0.8.1_osx_release/addons/ofxUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxUI/src,
+					"$(OF_PATH)/addons/ofxXmlSettings/libs",
+					"$(OF_PATH)/addons/ofxXmlSettings/src",
+					"$(OF_PATH)/addons/ofxSyphon/libs",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/src",
+					"$(OF_PATH)/addons/ofxSyphon/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/libs",
+					"$(OF_PATH)/addons/ofxTangibleUI/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls/bezier",
+					"$(OF_PATH)/addons/ofxUI/libs",
+					"$(OF_PATH)/addons/ofxUI/src",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1010,24 +1010,24 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
 					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
-					/Users/dewb/ah/of_v0.8.4_osx_release/libs/glut/lib/osx,
+					"$(OF_PATH)/libs/glut/lib/osx",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../of_v0.8.1_osx_release/libs/glut/lib/osx\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(OF_PATH)/libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/libs,
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls/bezier,
-					../of_v0.8.1_osx_release/addons/ofxUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxUI/src,
+					"$(OF_PATH)/addons/ofxXmlSettings/libs",
+					"$(OF_PATH)/addons/ofxXmlSettings/src",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/src",
+					"$(OF_PATH)/addons/ofxSyphon/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/libs",
+					"$(OF_PATH)/addons/ofxTangibleUI/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls/bezier",
+					"$(OF_PATH)/addons/ofxUI/libs",
+					"$(OF_PATH)/addons/ofxUI/src",
 				);
 				ICON = "$(ICON_NAME_DEBUG)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
@@ -1096,7 +1096,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
-					/Users/dewb/ah/of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx,
+					"$(OF_PATH)/libs/openFrameworksCompiled/lib/osx",
 				);
 				OF_PATH = ../of_v0.8.4_osx_release;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
@@ -1114,23 +1114,23 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
 					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/lib/osx",
-					/Users/dewb/ah/of_v0.8.4_osx_release/libs/glut/lib/osx,
+					"$(OF_PATH)/libs/glut/lib/osx",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../of_v0.8.1_osx_release/libs/glut/lib/osx\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(OF_PATH)/libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/libs,
-					../of_v0.8.1_osx_release/addons/ofxXmlSettings/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/libs/Syphon/src,
-					../of_v0.8.1_osx_release/addons/ofxSyphon/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls,
-					../of_v0.8.1_osx_release/addons/ofxTangibleUI/src/exampleControls/bezier,
-					../of_v0.8.1_osx_release/addons/ofxUI/libs,
-					../of_v0.8.1_osx_release/addons/ofxUI/src,
+					"$(OF_PATH)/addons/ofxXmlSettings/libs",
+					"$(OF_PATH)/addons/ofxXmlSettings/src",
+					"$(OF_PATH)/addons/ofxSyphon/libs/Syphon/src",
+					"$(OF_PATH)/addons/ofxSyphon/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/libs",
+					"$(OF_PATH)/addons/ofxTangibleUI/src",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls",
+					"$(OF_PATH)/addons/ofxTangibleUI/src/exampleControls/bezier",
+					"$(OF_PATH)/addons/ofxUI/libs",
+					"$(OF_PATH)/addons/ofxUI/src",
 				);
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
@@ -1199,7 +1199,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
-					/Users/dewb/ah/of_v0.8.4_osx_release/libs/openFrameworksCompiled/lib/osx,
+					"$(OF_PATH)/libs/openFrameworksCompiled/lib/osx",
 				);
 				OF_PATH = ../of_v0.8.4_osx_release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
