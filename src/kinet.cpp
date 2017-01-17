@@ -14,8 +14,6 @@
 #pragma comment(lib, "ws2_32.lib")
 #else
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <netdb.h>
 #endif
 #include <sstream>
@@ -27,8 +25,8 @@
 
 const unsigned char oldHeaderBytes[] = {
     0x04, 0x01, 0xdc, 0x4a, 0x01, 0x00, 0x01, 0x01,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xff, 0xff, 0xff, 0xff, 0x00
 };
 
 const KinetProtocol oldProtocol(21, 512, 1, oldHeaderBytes);
@@ -99,7 +97,6 @@ void PowerSupply::initializeBuffer()
 
 bool PowerSupply::connect(const string strHost, const string strPort)
 {
-    /*
     struct addrinfo hints;
     struct addrinfo *pResult, *pr;
     int result;
@@ -155,28 +152,6 @@ bool PowerSupply::connect(const string strHost, const string strPort)
 #endif    
     _socket = sock;
     _connected = true;
-     */
-
-    // networking code adapted from Shadow
-
-    int kinet_sock;
-
-    if((kinet_sock = socket(PF_INET, SOCK_DGRAM, 0)) == -1) {
-        fprintf(stderr, "kinet_init: socket() failed\n");
-    }
-
-    int i = 1;
-    if (setsockopt(kinet_sock, SOL_SOCKET, SO_BROADCAST, &i, sizeof(i))) {
-        fprintf(stderr, "kinet_init: setsockopt() failed\n");
-        close(kinet_sock);
-    }
-
-    // end code from Shadow
-
-    _host = strHost;
-    _port = 6038;
-    _socket = kinet_sock;
-    _connected = true;
     
     return true;
 }
@@ -218,24 +193,11 @@ void PowerSupply::go()
     {
         (*fix)->updateFrame(_frame);
     }
-
+    
     for (unsigned channel = 0; channel < _proto->getNumChannels(); channel++)
     {
-        //send(_socket, (char*)_frame + _proto->getPacketSize() * channel, _proto->getPacketSize(), 0);
-
-        // networking code adapted from Shadow
-
-        struct sockaddr_in dest;
-        dest.sin_family = AF_INET;
-        dest.sin_port = htons(_port);
-
-        dest.sin_addr.s_addr = inet_addr(_host.c_str());
-        if(dest.sin_addr.s_addr)
-            sendto(_socket, _frame, 112, 0, (struct sockaddr *)&dest, sizeof(dest));
-
-        // end code from Shadow
-
-
+        send(_socket, (char*)_frame + _proto->getPacketSize() * channel, _proto->getPacketSize(), 0);
+        
 #if ENABLE_LOGGING
         std::cout << "Channel " << channel+1 << "\n";
         dump_buffer(_proto->getHeaderSize() + 3, _frame + _proto->getPacketSize() * channel);
@@ -531,59 +493,5 @@ std::string FixtureTile::getName() const
     std::ostringstream out;
     out << "C" << _startChannel << "/" << (_startChannel + 1);
     return out.str();
-}
-
-
-FixtureTileTensor::FixtureTileTensor(int startChannel, int width, int height)
-: FixtureTile(startChannel, width, height)
-{
-}
-
-void FixtureTileTensor::updateFrame(uint8_t* packets) const
-{
-    if (_sourceData == NULL)
-        return;
-
-    int tileX, tileY, startx, endx;
-    uint8_t* pIndex;
-
-    pIndex = packets + oldProtocol.getHeaderSize();
-
-    tileX = 0;
-    tileY = 0;
-    startx = 0;
-    endx = _fixtureWidth;
-
-    int xscale = (int)floor(_videoW/(_fixtureWidth*1.0));
-    int yscale = (int)floor(_videoH/(_fixtureHeight*1.0));
-
-    while(1)
-    {
-#if ENABLE_LOGGING
-        std::cout << "Writing x: " << tileX << " y: " << tileY << " to address " << (void*)pIndex << "\n";
-#endif
-
-        int xx = _videoX + tileX * xscale;
-        int yy = _videoY + tileY * yscale;
-
-        if (xx >= 0 && xx < _sourceWidth && yy >= 0 && yy < _sourceHeight) {
-            memcpy(pIndex, _sourceData + (xx + yy * _sourceWidth) * _sourceChannels, 3);
-        } else {
-            memset(pIndex, 0, 3);
-        }
-
-        pIndex += 3;
-        tileX++;
-
-        if (tileX > endx)
-        {
-            tileY++;
-            if (tileY >= _fixtureHeight) {
-                break;
-            }
-            tileX = startx;
-        }
-    }
-    
 }
 
