@@ -59,6 +59,25 @@ protected:
     ofColor _color;
 };
 
+class ckvdStripGrabber : public ckvdVideoGrabber
+{
+public:
+    ckvdStripGrabber(int length = 50);
+    virtual void draw();
+
+    virtual void setColorFromFrame(ofImage& frame);
+    virtual Fixture* getFixture() { return &_fixture; }
+
+    virtual void listParams(vector<string>* pParams);
+    virtual int getParameterInt(const string& name) const;
+    virtual bool setParameterInt(const string& name, int val);
+
+    virtual string type() const { return "strip"; }
+
+protected:
+    FixtureStrip _fixture;
+};
+
 class ckvdTileGrabber : public ckvdVideoGrabber
 {
 public:

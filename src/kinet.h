@@ -73,6 +73,28 @@ protected:
     unsigned char _values[3];
 };
 
+class FixtureStrip : public Fixture
+{
+public:
+    FixtureStrip(int startAddress, int length);
+
+    int getStartAddress() const { return _address; }
+    void setStartAddress(int address) { _address = address; }
+
+    int getLength() const { return _length; }
+    void setLength(int length) { _length = length; }
+
+    virtual void updateFrame(uint8_t* packets) const;
+    virtual std::string getName() const;
+
+    void set_data(uint8_t* bytes) { _bytes = bytes; }
+
+protected:
+    int _address;
+    int _length;
+    uint8_t* _bytes;
+};
+
 class FixtureTile : public Fixture
 {
 public:
