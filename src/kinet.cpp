@@ -278,7 +278,7 @@ void FixtureStrip::updateFrame(uint8_t* packets) const
 std::string FixtureStrip::getName() const
 {
     std::ostringstream out;
-    out << "S" << getStartAddress();
+    out << getStartAddress() << "-" << getStartAddress() + _length * 3 - 1;
     return out.str();
 }
 

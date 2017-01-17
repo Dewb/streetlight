@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-#define SIDEBAR_WIDTH 260
+#define SIDEBAR_WIDTH 270
 #define MIN_WIDTH 800
 #define MIN_HEIGHT 600
 #define MAX_WIDTH 1200
@@ -156,7 +156,7 @@ namespace
         
         if (inlineLabel.size())
         {
-            auto pLabel = new ofxUILabel(75, inlineLabel, OFX_UI_FONT_SMALL, 24);
+            auto pLabel = new ofxUILabel(75, inlineLabel, OFX_UI_FONT_SMALL, 15);
             widgets.push_back(addRight ? pUI->addWidgetRight(pLabel) : pUI->addWidgetDown(pLabel));
         }
         
@@ -181,7 +181,7 @@ void ckvdApp::setup()
 	ofSetWindowTitle("Streetlight // Syphon to LEDs");
     mClientImage.setUseTexture(false);
     ofSetFrameRate(DEFAULT_FRAME_RATE);
-    
+
     _pUI = new ofxUICanvas(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
     _pUI->setFont("GUI/Exo-Regular.ttf", true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
 
@@ -190,18 +190,27 @@ void ckvdApp::setup()
     addTextInput(_pUI, "SYPHON_APP", DEFAULT_SYPHON_APP, 180);
     _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER NAME", OFX_UI_FONT_SMALL));
     addTextInput(_pUI, "SYPHON_SERVER", DEFAULT_SYPHON_SERVER, 180);
+
+    _pUI->addSpacer(1,3)->setDrawFill(false);
+
     addTextInput(_pUI, "FRAME_RATE", "30", 40);
-    _pUI->addWidgetRight(new ofxUILabel("FRAMES PER SEC", OFX_UI_FONT_SMALL));
+    _pUI->addWidgetRight(new ofxUILabel(200, "FRAMES PER SEC", OFX_UI_FONT_SMALL, 15));
     
     _pUI->addSpacer(1,6)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("CONFIG", OFX_UI_FONT_SMALL));
-    _pUI->addWidgetRight(new ofxUILabelButton("LOAD", false));
+
+    _pUI->addSpacer(1,3)->setDrawFill(false);
+
+    _pUI->addWidgetDown(new ofxUILabelButton("LOAD", false));
     _pUI->addWidgetRight(new ofxUILabelButton("SAVE", false));
     
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _pUI->addWidgetDown(new ofxUILabel("POWER SUPPLY ADDRESSES", OFX_UI_FONT_SMALL));
+
+    _pUI->addSpacer(1,3)->setDrawFill(false);
+
     addTextInput(_pUI, "PDS_IP_0", DEFAULT_PDS_IP_0, 120);
     addTextInput(_pUI, "PDS_IP_6", DEFAULT_PDS_IP_6, 120, "", true);
     addTextInput(_pUI, "PDS_IP_1", DEFAULT_PDS_IP_1, 120);
@@ -217,11 +226,11 @@ void ckvdApp::setup()
 
     _pUI->addSpacer(1,12)->setDrawFill(false);
 
-    _pUI->addWidgetDown(new ofxUILabelButton("+ PT", false));
-    _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
+    _pUI->addWidgetDown(new ofxUILabelButton("+ POINT", false));
     _pUI->addWidgetRight(new ofxUILabelButton("+ STRIP", false));
-    _pUI->addWidgetRight(new ofxUILabelButton("DELETE", false));
-    
+    _pUI->addWidgetRight(new ofxUILabelButton("+ TILE", false));
+    //_pUI->addWidgetRight(new ofxUILabelButton("DELETE", false));
+
     _pUI->addSpacer(1,12)->setDrawFill(false);
     
     _lastStaticWidget = _pUI->addWidgetDown(new ofxUILabel("SELECTED FIXTURE", OFX_UI_FONT_SMALL));
@@ -255,6 +264,8 @@ void ckvdApp::update()
 
 void ckvdApp::draw()
 {
+    ofPushStyle();
+
     ofDisableAlphaBlending();
     ofBackground(0,0,0,1.0);
 
@@ -269,7 +280,7 @@ void ckvdApp::draw()
         
         bool bVisible = _pSelectedGrabber != NULL;
         _pUI->getWidget("SELECTED FIXTURE")->setVisible(bVisible);
-        _pUI->getWidget("DELETE")->setVisible(bVisible);
+        //_pUI->getWidget("DELETE")->setVisible(bVisible);
     }
 
     mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
@@ -302,7 +313,7 @@ void ckvdApp::draw()
             (*iter)->go();
     }
 
-    
+    ofPopStyle();
 }
 
 void ckvdApp::keyPressed(int key)
@@ -310,23 +321,57 @@ void ckvdApp::keyPressed(int key)
     switch (key)
 	{
 		case OF_KEY_UP:
-            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(0,-1); break;
+            if (_pSelectedGrabber) {
+                _pSelectedGrabber->moveBy(0, -1);
+                setSelectedGrabber(_pSelectedGrabber);
+            }
+            break;
 		case OF_KEY_DOWN:
-            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(0,1); break;
+            if (_pSelectedGrabber) {
+                _pSelectedGrabber->moveBy(0, 1);
+                setSelectedGrabber(_pSelectedGrabber);
+            }
+            break;
 		case OF_KEY_LEFT:
-            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(-1,0); break;
+            if (_pSelectedGrabber) {
+                _pSelectedGrabber->moveBy(-1, 0);
+                setSelectedGrabber(_pSelectedGrabber);
+            }
+            break;
 		case OF_KEY_RIGHT:
-            if (_pSelectedGrabber) _pSelectedGrabber->moveBy(1,0); break;
+            if (_pSelectedGrabber) {
+                _pSelectedGrabber->moveBy(1, 0);
+                setSelectedGrabber(_pSelectedGrabber);
+            }
+            break;
+
         case OF_KEY_DEL:
         case OF_KEY_BACKSPACE:
             if (_pSelectedGrabber && !_pUI->hasKeyboardFocus())
                 deleteSelected();
             break;
+
+        case OF_KEY_TAB:
+            // cycle selection through all grabbers
+            if (_pSelectedGrabber == NULL) {
+                setSelectedGrabber(_grabbers[0]);
+            } else {
+                auto current = find(_grabbers.begin(), _grabbers.end(), _pSelectedGrabber);
+                current++;
+                if (current == _grabbers.end()) {
+                    setSelectedGrabber(_grabbers[0]);
+                } else {
+                    setSelectedGrabber(*current);
+                }
+            }
     }
 }
 
 void ckvdApp::mouseReleased(int x, int y, int button)
 {
+    if (x < getClientWidth()) {
+        setSelectedGrabber(_pSelectedGrabber);
+    }
 }
 
 void ckvdApp::windowResized(int w, int h)
@@ -364,16 +409,14 @@ void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)
     
     if (!pGrabber)
         return;
-    
+
     vector<string> params;
     _pSelectedGrabber->listParams(&params);
-    
+
     for (auto it = params.begin(); it != params.end(); ++it)
     {
         std::stringstream s;
-        if (*it == "X" || *it == "Y")
-            continue;
-        
+
         s << _pSelectedGrabber->getParameterInt(*it);
         auto widgets = addTextInput(_pUI, *it, s.str(), 90, *it);
         _contextWidgets.insert(_contextWidgets.begin(), widgets.begin(), widgets.end());
@@ -458,7 +501,7 @@ static int g_lastScale = 8;
 
 void ckvdApp::guiEvent(ofxUIEventArgs &e)
 {
-	if(e.widget->getName() == "+ PT")
+	if(e.widget->getName() == "+ POINT")
     {
         ofxUIButton* pButton = (ofxUIButton*)e.widget;
         if (pButton && pButton->getValue())
@@ -562,7 +605,8 @@ void ckvdApp::guiEvent(ofxUIEventArgs &e)
              e.widget->getName() == "SUPPLY" ||
              e.widget->getName() == "ROTATION" ||
              e.widget->getName() == "X" ||
-             e.widget->getName() == "Y"
+             e.widget->getName() == "Y" ||
+             e.widget->getName() == "LENGTH"
              )
     {
         int result = updateWidgetParameterInt(e.widget->getName(), (ofxUITextInput*)e.widget, _pSelectedGrabber);

@@ -17,17 +17,6 @@ namespace
     {
         ofPushStyle();
 
-        bool showXTicks = true;
-        bool showYTicks = true;
-        if (height == 0) {
-            showYTicks = false;
-            height = 8;
-        }
-        if (width == 0) {
-            showXTicks = false;
-            width = 8;
-        }
-        
         ofNoFill();
         ofSetLineWidth(l);
         
@@ -36,14 +25,10 @@ namespace
         
         ofRect(x-dw, y-dh, width, height);
 
-        if (showYTicks) {
-            ofLine(x, y-dh, x, y-dh*1.5);
-            ofLine(x, y+dh, x, y+dh*1.5+1);
-        }
-        if (showXTicks) {
-            ofLine(x-dw, y, x-dw*1.5-1, y);
-            ofLine(x+dw, y, x+dw*1.5, y);
-        }
+        ofLine(x, y-dh, x, y-dh*1.5);
+        ofLine(x, y+dh, x, y+dh*1.5+1);
+        ofLine(x-dw, y, x-dw*1.5-1, y);
+        ofLine(x+dw, y, x+dw*1.5, y);
 
         ofPopStyle();
     }
@@ -228,7 +213,7 @@ ckvdStripGrabber::ckvdStripGrabber(int length)
     int cx = 20+96*((count)%5+1);
     int cy = 30+96*((count/5)+1);
 
-    setup(cx, cy, 24, 12);
+    setup(cx, cy, 20, 20);
 
     count++;
 }
@@ -237,21 +222,29 @@ void ckvdStripGrabber::draw()
 {
     ofPushStyle();
 
-    width = _fixture.getLength();
-    height = 8;
+    ofNoFill();
+    ofSetLineWidth(1);
+    ofSetRectMode(OF_RECTMODE_CENTER);
 
     if (isFocused())
     {
         ofSetColor(255, 255, 100);
-        drawCrosshair(x, y, width, 0, 5);
+        ofSetLineWidth(5);
+        ofRect(x, y, width, height);
         ofSetColor(60, 60, 60);
-        drawCrosshair(x, y, width, 0, 1);
+        ofSetLineWidth(1);
+        ofRect(x, y, width, height);
+        ofSetRectMode(OF_RECTMODE_CORNER);
+        ofSetColor(255, 255, 100);
+        ofRect(x - 1, y - 1, _fixture.getLength() + 1, 3);
         ofSetColor(255, 255, 100);
     }
     else
     {
         ofSetColor(255, 255, 255);
-        drawCrosshair(x, y, width, 0, 1);
+        ofRect(x, y, width, height);
+        ofSetRectMode(OF_RECTMODE_CORNER);
+        ofRect(x - 1, y - 1, _fixture.getLength() + 1, 3);
     }
 
     if (theApp()->getGrabberFont())
