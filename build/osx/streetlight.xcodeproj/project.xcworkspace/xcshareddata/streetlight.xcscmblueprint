@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3665ADE37174E56838B9A209007A6EF65BDDC5A0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7E804D925461714118DB355C65BC964B41D94376" : 0,
+    "3F51819371F6A622BFF25A14624B884B6F1A2C65" : 0,
+    "F4CCB893AFADB97238A965FD2F28717F1CAAE613" : 0,
+    "3665ADE37174E56838B9A209007A6EF65BDDC5A0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8B740F51-A10A-4908-B3F6-0F9736F7D493",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7E804D925461714118DB355C65BC964B41D94376" : "of_v0.8.4_osx_release\/addons\/ofxUI\/",
+    "3F51819371F6A622BFF25A14624B884B6F1A2C65" : "of_v0.8.4_osx_release\/addons\/ofxTangibleUI\/",
+    "F4CCB893AFADB97238A965FD2F28717F1CAAE613" : "of_v0.8.4_osx_release\/addons\/ofxSyphon\/",
+    "3665ADE37174E56838B9A209007A6EF65BDDC5A0" : "streetlight\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "streetlight",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "streetlight.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Dewb\/streetlight",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3665ADE37174E56838B9A209007A6EF65BDDC5A0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fx-lange\/ofxTangibleUI",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3F51819371F6A622BFF25A14624B884B6F1A2C65"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Dewb\/ofxUI",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7E804D925461714118DB355C65BC964B41D94376"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/astellato\/ofxSyphon",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F4CCB893AFADB97238A965FD2F28717F1CAAE613"
+    }
+  ]
+}
