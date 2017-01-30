@@ -15,3 +15,4 @@ bin/*.app/
 bin/*.exe
 bin/*.exp
 *.opensdf
+build/windows/bin

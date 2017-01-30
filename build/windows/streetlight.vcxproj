@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>streetlight</RootNamespace>
+    <ProjectName>streetlight</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="streetlight.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(OF_ROOT)/libs/openFrameworksCompiled/project/vs/openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(OF_ROOT)/libs/openFrameworksCompiled/project/vs/openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(STREETLIGHT_ROOT)\bin</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(STREETLIGHT_ROOT)\bin</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(STREETLIGHT_ROOT)\lib;%(AdditionalIncludeDirectories);$(OF_ROOT)\libs\openFrameworks;$(OF_ROOT)\libs\openFrameworks\graphics;$(OF_ROOT)\libs\openFrameworks\app;$(OF_ROOT)\libs\openFrameworks\sound;$(OF_ROOT)\libs\openFrameworks\utils;$(OF_ROOT)\libs\openFrameworks\communication;$(OF_ROOT)\libs\openFrameworks\video;$(OF_ROOT)\libs\openFrameworks\types;$(OF_ROOT)\libs\openFrameworks\math;$(OF_ROOT)\libs\openFrameworks\3d;$(OF_ROOT)\libs\openFrameworks\gl;$(OF_ROOT)\libs\openFrameworks\events;$(OF_ROOT)\libs\glut\include;$(OF_ROOT)\libs\rtAudio\include;$(OF_ROOT)\libs\quicktime\include;$(OF_ROOT)\libs\freetype\include;$(OF_ROOT)\libs\freetype\include\freetype2;$(OF_ROOT)\libs\freeImage\include;$(OF_ROOT)\libs\fmodex\include;$(OF_ROOT)\libs\videoInput\include;$(OF_ROOT)\libs\glew\include\;$(OF_ROOT)\libs\glu\include;$(OF_ROOT)\libs\tess2\include;$(OF_ROOT)\libs\cairo\include\cairo;$(OF_ROOT)\libs\poco\include;$(OF_ROOT)\libs\glfw\include;$(OF_ROOT)\libs\openssl\include;$(OF_ROOT)\addons\ofxOsc\libs;$(OF_ROOT)\addons\ofxOsc\src;$(OF_ROOT)\addons\ofxOsc\libs\oscpack;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip\posix;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip\win32;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\osc;$(OF_ROOT)\addons\ofxXmlSettings\libs;$(OF_ROOT)\addons\ofxXmlSettings\src;$(OF_ROOT)\addons\ofxAppGLFWWindowMulti\libs;$(OF_ROOT)\addons\ofxAppGLFWWindowMulti\src;$(OF_ROOT)\addons\ofxAutoReloadedShader\libs;$(OF_ROOT)\addons\ofxAutoReloadedShader\src;$(OF_ROOT)\addons\ofxCubeMap\libs;$(OF_ROOT)\addons\ofxCubeMap\src;$(OF_ROOT)\addons\ofxUI\libs;$(OF_ROOT)\addons\ofxUI\src;$(OF_ROOT)\addons\ofxTangibleUI\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(OF_ROOT)\libs\glut\lib\vs;$(OF_ROOT)\libs\glfw\lib\vs;$(OF_ROOT)\libs\rtAudio\lib\vs;$(OF_ROOT)\libs\FreeImage\lib\vs;$(OF_ROOT)\libs\freetype\lib\vs;$(OF_ROOT)\libs\quicktime\lib\vs;$(OF_ROOT)\libs\fmodex\lib\vs;$(OF_ROOT)\libs\videoInput\lib\vs;$(OF_ROOT)\libs\cairo\lib\vs;$(OF_ROOT)\libs\glew\lib\vs;$(OF_ROOT)\libs\glu\lib\vs;$(OF_ROOT)\libs\openssl\lib\vs;$(OF_ROOT)\libs\Poco\lib\vs;$(OF_ROOT)\libs\tess2\lib\vs;</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /e /i /y "$(OF_ROOT)\export\vs\*.dll" "$(OutputPath)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(STREETLIGHT_ROOT)\lib;%(AdditionalIncludeDirectories);$(OF_ROOT)\libs\openFrameworks;$(OF_ROOT)\libs\openFrameworks\graphics;$(OF_ROOT)\libs\openFrameworks\app;$(OF_ROOT)\libs\openFrameworks\sound;$(OF_ROOT)\libs\openFrameworks\utils;$(OF_ROOT)\libs\openFrameworks\communication;$(OF_ROOT)\libs\openFrameworks\video;$(OF_ROOT)\libs\openFrameworks\types;$(OF_ROOT)\libs\openFrameworks\math;$(OF_ROOT)\libs\openFrameworks\3d;$(OF_ROOT)\libs\openFrameworks\gl;$(OF_ROOT)\libs\openFrameworks\events;$(OF_ROOT)\libs\glut\include;$(OF_ROOT)\libs\rtAudio\include;$(OF_ROOT)\libs\quicktime\include;$(OF_ROOT)\libs\freetype\include;$(OF_ROOT)\libs\freetype\include\freetype2;$(OF_ROOT)\libs\freeImage\include;$(OF_ROOT)\libs\fmodex\include;$(OF_ROOT)\libs\videoInput\include;$(OF_ROOT)\libs\glew\include\;$(OF_ROOT)\libs\glu\include;$(OF_ROOT)\libs\tess2\include;$(OF_ROOT)\libs\cairo\include\cairo;$(OF_ROOT)\libs\poco\include;$(OF_ROOT)\libs\glfw\include;$(OF_ROOT)\libs\openssl\include;$(OF_ROOT)\addons\ofxOsc\libs;$(OF_ROOT)\addons\ofxOsc\src;$(OF_ROOT)\addons\ofxOsc\libs\oscpack;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip\posix;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\ip\win32;$(OF_ROOT)\addons\ofxOsc\libs\oscpack\src\osc;$(OF_ROOT)\addons\ofxXmlSettings\libs;$(OF_ROOT)\addons\ofxXmlSettings\src;$(OF_ROOT)\addons\ofxAppGLFWWindowMulti\libs;$(OF_ROOT)\addons\ofxAppGLFWWindowMulti\src;$(OF_ROOT)\addons\ofxAutoReloadedShader\libs;$(OF_ROOT)\addons\ofxAutoReloadedShader\src;$(OF_ROOT)\addons\ofxCubeMap\libs;$(OF_ROOT)\addons\ofxCubeMap\src;$(OF_ROOT)\addons\ofxUI\libs;$(OF_ROOT)\addons\ofxUI\src;$(OF_ROOT)\addons\ofxTangibleUI\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(OF_ROOT)\libs\glut\lib\vs;$(OF_ROOT)\libs\glfw\lib\vs;$(OF_ROOT)\libs\rtAudio\lib\vs;$(OF_ROOT)\libs\FreeImage\lib\vs;$(OF_ROOT)\libs\freetype\lib\vs;$(OF_ROOT)\libs\quicktime\lib\vs;$(OF_ROOT)\libs\fmodex\lib\vs;$(OF_ROOT)\libs\videoInput\lib\vs;$(OF_ROOT)\libs\cairo\lib\vs;$(OF_ROOT)\libs\glew\lib\vs;$(OF_ROOT)\libs\glu\lib\vs;$(OF_ROOT)\libs\openssl\lib\vs;$(OF_ROOT)\libs\Poco\lib\vs;$(OF_ROOT)\libs\tess2\lib\vs;</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /e /i /y "$(OF_ROOT)\export\vs\*.dll" "$(OutputPath)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxListener.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleCore.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleHandle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleToggle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTransmitter.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUI2DGraph.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUI2DPad.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIBaseDraws.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIBiLabelSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICanvas.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICircleSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICustomImageButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIDragableLabelButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIDropDownList.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIEventArgs.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIFPS.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIFPSSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImage.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageSampler.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageToggle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIIntSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabel.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabelButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabelToggle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMinimalSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMovingGraph.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMultiImageButton.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMultiImageToggle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUINumberDialer.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRadio.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRangeSlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRectangle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRotarySlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIScrollableCanvas.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISlider.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISortableList.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISpacer.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISpectrum.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISuperCanvas.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITabBar.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITextArea.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITextInput.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIToggle.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIToggleMatrix.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIValuePlotter.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWaveform.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWidget.cpp" />
+    <ClCompile Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWidgetWithLabel.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutDirectX.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutGLDXinterop.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutGLextensions.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutMemoryShare.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutReceiver.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSDK.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSender.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSenderNames.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSharedMemory.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\src\ckvdApp.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\src\ckvdHandle.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\src\kinet.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\src\main.cpp" />
+    <ClCompile Include="$(STREETLIGHT_ROOT)\src\radomeSyphonClient.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\exampleControls\ofxTangibleSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxListener.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleCore.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleHandle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTangibleToggle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxTangibleUI\src\ofxTransmitter.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUI.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUI2DGraph.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUI2DPad.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIBaseDraws.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIBiLabelSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICanvas.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICircleSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUICustomImageButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIDefines.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIDragableLabelButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIDropDownList.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIEventArgs.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIFPS.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIFPSSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImage.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageSampler.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIImageToggle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIIntSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabel.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabelButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUILabelToggle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMinimalSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMovingGraph.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMultiImageButton.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIMultiImageToggle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUINumberDialer.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIOFWrapper.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRadio.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRangeSlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRectangle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIRotarySlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIScrollableCanvas.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISlider.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISortableList.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISpacer.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISpectrum.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUISuperCanvas.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITabBar.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITextArea.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUITextInput.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIToggle.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIToggleMatrix.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIUtils.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIValuePlotter.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWaveform.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWidget.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWidgetWithLabel.h" />
+    <ClInclude Include="$(OF_ROOT)\addons\ofxUI\src\ofxUIWrapper.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\Spout.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutCommon.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutDirectX.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutGLDXinterop.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutGLextensions.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutMemoryShare.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutReceiver.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSDK.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSender.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSenderNames.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\lib\Spout2\SpoutSharedMemory.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\src\ckvdApp.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\src\ckvdHandle.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\src\kinet.h" />
+    <ClInclude Include="$(STREETLIGHT_ROOT)\src\radomeSyphonClient.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
