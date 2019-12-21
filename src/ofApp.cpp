@@ -1,13 +1,13 @@
-#include "ckvdApp.h"
+#include "ofApp.h"
 #include "ofxXmlSettings.h"
 
 #include <algorithm>
 
 #define SIDEBAR_WIDTH 270
-#define MIN_WIDTH 800
-#define MIN_HEIGHT 600
-#define MAX_WIDTH 1200
-#define MAX_HEIGHT 900
+#define MIN_WIDTH 1024
+#define MIN_HEIGHT 800
+#define MAX_WIDTH 1920
+#define MAX_HEIGHT 1080
 #define DEFAULT_SYPHON_APP "Arena"
 #define DEFAULT_SYPHON_SERVER "Composition"
 #define DEFAULT_FRAME_RATE 30
@@ -182,7 +182,7 @@ void ckvdApp::setup()
     mClientImage.setUseTexture(false);
     ofSetFrameRate(DEFAULT_FRAME_RATE);
 
-    _pUI = new ofxUICanvas(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
+    _pUI = new ofxUICanvas(getVideoAreaWidth(), 0, SIDEBAR_WIDTH, getHeight());
     _pUI->setFont("GUI/Exo-Regular.ttf", true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
 
     _pUI->addWidgetDown(new ofxUILabel("SYPHON SERVER APP", OFX_UI_FONT_SMALL));
@@ -252,7 +252,7 @@ void ckvdApp::sizeToContent()
     ofSetWindowShape(imgW, imgH);
     if (_pUI)
     {
-        _pUI->getRect()->setX(getClientWidth());
+        _pUI->getRect()->setX(getVideoAreaWidth());
         _pUI->getRect()->setHeight(getHeight());
     }
 }
@@ -270,12 +270,12 @@ void ckvdApp::draw()
     ofBackground(0,0,0,1.0);
 
 	mClient.maybeBind();
-    mClient.getTexture().draw(0, 0);
+    mClient.getTexture().draw(0, 0, getVideoAreaWidth(), getHeight());
     
     if (_pUI)
     {
         ofSetColor(60,60,80);
-        ofRect(getClientWidth(), 0, SIDEBAR_WIDTH, getHeight());
+        ofRect(getVideoAreaWidth(), 0, SIDEBAR_WIDTH, getHeight());
         ofSetColor(255,255,255);
         
         bool bVisible = _pSelectedGrabber != NULL;
@@ -283,7 +283,7 @@ void ckvdApp::draw()
         //_pUI->getWidget("DELETE")->setVisible(bVisible);
     }
 
-    mClientImage.grabScreen(0, 0, getClientWidth(), getHeight());
+    mClientImage.grabScreen(0, 0, getVideoAreaWidth(), getHeight());
     
     for (auto iter = _supplies.begin(); iter != _supplies.end(); iter++)
     {
@@ -369,7 +369,7 @@ void ckvdApp::keyPressed(int key)
 
 void ckvdApp::mouseReleased(int x, int y, int button)
 {
-    if (x < getClientWidth()) {
+    if (x < getVideoAreaWidth()) {
         setSelectedGrabber(_pSelectedGrabber);
     }
 }
@@ -379,21 +379,28 @@ void ckvdApp::windowResized(int w, int h)
     sizeToContent();
 }
 
-int ckvdApp::getClientWidth()
+int ckvdApp::getVideoAreaWidth()
 {
-    int w = floor(mClient.getWidth());
-    return w > MIN_WIDTH ? (w < MAX_WIDTH ? w : MAX_WIDTH) : MIN_WIDTH;
+    return MIN_WIDTH;
 }
 
 int ckvdApp::getWidth()
 {
-    return getClientWidth() + SIDEBAR_WIDTH;
+    return getVideoAreaWidth() + SIDEBAR_WIDTH;
 }
 
 int ckvdApp::getHeight()
 {
-    int h = floor(mClient.getHeight());
-    return h > MIN_HEIGHT ? (h < MAX_HEIGHT ? h : MAX_HEIGHT) : MIN_HEIGHT;
+    if (mClient.isSetup() && mClient.isBound())
+    {
+        float w = mClient.getWidth();
+        float h = mClient.getHeight();
+        return h/w * MIN_WIDTH;
+    }
+    else
+    {
+        return MIN_HEIGHT;
+    }
 }
 
 void ckvdApp::setSelectedGrabber(ckvdVideoGrabber* pGrabber)

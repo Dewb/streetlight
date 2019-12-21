@@ -6,7 +6,7 @@
 //
 //
 
-#include "ckvdApp.h"
+#include "ofApp.h"
 #include "ckvdHandle.h"
 
 #define pi 3.141592
@@ -102,7 +102,7 @@ void ckvdVideoGrabber::mousePressed(ofMouseEventArgs &e)
 
 void ckvdVideoGrabber::moveBy(float dx, float dy)
 {
-    int w = theApp()->getClientWidth();
+    int w = theApp()->getVideoAreaWidth();
     int h = theApp()->getHeight();
     dx = x + dx < 0 ? -x : x + dx >= w ? w-x-1 : dx;
     dy = y + dy < 0 ? -y : y + dy >= h ? h-y-1 : dy;
@@ -257,7 +257,7 @@ void ckvdStripGrabber::draw()
 
 void ckvdStripGrabber::setColorFromFrame(ofImage& frame)
 {
-    _fixture.set_data(frame.getPixels() + 3 * (int(x) + frame.width * int(y)));
+    _fixture.set_data(frame.getPixels().getData() + 3 * (int(x) + (int)frame.getWidth() * int(y)));
 }
 
 void ckvdStripGrabber::listParams(vector<string>* pParams)
@@ -367,7 +367,7 @@ void ckvdTileGrabber::draw()
 void ckvdTileGrabber::setColorFromFrame(ofImage& frame)
 {
     _fixture.setVideoRect(x - width/2, y - height/2, width, height);
-    _fixture.setSourceData(frame.getPixels(), frame.width, frame.height, 3);
+    _fixture.setSourceData(frame.getPixels().getData(), frame.getWidth(), frame.getHeight(), 3);
 }
 
 void ckvdTileGrabber::listParams(vector<string>* pParams)

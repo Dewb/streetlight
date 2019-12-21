@@ -86,7 +86,7 @@ void PowerSupply::initializeBuffer()
         free(_frame);
         
     _frame = (uint8_t*)malloc(_proto->getBufferSize() * sizeof(uint8_t));
-    memset(_frame, _proto->getBufferSize(), 0);
+    memset(_frame, 0, _proto->getBufferSize());
     for (unsigned c = 0; c < _proto->getNumChannels(); c++)
     {
         memcpy(_frame + c * _proto->getPacketSize(), _proto->getHeaderBytes(), _proto->getHeaderSize());
@@ -127,7 +127,7 @@ bool PowerSupply::connect(const string strHost, const string strPort)
 #ifdef _WIN32
 		closesocket(sock);
 #else
-        close(sock);
+        shutdown(sock, SHUT_RDWR);
 #endif
 	}
 

@@ -1,4 +1,5 @@
-ofxXmlSettings
+ofxPoco
 ofxSyphon
 ofxTangibleUI
 ofxUI
+ofxXmlSettings

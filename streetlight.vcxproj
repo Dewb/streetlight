@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|x64">
+			<Configuration>Debug</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|x64">
+			<Configuration>Release</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
+		<LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+		<WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+		<TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+		<Keyword>Win32Proj</Keyword>
+		<RootNamespace>streetlight</RootNamespace>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<PlatformToolset>v141</PlatformToolset>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="../of_v0.11.0_osx_release/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="../of_v0.11.0_osx_release/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="../of_v0.11.0_osx_release/libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="../of_v0.11.0_osx_release/libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<TargetName>$(ProjectName)_debug</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<GenerateManifest>true</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<TargetName>$(ProjectName)_debug</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<GenerateManifest>true</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\of_v0.11.0_osx_release\addons\ofxPoco\libs\poco\include;..\of_v0.11.0_osx_release\addons\ofxPoco\src;..\of_v0.11.0_osx_release\addons\ofxSyphon\libs;..\of_v0.11.0_osx_release\addons\ofxSyphon\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier;..\of_v0.11.0_osx_release\addons\ofxUI\src;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\of_v0.11.0_osx_release\addons\ofxPoco</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\of_v0.11.0_osx_release\addons\ofxPoco\libs\poco\include;..\of_v0.11.0_osx_release\addons\ofxPoco\src;..\of_v0.11.0_osx_release\addons\ofxSyphon\libs;..\of_v0.11.0_osx_release\addons\ofxSyphon\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier;..\of_v0.11.0_osx_release\addons\ofxUI\src;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<MultiProcessorCompilation>true</MultiProcessorCompilation>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\of_v0.11.0_osx_release\addons\ofxPoco</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<ClCompile>
+			<WholeProgramOptimization>false</WholeProgramOptimization>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\of_v0.11.0_osx_release\addons\ofxPoco\libs\poco\include;..\of_v0.11.0_osx_release\addons\ofxPoco\src;..\of_v0.11.0_osx_release\addons\ofxSyphon\libs;..\of_v0.11.0_osx_release\addons\ofxSyphon\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier;..\of_v0.11.0_osx_release\addons\ofxUI\src;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<MultiProcessorCompilation>true</MultiProcessorCompilation>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+		</ClCompile>
+		<Link>
+			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\of_v0.11.0_osx_release\addons\ofxPoco</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<ClCompile>
+			<WholeProgramOptimization>false</WholeProgramOptimization>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\of_v0.11.0_osx_release\addons\ofxPoco\libs\poco\include;..\of_v0.11.0_osx_release\addons\ofxPoco\src;..\of_v0.11.0_osx_release\addons\ofxSyphon\libs;..\of_v0.11.0_osx_release\addons\ofxSyphon\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls;..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier;..\of_v0.11.0_osx_release\addons\ofxUI\src;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs;..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+			<ObjectFileName>$(IntDir)</ObjectFileName>
+			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+		</ClCompile>
+		<Link>
+			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\of_v0.11.0_osx_release\addons\ofxPoco</AdditionalLibraryDirectories>
+		</Link>
+		<PostBuildEvent />
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClCompile Include="src\main.cpp" />
+		<ClCompile Include="src\ofApp.cpp" />
+		<ClCompile Include="src\ckvdHandle.cpp" />
+		<ClCompile Include="src\kinet.cpp" />
+		<ClCompile Include="src\ckvdApp.cpp" />
+		<ClCompile Include="src\radomeSyphonClient.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxPoco\src\ofxXmlPoco.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleHandle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTimeline.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleValue.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxListener.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTransmitter.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleCore.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleToggle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIScrollableCanvas.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWaveform.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIIntSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIEventArgs.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMovingGraph.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBiLabelSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUINumberDialer.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageToggle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDragableLabelButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageToggle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelToggle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextInput.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPSSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPS.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpacer.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICircleSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRectangle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISortableList.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImage.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICustomImageButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRotarySlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DPad.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DGraph.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRangeSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMinimalSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDropDownList.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextArea.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSampler.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIValuePlotter.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISuperCanvas.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggleMatrix.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRadio.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpectrum.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIButton.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggle.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICanvas.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSlider.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidget.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabel.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITabBar.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBaseDraws.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidgetWithLabel.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h" />
+		<ClInclude Include="src\ckvdHandle.h" />
+		<ClInclude Include="src\kinet.h" />
+		<ClInclude Include="src\ckvdApp.h" />
+		<ClInclude Include="src\radomeSyphonClient.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\src\ofxXmlPoco.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pem2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\kdf.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pem.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl3.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ossl_typ.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dtls1.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\err.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\bn.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\blowfish.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cms.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\engine.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslconf_osx.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\conf_api.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1_mac.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ui.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\sha.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\symhacks.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslconf.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\bio.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dh.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509v3.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\conf.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md5.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509_vfy.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\txt_db.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\safestack.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ecdsa.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc5.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\objects.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pkcs12.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\crypto.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslv.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pkcs7.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\obj_mac.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ct.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\async.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\buffer.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\srp.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\camellia.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\evp.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\e_os2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md4.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\hmac.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\aes.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\comp.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cast.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc4.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\stack.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\des.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ocsp.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ec.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ecdh.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rand.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ts.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\seed.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\modes.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rsa.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ripemd.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\whrlpool.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\tls1.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\mdc2.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dsa.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\srtp.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1t.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cmac.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ebcdic.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\idea.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\lhash.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleHandle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxListener.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleToggle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleValue.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTimeline.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTransmitter.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleCore.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDefines.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPSSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggleMatrix.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextArea.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDropDownList.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPS.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDragableLabelButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSampler.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpacer.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIIntSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRadio.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISortableList.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICustomImageButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImage.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidget.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageToggle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICircleSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWrapper.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpectrum.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageToggle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DGraph.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMinimalSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelToggle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIScrollableCanvas.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICanvas.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIUtils.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabel.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBiLabelSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISuperCanvas.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWaveform.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRangeSlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITabBar.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRotarySlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBaseDraws.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidgetWithLabel.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIValuePlotter.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRectangle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIButton.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIOFWrapper.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIEventArgs.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISlider.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DPad.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMovingGraph.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextInput.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUINumberDialer.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggle.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxml.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+			<Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc">
+			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+			<AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+		</ResourceCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties RESOURCE_FILE="icon.rc" />
+		</VisualStudio>
+	</ProjectExtensions>
+</Project>

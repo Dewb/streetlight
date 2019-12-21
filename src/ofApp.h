@@ -39,7 +39,7 @@ public:
     void exit();
     void guiEvent(ofxUIEventArgs& args);
 
-    int getClientWidth();
+    int getVideoAreaWidth();
     int getWidth();
     int getHeight();
     

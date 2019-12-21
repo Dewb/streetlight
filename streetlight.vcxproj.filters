@@ -1,0 +1,720 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ckvdHandle.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\kinet.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ckvdApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\radomeSyphonClient.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxPoco\src\ofxXmlPoco.cpp">
+			<Filter>addons\ofxPoco\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleHandle.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTimeline.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleValue.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.cpp">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxListener.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTransmitter.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleCore.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleToggle.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleButton.cpp">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIScrollableCanvas.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWaveform.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIIntSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIEventArgs.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMovingGraph.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBiLabelSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUINumberDialer.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageToggle.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDragableLabelButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageToggle.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelToggle.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextInput.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPSSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPS.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpacer.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICircleSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRectangle.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISortableList.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImage.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICustomImageButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRotarySlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DPad.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DGraph.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRangeSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMinimalSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDropDownList.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextArea.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSampler.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIValuePlotter.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISuperCanvas.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggleMatrix.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRadio.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpectrum.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIButton.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggle.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICanvas.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSlider.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidget.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabel.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITabBar.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBaseDraws.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidgetWithLabel.cpp">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+		<ClCompile Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxml.cpp">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco">
+			<UniqueIdentifier>{3256AE3E-9B29-EA27-C842-CE6B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco\src">
+			<UniqueIdentifier>{C7D4269D-D8A9-A7BB-531B-98DA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco\libs">
+			<UniqueIdentifier>{3E8A9E9C-2DA4-7391-777F-56C5}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco\libs\openssl">
+			<UniqueIdentifier>{5947399C-92B2-BAE8-E58F-7024}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco\libs\openssl\include">
+			<UniqueIdentifier>{D5DE9DB7-5574-8FBC-7336-5107}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxPoco\libs\openssl\include\openssl">
+			<UniqueIdentifier>{C648CDF7-0C1F-4D5B-2490-7010}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxTangibleUI">
+			<UniqueIdentifier>{D41443FD-8195-0A73-BF7D-CDEB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxTangibleUI\src">
+			<UniqueIdentifier>{A554470E-084C-EECD-26DC-78EB}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxTangibleUI\src\exampleControls">
+			<UniqueIdentifier>{F32961D5-2D8B-1DCF-3685-86F7}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxTangibleUI\src\exampleControls\bezier">
+			<UniqueIdentifier>{91098DC2-4658-4BED-91AF-BE37}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxUI">
+			<UniqueIdentifier>{B492C5B0-FF91-9C5A-638A-3142}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxUI\src">
+			<UniqueIdentifier>{A00C2D23-6C11-BC86-3993-2CF0}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings">
+			<UniqueIdentifier>{877F005D-13E6-0592-1D97-F2E3}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\src">
+			<UniqueIdentifier>{CCB2AC63-49D2-977C-CFE8-AEAD}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxXmlSettings\libs">
+			<UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ckvdHandle.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\kinet.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\ckvdApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\radomeSyphonClient.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\src\ofxXmlPoco.h">
+			<Filter>addons\ofxPoco\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pem2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\kdf.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pem.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl3.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ossl_typ.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dtls1.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\err.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\bn.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\blowfish.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cms.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\engine.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslconf_osx.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\conf_api.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1_mac.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ui.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\sha.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\symhacks.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslconf.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\bio.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dh.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509v3.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\conf.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md5.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\x509_vfy.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\txt_db.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\safestack.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ecdsa.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc5.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\objects.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pkcs12.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\crypto.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\opensslv.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\pkcs7.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\obj_mac.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ct.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\async.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\buffer.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\srp.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\camellia.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\evp.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\e_os2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\md4.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\hmac.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\aes.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\comp.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cast.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rc4.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\stack.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\des.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ocsp.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ec.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ecdh.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rand.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ts.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\seed.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\modes.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ssl2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\rsa.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ripemd.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\whrlpool.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\tls1.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\mdc2.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\dsa.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\srtp.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\asn1t.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\cmac.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\ebcdic.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\idea.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxPoco\libs\openssl\include\openssl\lhash.h">
+			<Filter>addons\ofxPoco\libs\openssl\include\openssl</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleHandle.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleButton.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxListener.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleToggle.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierHelper.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezierControl.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\bezier\ofxTangibleBezier.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls\bezier</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleSlider.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleImage.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxPositioningContainer.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxRotaryKnob.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTangibleValue.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\exampleControls\ofxTimeline.h">
+			<Filter>addons\ofxTangibleUI\src\exampleControls</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTransmitter.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxTangibleUI\src\ofxTangibleCore.h">
+			<Filter>addons\ofxTangibleUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDefines.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPSSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggleMatrix.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextArea.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDropDownList.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIFPS.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIDragableLabelButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSampler.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpacer.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIIntSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRadio.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISortableList.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICustomImageButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImage.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidget.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageToggle.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICircleSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWrapper.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISpectrum.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIImageToggle.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMultiImageButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DGraph.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMinimalSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelToggle.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIScrollableCanvas.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUICanvas.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIUtils.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabel.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBiLabelSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUILabelButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISuperCanvas.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWaveform.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRangeSlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITabBar.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRotarySlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIBaseDraws.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIWidgetWithLabel.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIValuePlotter.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIRectangle.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIButton.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIOFWrapper.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIEventArgs.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUISlider.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUI2DPad.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIMovingGraph.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUITextInput.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUINumberDialer.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxUI\src\ofxUIToggle.h">
+			<Filter>addons\ofxUI\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+			<Filter>addons\ofxXmlSettings\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\of_v0.11.0_osx_release\addons\ofxXmlSettings\libs\tinyxml.h">
+			<Filter>addons\ofxXmlSettings\libs</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
+</Project>
